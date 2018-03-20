@@ -39,27 +39,24 @@ public class InternshipDAO {
 		return this.jdbcTemplate.query("select * from Internship;", new InternshipMapper());
 	}
 	
-	public Internship getInternship(String id){
+	public Internship getInternship(long id){
 		return this.jdbcTemplate.queryForObject("select * from Internship where id=?;", 
 				new Object[]{id}, new InternshipMapper());
 	}
 	
-	// add ID into model
 	public void addInternship(Internship internship){
 		this.jdbcTemplate.update("insert into Internship (id, mailContactPerson, description,"
-				+ "renumeration) values (?,?,?,?);", internship.getMailContactPerson(),
+				+ "renumeration) values (?,?,?,?);", internship.getId(), internship.getMailContactPerson(),
 				internship.getDescription(), internship.getRenumeration());
 	}
 	
-	// add ID into model
 	public void updateInternship(Internship internship){
 		this.jdbcTemplate.update("update Internship set mailContactPerson=?, "
 				+ "description=?, renumeration=? where id=?;", internship.getMailContactPerson(),
-				internship.getDescription(), internship.getRenumeration());
+				internship.getDescription(), internship.getRenumeration(), internship.getId());
 	}
 	
-	// add ID into model
 	public void deleteInternship(Internship internship){
-		this.jdbcTemplate.update("delete from Internship where id=?");
+		this.jdbcTemplate.update("delete from Internship where id=?", internship.getId());
 	}
 }
