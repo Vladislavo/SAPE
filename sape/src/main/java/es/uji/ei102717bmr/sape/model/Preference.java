@@ -3,7 +3,7 @@ package es.uji.ei102717bmr.sape.model;
 import java.util.Date;
 
 public class Preference {
-	private String order;
+	private int preference_order;
 	private String state;
 	private Date lastChangeDate;
 	
@@ -14,11 +14,11 @@ public class Preference {
 		super();
 	}
 	
-	public String getOrder() {
-		return order;
+	public int getOrder() {
+		return preference_order;
 	}
-	public void setOrder(String order) {
-		this.order = order;
+	public void setOrder(int order) {
+		this.preference_order = order;
 	}
 	public String getState() {
 		return state;
@@ -46,7 +46,7 @@ public class Preference {
 	}
 	@Override
 	public String toString() {
-		return "Preference [order=" + order + ", state=" + state + ", lastChangeDate=" + lastChangeDate + ", studentNIF="
+		return "Preference [order=" + preference_order + ", state=" + state + ", lastChangeDate=" + lastChangeDate + ", studentNIF="
 				+ student.getNIF() + ", proectOfferID=" + proectOffer.getId() + "]";
 	}
 	

@@ -1,6 +1,7 @@
 package es.uji.ei102717bmr.sape.model;
 
 public class Internship {
+	private long id;
 	private String description;
 	private int renumeration;
 	private String mailContactPerson;
@@ -51,6 +52,14 @@ public class Internship {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	@Override

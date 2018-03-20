@@ -5,13 +5,13 @@ import java.util.List;
 public class Student {
 	private String name;
 	private String email;
-	private String NIF;
+	private String nif;
 	private String telephone;
 	private String gradeCertificate;
 	private String itinerary;
 	
 	private List<Assignment> assignments;
-	private Preference preference;
+	private List<Preference> preferences;
 	
 	public String getName() {
 		return name;
@@ -26,10 +26,10 @@ public class Student {
 		this.email = email;
 	}
 	public String getNIF() {
-		return NIF;
+		return nif;
 	}
 	public void setNIF(String nIF) {
-		NIF = nIF;
+		nif = nIF;
 	}
 	public String getTelephone() {
 		return telephone;
@@ -52,9 +52,9 @@ public class Student {
 	
 	@Override
 	public String toString() {
-		return "Student [name=" + name + ", email=" + email + ", NIF=" + NIF + ", telephone=" + telephone
+		return "Student [name=" + name + ", email=" + email + ", NIF=" + nif + ", telephone=" + telephone
 				+ ", gradeCertificate=" + gradeCertificate + ", itinerary=" + itinerary + ", assignments=" + assignments
-				+ ", preference=" + preference + "]";
+				+ ", preferences=" + preferences + "]";
 	}
 
 }

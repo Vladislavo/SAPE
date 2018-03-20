@@ -4,7 +4,8 @@ import java.sql.Date;
 import java.util.List;
 
 public class ProjectOffer {
-	private int id;
+	private long id;
+	private long id_Internship;
 	private String title;
 	private String itinerary;
 	private String tasks;
@@ -23,12 +24,20 @@ public class ProjectOffer {
 	public ProjectOffer(){
 		super();
 	}
+	
+	public long getId_Internship() {
+		return id_Internship;
+	}
 
-	public int getId() {
+	public void setId_Internship(long id_Internship) {
+		this.id_Internship = id_Internship;
+	}
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
