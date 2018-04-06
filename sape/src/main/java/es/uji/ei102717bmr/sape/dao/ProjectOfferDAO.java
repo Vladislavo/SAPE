@@ -35,6 +35,7 @@ public class ProjectOfferDAO {
 	        projectOffer.setState(rs.getString("state"));
 	        projectOffer.setStartDate(rs.getDate("startDate"));
 	        projectOffer.setLastChangeDate(rs.getDate("lastChangeDate"));
+	        projectOffer.setId_Internship(rs.getLong("Internship"));
 	        
 	        return projectOffer;
 	    }
