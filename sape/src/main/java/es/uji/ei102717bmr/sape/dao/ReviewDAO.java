@@ -44,7 +44,7 @@ public class ReviewDAO {
 	
 	public Review getReview(long idProjectOffer, Date creationDate) {
 		return this.jdbcTemplate.queryForObject("select * from Review where id_ProjectOffer = ? AND creationDate = ?;",
-				new Object[]{ifProjectOffer, creationDate}, new ReviewMapper());
+				new Object[]{idProjectOffer, creationDate}, new ReviewMapper());
 		
 	}
 	public void addReview(Review review){
@@ -55,7 +55,7 @@ public class ReviewDAO {
 				
 	}
 	public void updateReview(Review review) {
-		this.jdbcTemplate.update("update Review set (text = ?",
+		this.jdbcTemplate.update("update Review set (text = ?"
 				+ " where id_ProjectOffer = ? AND creationDate = ?);", 
 				review.getText(), review.getProjectOffer().getId(), review.getCreationDate());
 	}			

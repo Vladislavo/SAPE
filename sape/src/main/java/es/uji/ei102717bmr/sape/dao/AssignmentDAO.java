@@ -61,7 +61,7 @@ public class AssignmentDAO {
 				
 	}
 	public void updateAssignment(Assignment assignment) {
-		this.jdbcTemplate.update("update Assignment set (id_ProjectOffer = ?, mail_Tutor= ?, state = ?, approvalDate = ?",
+		this.jdbcTemplate.update("update Assignment set (id_ProjectOffer = ?, mail_Tutor= ?, state = ?, approvalDate = ?"
 				+ ", rejectDate = ? where nif_Student = ? AND creationDate = ?);", 
 				assignment.getProjectOffer().getId(), assignment.getTutor().getEmail(), assignment.getState(), 
 				assignment.getApprovalDate(), assignment.getRejectDate(), assignment.getStudent().getNIF(), 
@@ -69,7 +69,7 @@ public class AssignmentDAO {
 	}			
 	public void deleteAssignment(Assignment assignment) {
 		this.jdbcTemplate.update("delete from Assignment where nif_Student = ? AND creationDate = ?;", 
-				assigment.getStudent().getNIF(), assignment.getCreationDate());
+				assignment.getStudent().getNIF(), assignment.getCreationDate());
 	}
 	
 

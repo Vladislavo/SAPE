@@ -66,7 +66,7 @@ public class SapeServicesImpl implements SapeServices {
 
 	@Override
 	public List<Preference> getPreferenceList() {
-		return preferenceDao.getPreferenceses();
+		return preferenceDao.getPreferences();
 	}
 
 	@Override

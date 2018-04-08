@@ -58,7 +58,7 @@ public class PreferenceDAO {
 				
 	}
 	public void updatePreference(Preference preference) {
-		this.jdbcTemplate.update("updatePreference set (order = ?, state= ?, lastChangeDate = ?",
+		this.jdbcTemplate.update("updatePreference set (order = ?, state= ?, lastChangeDate = ?"
 				+ " where nif_Student = ? AND id_ProjectOffer = ?);", 
 				preference.getOrder(), preference.getState(), preference.getLastChangeDate(),
 				preference.getStudent().getNIF(), preference.getProectOffer().getId());
