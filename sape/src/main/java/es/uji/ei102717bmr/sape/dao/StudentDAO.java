@@ -58,7 +58,7 @@ public class StudentDAO {
 				student.getTelephone(), student.getGradeCertificate(), student.getItinerary(), student.getNIF());
 	}
 	
-	public void deleteStudent(Student student){
-		this.jdbcTemplate.update("delete from Student where nif = ?", student.getNIF());
+	public void deleteStudent(String nif){
+		this.jdbcTemplate.update("delete from Student where nif = ?", nif);
 	}
 }
