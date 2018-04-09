@@ -66,8 +66,8 @@ public class ProjectOfferDAO {
 				projectOffer.getState(), projectOffer.getStartDate(),
 				projectOffer.getLastChangeDate(), projectOffer.getId());
 	}			
-	public void deleteProjectOffer(ProjectOffer projectOffer) {
-		this.jdbcTemplate.update("delete from ProjectOffer where id = ?;", projectOffer.getId());
+	public void deleteProjectOffer(long id) {
+		this.jdbcTemplate.update("delete from ProjectOffer where id = ?;", id);
 	}
 	
 

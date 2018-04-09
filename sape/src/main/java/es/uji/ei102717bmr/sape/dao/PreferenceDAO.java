@@ -63,9 +63,9 @@ public class PreferenceDAO {
 				preference.getOrder(), preference.getState(), preference.getLastChangeDate(),
 				preference.getStudent().getNIF(), preference.getProectOffer().getId());
 	}			
-	public void deletePreference(Preference preference) {
+	public void deletePreference(String nifStudent, long projectId) {
 		this.jdbcTemplate.update("delete from Preference where nif_Student = ? AND id_Project = ?;", 
-				preference.getStudent().getNIF(), preference.getProectOffer().getId());
+				nifStudent, projectId);
 	}
 	
 

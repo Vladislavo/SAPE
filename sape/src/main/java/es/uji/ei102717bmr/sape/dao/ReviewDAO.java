@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-
 import es.uji.ei102717bmr.sape.model.Review;
-import es.uji.ei102717bmr.sape.model.ProjectOffer;
 
 @Repository
 public class ReviewDAO {
@@ -59,9 +56,9 @@ public class ReviewDAO {
 				+ " where id_ProjectOffer = ? AND creationDate = ?);", 
 				review.getText(), review.getProjectOffer().getId(), review.getCreationDate());
 	}			
-	public void deleteReview(Review review) {
+	public void deleteReview(long idProjectOffer, Date creationDate) {
 		this.jdbcTemplate.update("delete from Review where id_ProjectOffer = ? AND creationDate = ?;", 
-				review.getProjectOffer().getId(), review.getCreationDate());
+				idProjectOffer, creationDate);
 	}
 	
 
