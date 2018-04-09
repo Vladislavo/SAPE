@@ -57,7 +57,7 @@ public class TutorDAO {
 				tutor.getTelephone(), tutor.getOffice(), tutor.getEmail());
 	}
 	
-	public void deleteTutor(Tutor tutor){
-		this.jdbcTemplate.update("delete from Tutor where mail=?", tutor.getEmail());
+	public void deleteTutor(String mail){
+		this.jdbcTemplate.update("delete from Tutor where mail=?", mail);
 	}
 }
