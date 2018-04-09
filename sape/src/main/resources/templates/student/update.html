@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head>
+   <title>Create new swimmer</title>
+   <meta charset="UTF-8" />
+   <link rel="stylesheet"       
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+</head>
+<body>
+    <h2>Update student</h2>
+    <form action="#" th:action="@{/student/update/{nif}(name=${student.nif})}"
+                     th:object="${student}" method="post">
+      <table>
+        <tr>
+            <td><label>NIF</label></td>
+            <td><input type="text" th:field="*{nif}" /></td>
+        </tr>
+        <tr>
+            <td><label>Name</label></td>
+            <td><input type="text" th:field="*{name}" /></td>
+        </tr>
+        <tr>
+            <td><label>Email</label></td>
+            <td><input type="text" th:field="*{mail}" /></td>
+        </tr>
+        <tr>
+            <td><label>Telephone</label></td>
+            <td><input type="text" th:field="*{telephone}" /></td>
+        </tr>
+        <tr>
+            <td><label>Grade Certificate</label></td>
+            <td><input type="text" th:field="*{gradeCertificate}" /></td>
+        </tr>
+        <tr>
+            <td><label>Itinerary</label></td>
+            <td><input type="text" th:field="*{itinerary}" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Update student" /></td>
+        </tr>
+      </table>
+    </form>
+</body>
+</html>

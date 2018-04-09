@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <title>Manage swimmers</title>
+   <meta charset="UTF-8"/>
+   <link rel="stylesheet"   
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+</head>
+<body>
+   <h1>List of students</h1>
+   <table>
+    <thead>
+       <tr>
+         <th>NIF</th>
+         <th>Name</th>
+         <th>Email</th>
+         <th>Telephone</th>
+         <th>Grade Certificate</th>
+         <th>Itinerary</th>
+       </tr>
+    </thead>
+    <tbody>
+     <tr th:each="student: ${students}">
+      <td th:text="${student.nif}"></td>
+      <td th:text="${student.name}"></td>
+      <td th:text="${student.mail}"></td>
+      <td th:text="${student.telephone}"></td>
+      <td th:text="${student.gradeCertificate}"></td>
+	  <td th:text="${student.itinerary}"></td>
+      <td><a th:href="@{/student/update/{nif}(name=${student.nif})}">Update</a>
+      </td>
+      <td><a th:href="@{/student/delete/{nif}(name=${student.nif})}">Delete</a>
+      </td>
+     </tr>
+    </tbody>
+   </table>
+   <a href="add.html">Add student</a>
+</body>
+</html>

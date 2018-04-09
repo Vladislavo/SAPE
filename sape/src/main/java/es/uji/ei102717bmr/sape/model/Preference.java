@@ -8,7 +8,7 @@ public class Preference {
 	private Date lastChangeDate;
 	
 	private Student student;
-	private ProjectOffer proectOffer;
+	private ProjectOffer projectOffer;
 	
 	public Preference(){
 		super();
@@ -39,15 +39,15 @@ public class Preference {
 		this.student = student;
 	}
 	public ProjectOffer getProectOffer() {
-		return proectOffer;
+		return projectOffer;
 	}
 	public void setProectOffer(ProjectOffer proectOffer) {
-		this.proectOffer = proectOffer;
+		this.projectOffer = proectOffer;
 	}
 	@Override
 	public String toString() {
 		return "Preference [order=" + preference_order + ", state=" + state + ", lastChangeDate=" + lastChangeDate + ", studentNIF="
-				+ student.getNIF() + ", proectOfferID=" + proectOffer.getId() + "]";
+				+ student.getNIF() + ", proectOfferID=" + projectOffer.getId() + "]";
 	}
 	
 	

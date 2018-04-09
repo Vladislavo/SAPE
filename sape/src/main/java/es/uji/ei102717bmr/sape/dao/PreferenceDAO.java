@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 
 
 import es.uji.ei102717bmr.sape.model.Preference;
-import es.uji.ei102717bmr.sape.model.Student;
-import es.uji.ei102717bmr.sape.model.ProjectOffer;
 
 @Repository
 public class PreferenceDAO {
@@ -44,7 +42,7 @@ public class PreferenceDAO {
 		return this.jdbcTemplate.query("select * from Preference;" , new PreferenceDAOMapper());
 	}
 	
-	public Preference getPreference(long nifStudent, long idProjectOffer) {
+	public Preference getPreference(String nifStudent, long idProjectOffer) {
 		return this.jdbcTemplate.queryForObject("select * from Preference where nif_Student = ? AND id_ProjectOffer = ?;",
 				new Object[]{nifStudent, idProjectOffer}, new PreferenceDAOMapper());
 		
