@@ -18,7 +18,7 @@ import es.uji.ei102717bmr.sape.model.Preference;
 public class PreferenceDAO {
 	
 	private JdbcTemplate jdbcTemplate;
-    
+	
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 	        this.jdbcTemplate = new JdbcTemplate(dataSource); 

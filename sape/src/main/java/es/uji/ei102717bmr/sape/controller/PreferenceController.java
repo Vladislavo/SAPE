@@ -37,23 +37,23 @@ public class PreferenceController {
     
     @RequestMapping(value="/add", method=RequestMethod.POST) 
     public String processAddSubmit(@ModelAttribute("preference") Preference preference,
-                                    BindingResult bindingResult) {  
+                                    BindingResult bindingResult) {
          if (bindingResult.hasErrors()) 
                 return "preference/add";
          preferenceDAO.addPreference(preference);
-         return "redirect:list.html"; 
+         return "redirect:list.html";
     }
     
-    @RequestMapping(value="/update/{nif_Student}&{id_ProjectOffer}", method = RequestMethod.GET) 
+    @RequestMapping(value="/update/{nifStudent}&{idProjectOffer}", method = RequestMethod.GET) 
     public String editStudent(Model model, @PathVariable String nif_Student,
     									   @PathVariable long id_ProjectOffer) { 
         model.addAttribute("preference", preferenceDAO.getPreference(nif_Student, id_ProjectOffer));
         return "preference/update"; 
     }
     
-    @RequestMapping(value="/update/{nif_Student}&{id_ProjectOffer}", method = RequestMethod.POST)
-    public String processUpdateSubmit(@PathVariable String nif_Student,
-			   						  @PathVariable long id_ProjectOffer, 
+    @RequestMapping(value="/update/{nifStudent}&{idProjectOffer}", method = RequestMethod.POST)
+    public String processUpdateSubmit(@PathVariable String nifStudent,
+			   						  @PathVariable long idProjectOffer, 
 			   						  @ModelAttribute("preference") Preference preference, 
 			   						  BindingResult bindingResult) {
     	if (bindingResult.hasErrors()) 
