@@ -26,18 +26,17 @@ public class TutorDAO {
 
 	    public Tutor mapRow(ResultSet rs, int rowNum) throws SQLException { 
 	    	Tutor tutor = new Tutor();
-	    	tutor.setEmail(rs.getString("mail"));
+	    	tutor.setMail(rs.getString("mail"));
 	    	tutor.setName(rs.getString("name"));
 	    	tutor.setTelephone(rs.getString("telephone"));
 	    	tutor.setOffice(rs.getString("office"));
-	    	
-	    	
+	    
 	        return tutor;
 	    }
 	}
 	
 	public List<Tutor> getTutors(){
-		return this.jdbcTemplate.query("select * from Tutor;", new TutorMapper());
+		return this.jdbcTemplate.query("select * from tutor;", new TutorMapper());
 	}
 	
 	public Tutor getTutor(String mail){
@@ -47,14 +46,14 @@ public class TutorDAO {
 	
 	public void addTutor(Tutor tutor){
 		this.jdbcTemplate.update("insert into Tutor (mail, name, telephone,"
-				+ "office) values (?,?,?,?);", tutor.getEmail(), tutor.getName(),
+				+ "office) values (?,?,?,?);", tutor.getMail(), tutor.getName(),
 				tutor.getTelephone(), tutor.getOffice());
 	}
 	
 	public void updateTutor(Tutor tutor){
 		this.jdbcTemplate.update("update Tutor set name = ?, "
 				+ "telephone = ?, office = ? where mail = ?;",  tutor.getName(),
-				tutor.getTelephone(), tutor.getOffice(), tutor.getEmail());
+				tutor.getTelephone(), tutor.getOffice(), tutor.getMail());
 	}
 	
 	public void deleteTutor(String mail){

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Tutor {
 	private String name;
-	private String email;
+	private String mail;
 	private String office;
 	private String telephone;
 	
@@ -22,12 +22,12 @@ public class Tutor {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getMail() {
+		return mail;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
 	public String getOffice() {
@@ -56,7 +56,7 @@ public class Tutor {
 
 	@Override
 	public String toString() {
-		return "Tutor [name=" + name + ", email=" + email + ", office=" + office + ", telephone=" + telephone
+		return "Tutor [name=" + name + ", email=" + mail + ", office=" + office + ", telephone=" + telephone
 				+ ", assignmentes=" + assignmentes + "]";
 	}
 	

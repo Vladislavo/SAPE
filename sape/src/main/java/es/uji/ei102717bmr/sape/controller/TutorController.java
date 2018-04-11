@@ -21,6 +21,7 @@ public class TutorController {
     public void setTutorDao(TutorDAO tutorDao) {
         this.tutorDao = tutorDao;
     }
+    
     @RequestMapping("/list") 
     public String listTutors(Model model) {
         model.addAttribute("tutors", tutorDao.getTutors());
@@ -39,11 +40,13 @@ public class TutorController {
          tutorDao.addTutor(tutor);
          return "redirect:list.html"; 
      }
+    
     @RequestMapping(value="/update/{mail}", method = RequestMethod.GET) 
     public String editTutor(Model model, @PathVariable String mail) { 
         model.addAttribute("tutor", tutorDao.getTutor(mail));
         return "tutor/update"; 
     }
+    
     @RequestMapping(value="/update/{mail}", method = RequestMethod.POST) 
     public String processUpdateSubmit(@PathVariable String mail, 
                             @ModelAttribute("tutor") Tutor tutor, 
@@ -53,6 +56,7 @@ public class TutorController {
          tutorDao.updateTutor(tutor);
          return "redirect:../list"; 
       }
+    
     @RequestMapping(value="/delete/{mail}")
     public String processDelete(@PathVariable String mail) {
            tutorDao.deleteTutor(mail);;

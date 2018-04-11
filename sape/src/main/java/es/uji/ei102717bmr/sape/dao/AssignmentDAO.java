@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository;
 
 
 import es.uji.ei102717bmr.sape.model.Assignment;
-import es.uji.ei102717bmr.sape.model.Student;
-import es.uji.ei102717bmr.sape.model.ProjectOffer;
 
 @Repository
 public class AssignmentDAO {
@@ -57,13 +55,13 @@ public class AssignmentDAO {
 				"insert into Assignment (nif_Student, creationDate, id_ProjectOffer, mail_Tutor, state, approvalDate, rejectDate) "
 				+ " values (?,?,?,?,?,?,?);", 
 				assignment.getStudent().getNIF(), assignment.getCreationDate(), assignment.getProjectOffer().getId(),
-				assignment.getTutor().getEmail(), assignment.getState(), assignment.getApprovalDate(), assignment.getRejectDate());
+				assignment.getTutor().getMail(), assignment.getState(), assignment.getApprovalDate(), assignment.getRejectDate());
 				
 	}
 	public void updateAssignment(Assignment assignment) {
 		this.jdbcTemplate.update("update Assignment set (id_ProjectOffer = ?, mail_Tutor= ?, state = ?, approvalDate = ?"
 				+ ", rejectDate = ? where nif_Student = ? AND creationDate = ?);", 
-				assignment.getProjectOffer().getId(), assignment.getTutor().getEmail(), assignment.getState(), 
+				assignment.getProjectOffer().getId(), assignment.getTutor().getMail(), assignment.getState(), 
 				assignment.getApprovalDate(), assignment.getRejectDate(), assignment.getStudent().getNIF(), 
 				assignment.getCreationDate());
 	}			
