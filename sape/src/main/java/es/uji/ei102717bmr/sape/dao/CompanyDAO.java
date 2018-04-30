@@ -58,7 +58,7 @@ public class CompanyDAO {
 				company.getTelephone(), company.getVat(), company.getCif());
 	}
 	
-	public void deleteCompany(Company company){
-		this.jdbcTemplate.update("delete from Company where cif=?;", company.getCif());
+	public void deleteCompany(String cif){
+		this.jdbcTemplate.update("delete from Company where cif=?;", cif);
 	}
 }

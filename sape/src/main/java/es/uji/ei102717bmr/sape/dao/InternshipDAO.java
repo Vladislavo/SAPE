@@ -56,7 +56,7 @@ public class InternshipDAO {
 				internship.getDescription(), internship.getRenumeration(), internship.getId());
 	}
 	
-	public void deleteInternship(Internship internship){
-		this.jdbcTemplate.update("delete from Internship where id=?", internship.getId());
+	public void deleteInternship(long id){
+		this.jdbcTemplate.update("delete from Internship where id=?", id);
 	}
 }
