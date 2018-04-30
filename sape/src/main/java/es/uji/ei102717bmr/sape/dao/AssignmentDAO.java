@@ -45,7 +45,7 @@ public class AssignmentDAO {
 		return this.jdbcTemplate.query("select * from Assignment;" , new AssignmentMapper());
 	}
 	
-	public Assignment getAssignment(long nifStudent, Date creationDate) {
+	public Assignment getAssignment(String nifStudent, Date creationDate) {
 		return this.jdbcTemplate.queryForObject("select * from Assignment where nif_Student = ? AND creationDate = ?;",
 				new Object[]{nifStudent, creationDate}, new AssignmentMapper());
 		
@@ -65,9 +65,9 @@ public class AssignmentDAO {
 				assignment.getApprovalDate(), assignment.getRejectDate(), assignment.getStudent().getNIF(), 
 				assignment.getCreationDate());
 	}			
-	public void deleteAssignment(Assignment assignment) {
+	public void deleteAssignment(String nifStudent, Date creationDate) {
 		this.jdbcTemplate.update("delete from Assignment where nif_Student = ? AND creationDate = ?;", 
-				assignment.getStudent().getNIF(), assignment.getCreationDate());
+				nifStudent, creationDate);
 	}
 	
 
