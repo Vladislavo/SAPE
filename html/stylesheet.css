@@ -1,0 +1,52 @@
+.pcenter {
+	display: flex;
+  	flex-direction: row;
+  	justify-content: center;
+ 	align-items: center;
+ 	min-height: 70vh;
+}
+
+.bg {
+	background-image: url("img/bg1.jpg");
+	background-size: cover
+}
+
+h1 {
+	font-size: 33px
+}
+
+.index-text {
+	font-family: Sans-serif;
+	font-size: 20px
+}
+
+.signin-window {
+	background-color: #f7f7f7;
+	border: 1px solid grey;
+	border-radius: 10px;
+	padding: 40px
+}
+
+.green-button {
+	background-color: #ddffcc;
+}
+
+.center {
+	text-align: center;
+}
+
+.bttcenter {
+	display: flex;
+  	flex-direction: column;
+  	justify-content: center;
+ 	align-items: center;
+	padding: 10px
+}
+
+.set-width {
+	width: 825px
+}
+
+#tableOffers {
+    width: 100%;
+}

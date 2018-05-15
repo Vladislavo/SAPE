@@ -1,0 +1,65 @@
+<html>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"></link>
+<link href="css/index.css" th:href="@{/css/index.css}" rel="stylesheet"></link>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-header" href="/"><img alt="Brand" src="img/mlogo.png"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+          <li class="navbar-right"><a href="/signin">Sign in</a></li>
+          <form class="navbar-form navbar-right" style="margin-right:150px">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search SAPE">
+            </div>
+            <button type="submit" class="btn btn-default">Search</button>
+      	  </form>
+      </ul>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+
+<body class="bg">
+<div>
+  <div class="pcenter">
+    <div class="col-md-3">
+       <h1 class="signin-text center">Sign In</h1>
+       <form class="form-horizontal signin-window" action="#" th:action="@{/signin}"
+          th:object="${user}" method="post">
+		  <div class="form-group">
+		    <label class="form_control control-label">Email</label>
+		    <input type="email" class="form-control" placeholder="Email" th:field="*{email}">
+            <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+		  </div>
+		  <div class="form-group">
+		    <label class="form_control control-label">Password</label>
+		    <input type="password" class="form-control" placeholder="Password" th:field="*{password}">
+		    <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+		  </div>
+		  <div class="form-group">
+		    <div >
+		      <div class="checkbox">
+			<label>
+			  <input type="checkbox"> Remember me
+			</label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div>
+		      <button type="submit" class="btn btn-default green-button">Sign in</button>
+		    </div>
+		  </div>
+		</form>
+	</div>
+  </div>
+</div>
+
+<div class="footer navbar-fixed-bottom">
+ <p class="center"> SAPE is a non commercial trademark created for educational purposes. <br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved. &nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<html>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-header" href="/"><img alt="Brand" src="img/mlogo.png"></a>
+    		</div>
+    		<div class="collapse navbar-collapse">
+        		<ul class="nav navbar-nav navbar-right">
+	  			<li>
+	    				<form class="navbar-form navbar-right" style="margin-right:150px">
+              					<div class="form-group">
+                					<input type="text" class="form-control" placeholder="Search SAPE">
+              					</div>
+              					<button type="submit" class="btn btn-default">Search</button>
+      	    				</form>
+	  			</li>
+          			<li class="dropdown">
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+            				<ul class="dropdown-menu">
+              					<li><a href="profile">Your profile</a></li>
+              					<li><a href="/help">Help</a></li>
+              					<li><a href="/signout">Sign out</a></li>
+            				</ul>
+          			</li>
+      			</ul>
+    		</div>
+  	</div><!-- /.container-fluid -->
+</nav>
+
+<body>
+	<h1 class="center"> Manage Offers </h1>
+	<div class="bttcenter">
+  		<input type="text" id="inputOffers" onkeyup="filterOffers()" placeholder="Search offers...">
+	</div>
+
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<table id="tableOffers">
+			<tr>
+				<td>
+				<p>
+					<a class="btn btn-default btn-block" data-toggle="collapse" href="#offer1" role="button" aria-expanded="false" aria-controls="offer1">
+    					<strong> Company offer 1 </strong>
+					</a>
+   				</p>
+     				<div class="collapse" id="offer1">
+  					<div class="card card-body">
+					    	<b>State</b>: pending <br><br>
+					    	<b>Detailed description</b>: <br> asdsdadas <br><br>
+					    	<b>Goals:</b> <br> 1223456 <br><br>
+					    	<b>Technologies:</b> <br> High tech <br><br>
+					    	<b>Supervisor:</b> <br> hi there! <br><br>
+						<p>
+							<a class="btn btn-primary" data-toggle="collapse" href="#modify" role="button" aria-expanded="false" aria-controls="modify">
+							    Modify Offer
+							</a>
+							<a class="btn btn-primary" data-toggle="collapse" href="#reject" role="button" aria-expanded="true" aria-controls="reject">
+							    Reject Offer
+							</a>
+							<a class="btn btn-primary" data-toggle="collapse" href="#moreinfo" role="button" aria-expanded="true" aria-controls="moreinfo">
+							    Request more Info
+							</a>
+							<a class="btn btn-success" data-toggle="collapse" href="#approve" role="button" aria-expanded="false" aria-controls="approve">
+							    Approve Offer
+							</a>
+						</p>
+						<div class="collapse" id="modify">
+						  <div class="card card-body">
+						    <input type="text" class="set-width" placeholder="Your comment here..."> <br><br>
+						    <input type="submit" class="btn btn-primary" value="Apply">
+						  </div>
+						</div>
+
+						<div class="collapse" id="reject">
+						  <div class="card card-body">
+						    <input type="text" class="set-width" placeholder="Your comment here..."> <br><br>
+						    <a href="mailto:contactperson@company.com"><input type="submit" class="btn btn-primary" value="Reject"></a>
+						  </div>
+						</div>
+
+						<div class="collapse" id="moreinfo">
+						  <div class="card card-body">
+						    <input type="text" class="set-width" placeholder="Your comment here..."> <br><br>
+						    <a href="mailto:contactperson@company.com"><input type="submit" class="btn btn-primary" value="Request"></a>
+						  </div>
+						</div>
+
+						<div class="collapse" id="approve">
+						  <div class="card card-body">
+						    <input type="text" class="set-width" placeholder="Your comment here..."> <br><br>
+						    <input type="submit" class="btn btn-success" value="Approve">
+						  </div>
+						</div>
+					</div>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<p>
+				  	<a class="btn btn-default btn-block" data-toggle="collapse" href="#offer2" role="button" aria-expanded="true" aria-controls="offer2">
+				    	<strong> Offer 2 </strong>
+				  	</a>
+				</p>
+     				<div class="collapse" id="offer2">
+  					<div class="card card-body">
+						State: pending <br><br>
+						Detailed description: <br> asdsdadas
+						Goals: <br> 1223456 <br><br>
+						Technologies: <br> High tech <br><br>
+						Supervisor: <br> hi there! <br><br>
+  					</div>
+				</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="footer navbar-fixed-bottom">
+		<p class="center"> SAPE is a non commercial trademark created for educational perposes. <br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved. &nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a></p>
+	</div>
+	<script>
+		function filterOffers() {
+  			// Declare variables
+  			var input, filter, table, tr, td, i;
+  			input = document.getElementById("inputOffers");
+  			filter = input.value.toUpperCase();
+  			table = document.getElementById("tableOffers");
+  			tr = table.getElementsByTagName("tr");
+
+  			// Loop through all table rows, and hide those who don't match the search query
+  			for (i = 0; i < tr.length; i++) {
+    				td = tr[i].getElementsByTagName("td")[0];
+    				if (td) {
+      					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        					tr[i].style.display = "";
+      					} else {
+        					tr[i].style.display = "none";
+      					}
+    				}
+  			}
+		}
+	</script>
+</body>
+</html>
+
