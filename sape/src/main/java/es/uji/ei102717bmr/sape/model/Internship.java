@@ -2,6 +2,7 @@ package es.uji.ei102717bmr.sape.model;
 
 public class Internship {
 	private long id;
+	private String cif_Company;
 	private String description;
 	private int renumeration;
 	private String mailContactPerson;
@@ -12,6 +13,14 @@ public class Internship {
 
 	public Internship(){
 		super();
+	}
+	
+	public String getCif_Company() {
+		return cif_Company;
+	}
+	
+	public void setCif_Company(String cif_Company) {
+		this.cif_Company = cif_Company;
 	}
 
 	public String getDescription() {

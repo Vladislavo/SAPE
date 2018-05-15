@@ -26,11 +26,11 @@ public class InternshipDAO {
 
 	    public Internship mapRow(ResultSet rs, int rowNum) throws SQLException { 
 	    	Internship internship = new Internship();
+	    	internship.setId(rs.getInt("id"));
+	    	internship.setCif_Company(rs.getString("cif_Company"));
 	    	internship.setMailContactPerson(rs.getString("mailContactPerson"));
 	    	internship.setDescription(rs.getString("description"));
 	    	internship.setRenumeration(rs.getInt("renumeration"));
-	        //internship.setProjectOffer();
-	    	//internship.setCompany();
 	        return internship;
 	    }
 	}
@@ -45,14 +45,14 @@ public class InternshipDAO {
 	}
 	
 	public void addInternship(Internship internship){
-		this.jdbcTemplate.update("insert into Internship (id, mailContactPerson, description,"
-				+ "renumeration) values (?,?,?,?);", internship.getId(), internship.getMailContactPerson(),
+		this.jdbcTemplate.update("insert into Internship (id, cif_Company, mailContactPerson, description,"
+				+ "renumeration) values (?,?,?,?,?);", internship.getId(), internship.getCif_Company(), internship.getMailContactPerson(),
 				internship.getDescription(), internship.getRenumeration());
 	}
 	
 	public void updateInternship(Internship internship){
-		this.jdbcTemplate.update("update Internship set mailContactPerson=?, "
-				+ "description=?, renumeration=? where id=?;", internship.getMailContactPerson(),
+		this.jdbcTemplate.update("update Internship set cif_Company=?, mailContactPerson=?, "
+				+ "description=?, renumeration=? where id=?;", internship.getCif_Company(), internship.getMailContactPerson(),
 				internship.getDescription(), internship.getRenumeration(), internship.getId());
 	}
 	
