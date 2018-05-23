@@ -35,7 +35,7 @@ public class IndexSigninController {
         }
         // Check that the login is correct
         // by trying to load the user data
-        user = userDao.loadUserByUsername(user.getEmail(),user.getPassword());
+        user = userDao.loadUserByMail(user.getMail(),user.getPassword());
         if (user == null) {
             bindingResult.rejectValue("password", "badpw", "User does not exist or incorrect password was introduced");
             return "home";

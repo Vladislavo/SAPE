@@ -1,18 +1,37 @@
 package es.uji.ei102717bmr.sape.model;
 
 public class UserDetails {
-    String email;
+	String id;
+    String mail;
     String password; 
+    String role;
     
-    public String getEmail() {
-        return email; 
-    }
 
-    public void setEmail(String username) {
-        this.email = username; 
-    }
+	public String getRole() {
+		return role;
+	}
 
-    public String getPassword() {
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+    public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getPassword() {
        return password; 
     }
 

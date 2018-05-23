@@ -24,7 +24,7 @@ public class ProjectOfferController {
     @RequestMapping("/list") 
     public String listProjectOffers(Model model) {
         model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
-        return "projectOffer/list";
+        return "btc/offers/list";
     }
     @RequestMapping(value="/add") 
     public String addProjectOffer(Model model) {

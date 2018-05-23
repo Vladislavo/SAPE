@@ -29,10 +29,10 @@ public class AssignmentDAO {
 
 	    public Assignment mapRow(ResultSet rs, int rowNum) throws SQLException { 
 	        Assignment assignment = new Assignment();
-	        //assignment.setStudentNIF(rs.getString("nif_Student"));
+	        assignment.setNif_student(rs.getString("nif_Student"));
 	        assignment.setCreationDate(rs.getDate("creationDate"));
-	        //assignment.setProjectOfferId(rs.getString("id_ProjectOffer"));
-	        //assignment.setTutorMail(rs.getString("mail_tutor"));
+	        assignment.setId_projectoffer(rs.getLong("id_ProjectOffer"));
+	        assignment.setMail_tutor(rs.getString("mail_tutor"));
 	        assignment.setState(rs.getString("state"));
 	        assignment.setApprovalDate(rs.getDate("approvalDate"));
 	        assignment.setRejectDate(rs.getDate("rejectDate"));
@@ -54,17 +54,17 @@ public class AssignmentDAO {
 		this.jdbcTemplate.update(
 				"insert into Assignment (nif_Student, creationDate, id_ProjectOffer, mail_Tutor, state, approvalDate, rejectDate) "
 				+ " values (?,?,?,?,?,?,?);", 
-				assignment.getStudent().getNIF(), assignment.getCreationDate(), assignment.getProjectOffer().getId(),
-				assignment.getTutor().getMail(), assignment.getState(), assignment.getApprovalDate(), assignment.getRejectDate());
+				assignment.getNif_student(), assignment.getCreationDate(), assignment.getId_projectoffer(),
+				assignment.getMail_tutor(), assignment.getState(), assignment.getApprovalDate(), assignment.getRejectDate());
 				
 	}
 	public void updateAssignment(Assignment assignment) {
 		this.jdbcTemplate.update("update Assignment set (id_ProjectOffer = ?, mail_Tutor= ?, state = ?, approvalDate = ?"
 				+ ", rejectDate = ? where nif_Student = ? AND creationDate = ?);", 
-				assignment.getProjectOffer().getId(), assignment.getTutor().getMail(), assignment.getState(), 
-				assignment.getApprovalDate(), assignment.getRejectDate(), assignment.getStudent().getNIF(), 
+				assignment.getId_projectoffer(), assignment.getMail_tutor(), assignment.getState(), 
+				assignment.getApprovalDate(), assignment.getRejectDate(), assignment.getNif_student(), 
 				assignment.getCreationDate());
-	}			
+	}
 	public void deleteAssignment(String nifStudent, Date creationDate) {
 		this.jdbcTemplate.update("delete from Assignment where nif_Student = ? AND creationDate = ?;", 
 				nifStudent, creationDate);

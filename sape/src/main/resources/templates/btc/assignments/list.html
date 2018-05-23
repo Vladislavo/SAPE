@@ -1,0 +1,107 @@
+<html>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="css/btc.css" th:href="@{/css/btc.css}" rel="stylesheet"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-header" href="/"><img alt="Brand" src="../img/mlogo.png"></a>
+    		</div>
+    		<div class="collapse navbar-collapse">
+        		<ul class="nav navbar-nav navbar-right">
+	  			<li>
+	    				<form class="navbar-form navbar-right" style="margin-right:150px">
+              					<div class="form-group">
+                					<input type="text" class="form-control" placeholder="Search SAPE">
+              					</div>
+              					<button type="submit" class="btn btn-default">Search</button>
+      	    				</form>
+	  			</li>
+          			<li class="dropdown">
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+            				<ul class="dropdown-menu">
+              					<li><a href="/profile">Your profile</a></li>
+              					<li><a href="/help">Help</a></li>
+              					<li><a href="/signout">Sign out</a></li>
+            				</ul>
+          			</li>
+      			</ul>
+    		</div>
+  	</div><!-- /.container-fluid -->
+</nav>
+
+<body>
+	<div class="center">
+		<h1> Manage Offers </h1> <br>
+		<a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}"><button class="btn btn-primary"> Offers </button></a>
+		<a href="/assignment/list.html" th:href="@{/assignments/list.html}"><button class="btn btn-primary"> Assignments </button></a>
+	</div>
+
+	<div class="bttcenter">
+	<form action="#" id="assignments" th:action="@{/assignment/add}"
+                     		th:object="${assignment}" method="post">
+		<table>
+			<thead>
+				<tr>
+					<th> Project </th>
+					<th> Student </th>
+					<th> Tutor </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="assignment : ${assignments}">
+					<td th:text="${projectOffersMap['__${assignment.id_projectoffer}__']}"></td>
+					<td th:text="${studentsMap['__${assignment.nif_student}__']}"></td>
+					<td th:text="${tutorsMap['__${assignment.mail_tutor}__']}"></td>
+					<!-- edit assignment -->
+				</tr>
+				<tr>
+					<td>
+						<select th:field="*{id_projectoffer}" form="assignments">
+							<option value="0"> Select project </option>
+							<option th:each="projectOfferNotAssigned : ${projectOffersNotAssigned}" 
+								th:value="${projectOfferNotAssigned.id}" 
+								th:text="${projectOfferNotAssigned.title}"></option>
+						</select>
+					</td>
+					<td>
+						<select th:field="*{nif_student}" form="assignments">
+							<option value="0"> Select student </option>
+							<option th:each="studentNotAssigned : ${studentsNotAssigned}" 
+								th:value="${studentNotAssigned.nif}" 
+								th:text="${studentNotAssigned.name}"></option>
+						</select>
+					</td>
+					<td>
+						<select th:field="*{mail_tutor}" form="assignments">
+							<option value="0"> Select tutor </option>
+							<option th:each="tutor : ${tutors}" 
+								th:value="${tutor.mail}" 
+								th:text="${tutor.name}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td>
+						
+							<input class="btn btn-primary" type="submit" value="Assign">
+						
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+</body>
+	
+	
+	<div class="footer navbar-fixed-bottom">
+		<p class="center"> SAPE is a non commercial trademark created for educational purposes. <br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved. &nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a></p>
+	</div>
+</body>
+</html>

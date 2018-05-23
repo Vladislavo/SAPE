@@ -102,7 +102,11 @@ CREATE TABLE Assignment (
 --DROP TABLE Assigment, Preference, Tutor, Student, Review, ProjectOffer, Internship, Company;
 
 
-
+CREATE TABLE Users (
+	username VARCHAR(50),
+	password VARCHAR(200),
+	role VARCHAR(30)
+);
 
 
 

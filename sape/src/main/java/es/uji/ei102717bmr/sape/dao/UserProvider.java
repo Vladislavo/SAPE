@@ -1,41 +1,60 @@
 package es.uji.ei102717bmr.sape.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.jasypt.util.password.BasicPasswordEncryptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import es.uji.ei102717bmr.sape.model.Student;
 import es.uji.ei102717bmr.sape.model.UserDetails;
 
 @Repository
 public class UserProvider implements UserDAO {
-	final Map<String, UserDetails> knownUsers = new HashMap<String, UserDetails>();
+	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	public void setDataSource(DataSource dataSource) {
+	        this.jdbcTemplate = new JdbcTemplate(dataSource); 
+	}
 	
 	public UserProvider() {
-		BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-	    UserDetails userAlice = new UserDetails();
-	    userAlice.setEmail("alice@uji.es");
-	    userAlice.setPassword(passwordEncryptor.encryptPassword("alice"));
-	    knownUsers.put("alice", userAlice);
-	      
-	    UserDetails userBob = new UserDetails();
-	    userBob.setEmail("bob@uji.es");
-	    userBob.setPassword(passwordEncryptor.encryptPassword("bob"));
-	    knownUsers.put("bob", userBob);
+		super();
+	}
+	
+	private static final class UserMapper implements RowMapper<UserDetails> { 
+
+	    public UserDetails mapRow(ResultSet rs, int rowNum) throws SQLException { 
+	    	UserDetails user = new UserDetails();
+	    	user.setId(rs.getString("id"));
+	    	user.setMail(rs.getString("mail"));
+	    	user.setPassword(rs.getString("password"));
+	    	user.setRole(rs.getString("role"));
+	        
+	        return user;
+	    }
 	}
 	
 	@Override
-	public UserDetails loadUserByUsername(String username, String password) {
-		UserDetails user = knownUsers.get(username.trim());
+	public UserDetails loadUserByMail(String mail, String password) {
+		UserDetails user = (UserDetails) jdbcTemplate.query("select * from Users where email=?;"
+				, new Object[]{mail}, new UserMapper());
 	    if (user == null)
 	        return null; // User not found
 	    // Password
 	    BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
 	    if (passwordEncryptor.checkPassword(password, user.getPassword())) {
-	        // Field password should be deleted in a secure way before return 
-	       return user;
+	        // Field password should be deleted in a secure way before return
+	    	user.setPassword("");
+	    	return user;
 	    } else {
 	        return null; // bad login!
 	    }
@@ -43,7 +62,6 @@ public class UserProvider implements UserDAO {
 
 	@Override
 	public Collection<UserDetails> listAllUsers() {
-		return knownUsers.values();
+		return this.jdbcTemplate.query("select * from Users;", new UserMapper());
 	}
-
 }

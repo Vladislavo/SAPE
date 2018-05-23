@@ -51,7 +51,7 @@ public class PreferenceDAO {
 		this.jdbcTemplate.update(
 				"insert into Preference (nif_Student, id_ProjectOffer, order, state, lastChangeDate) "
 				+ " values (?,?,?,?,?);", 
-				preference.getStudent().getNIF(), preference.getProectOffer().getId(),
+				preference.getStudent().getNif(), preference.getProectOffer().getId(),
 				preference.getOrder(), preference.getState(), preference.getLastChangeDate());
 				
 	}
@@ -59,7 +59,7 @@ public class PreferenceDAO {
 		this.jdbcTemplate.update("updatePreference set (order = ?, state= ?, lastChangeDate = ?"
 				+ " where nif_Student = ? AND id_ProjectOffer = ?);", 
 				preference.getOrder(), preference.getState(), preference.getLastChangeDate(),
-				preference.getStudent().getNIF(), preference.getProectOffer().getId());
+				preference.getStudent().getNif(), preference.getProectOffer().getId());
 	}			
 	public void deletePreference(String nifStudent, long projectId) {
 		this.jdbcTemplate.update("delete from Preference where nif_Student = ? AND id_Project = ?;", 

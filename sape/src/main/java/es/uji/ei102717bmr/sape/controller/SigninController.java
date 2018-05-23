@@ -24,7 +24,7 @@ class UserValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
        UserDetails userDetails = (UserDetails) obj;
-       if(userDetails.getEmail().trim().equals("")){
+       if(userDetails.getMail().trim().equals("")){
     	   errors.rejectValue("email", "obligatory", "You must enter an email");
        }
        if(userDetails.getPassword().trim().equals("")){
@@ -55,7 +55,7 @@ public class SigninController {
         }
         // Check that the login is correct
         // by trying to load the user data
-        user = userDao.loadUserByUsername(user.getEmail(),user.getPassword());
+        user = userDao.loadUserByMail(user.getMail(),user.getPassword());
         if (user == null) {
             bindingResult.rejectValue("password", "badpw", "User does not exist or incorrect password was introduced");
             return "signin";

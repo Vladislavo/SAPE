@@ -1,0 +1,103 @@
+<html>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-header" href="/"><img alt="Brand" src="img/mlogo.png"></a>
+    		</div>
+    		<div class="collapse navbar-collapse">
+        		<ul class="nav navbar-nav navbar-right">
+	  			<li>
+	    				<form class="navbar-form navbar-right" style="margin-right:150px">
+              					<div class="form-group">
+                					<input type="text" class="form-control" placeholder="Search SAPE">
+              					</div>
+              					<button type="submit" class="btn btn-default">Search</button>
+      	    				</form>
+	  			</li>
+          			<li class="dropdown">
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+            				<ul class="dropdown-menu">
+              					<li><a href="profile">Your profile</a></li>
+              					<li><a href="/help">Help</a></li>
+              					<li><a href="/signout">Sign out</a></li>
+            				</ul>
+          			</li>
+      			</ul>
+    		</div>
+  	</div><!-- /.container-fluid -->
+</nav>
+
+<body>
+	<div class="center">
+		<h1> Manage Assignments </h1> <br>
+		<a href="dcc.html"><button class="btn btn-primary"> Offers </button></a>
+		<a href="assignments.html"><button class="btn btn-primary"> Assignments </button></a>
+	</div>
+	
+	<div class="bttcenter">
+		<table>
+				<tr>
+					<th> Project </th>
+					<th> Student </th>
+					<th> Tutor </th>
+				</tr>
+				<tr>
+					<td> Desrrollo de Sofware de Seguridad </td>
+					<td> David Gonzalez </td>
+					<td> Alejandro Garshch </td>
+				</tr>
+<tr>
+					<td> Swift app development </td>
+					<td> Pedro Marquez </td>
+					<td> Sergio Garcia </td>
+				</tr>
+				<tr>
+					<td>
+						<select name="projectid" form="assignments">
+							<option value="projectID1"> Cloud Computing Infrastructure Development </option>
+							<option value="projectID1"> Desarrollo muliplataforma movil </option>
+							<option value="projectID1"> Full stack web development </option>
+						</select>
+					</td>
+					<td>
+						<select name="studentid" form="assignments">
+							<option value="studentID1"> Alex </option>
+							<option value="studentID2"> Vlad </option>
+							<option value="studentID3"> Xavi </option>
+						</select>
+					</td>
+					<td>
+						<select name="tutortid" form="assignments">
+							<option value="tutorID1"> Jorje Badenas </option>
+							<option value="tutorID2"> Maria Angeles </option>
+							<option value="tutorID3"> Rafael Mayo </option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td>
+						<form id="assignments">
+			<input class="btn btn-primary" type="submit" value="Assign">
+		</form>
+					</td>
+				</tr>
+			</table>	
+
+		
+	</div>
+</body>
+
+	<div class="footer navbar-fixed-bottom">
+		<p class="center"> SAPE is a non commercial trademark created for educational perposes. <br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved. &nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a></p>
+	</div>
+</body>
+</html>
+

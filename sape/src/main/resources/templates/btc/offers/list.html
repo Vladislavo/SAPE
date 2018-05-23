@@ -1,6 +1,6 @@
 <html>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="stylesheet.css" rel="stylesheet"/>
+<link href="css/btc.css" th:href="@{/css/btc.css}" rel="stylesheet"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
@@ -8,7 +8,7 @@
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-header" href="/"><img alt="Brand" src="img/mlogo.png"></a>
+			<a class="navbar-header" href="/"><img alt="Brand" src="../img/mlogo.png"></a>
     		</div>
     		<div class="collapse navbar-collapse">
         		<ul class="nav navbar-nav navbar-right">
@@ -23,7 +23,7 @@
           			<li class="dropdown">
             				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
             				<ul class="dropdown-menu">
-              					<li><a href="profile">Your profile</a></li>
+              					<li><a href="/profile">Your profile</a></li>
               					<li><a href="/help">Help</a></li>
               					<li><a href="/signout">Sign out</a></li>
             				</ul>
@@ -36,8 +36,8 @@
 <body>
 	<div class="center">
 		<h1> Manage Offers </h1> <br>
-		<a href="dcc.html"><button class="btn btn-primary"> Offers </button></a>
-		<a href="assignments.html"><button class="btn btn-primary"> Assignments </button></a>
+		<a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}"><button class="btn btn-primary"> Offers </button></a>
+		<a href="/assignment/list.html" th:href="@{/assignment/list.html}"><button class="btn btn-primary"> Assignments </button></a>
 	</div>
 	<div class="bttcenter">
   		<input type="text" id="inputOffers" onkeyup="filterOffers()" placeholder="Search offers...">
@@ -45,57 +45,60 @@
 
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
-		<table id="tableOffers">
-			<tr>
+		<div th:if="${#lists.isEmpty(projectOffers)}">
+         	There are no project offers in the data base. 
+   		</div>
+		<table th:unless="${#lists.isEmpty(projectOffers)}" id="tableOffers">
+			<tr th:each="projectOffer: ${projectOffers}">
 				<td>
 				<p>
-					<a class="btn btn-default btn-block" data-toggle="collapse" href="#offer1" role="button" aria-expanded="false" aria-controls="offer1">
-    					<strong> Company offer 1 </strong>
+					<a class="btn btn-default btn-block" data-toggle="collapse" th:href="'#'+${projectOffer.id}" role="button" aria-expanded="false" aria-controls="offer1">
+    					<strong th:text="${projectOffer.title}"></strong>
 					</a>
    				</p>
-     				<div class="collapse" id="offer1">
+     				<div class="collapse" th:id="${projectOffer.id}">
   					<div class="card card-body">
-					    	<b>State</b>: pending <br><br>
-					    	<b>Detailed description</b>: <br> asdsdadas <br><br>
-					    	<b>Goals:</b> <br> 1223456 <br><br>
-					    	<b>Technologies:</b> <br> High tech <br><br>
-					    	<b>Supervisor:</b> <br> hi there! <br><br>
+					    	<b>State</b>: <p th:text="${projectOffer.state}"></p> <br><br>
+					    	<b>Detailed description</b>: <br> <p th:text="${projectOffer.tasks}"></p> <br><br>
+					    	<b>Goals:</b> <br> <p th:text="${projectOffer.objectives}"></p> <br><br>
+					    	<b>Itinerary:</b> <br> <p th:text="${projectOffer.itinerary}"></p> <br><br>
+					    	<b>Supervisor:</b> <br> <p th:text="${projectOffer.mailContactPerson_InternshipOffer}"></p> <br><br>
 						<p>
-							<a class="btn btn-primary" data-toggle="collapse" href="#modify" role="button" aria-expanded="false" aria-controls="modify">
+							<a class="btn btn-primary" data-toggle="collapse" th:href="'#modify'+${projectOffer.id}" role="button" aria-expanded="false" aria-controls="modify">
 							    Modify Offer
 							</a>
-							<a class="btn btn-primary" data-toggle="collapse" href="#reject" role="button" aria-expanded="true" aria-controls="reject">
+							<a class="btn btn-primary" data-toggle="collapse" th:href="'#reject'+${projectOffer.id}" role="button" aria-expanded="true" aria-controls="reject">
 							    Reject Offer
 							</a>
-							<a class="btn btn-primary" data-toggle="collapse" href="#moreinfo" role="button" aria-expanded="true" aria-controls="moreinfo">
+							<a class="btn btn-primary" data-toggle="collapse" th:href="'#moreinfo'+${projectOffer.id}" role="button" aria-expanded="true" aria-controls="moreinfo">
 							    Request more Info
 							</a>
-							<a class="btn btn-success" data-toggle="collapse" href="#approve" role="button" aria-expanded="false" aria-controls="approve">
+							<a class="btn btn-success" data-toggle="collapse" th:href="'#approve'+${projectOffer.id}" role="button" aria-expanded="false" aria-controls="approve">
 							    Approve Offer
 							</a>
 						</p>
-						<div class="collapse" id="modify">
+						<div class="collapse" th:id="'modify'+${projectOffer.id}">
 						  <div class="card card-body">
 						    <input type="text" class="set-width" placeholder="Your comment here..."> <br><br>
 						    <input type="submit" class="btn btn-primary" value="Apply">
 						  </div>
 						</div>
 
-						<div class="collapse" id="reject">
+						<div class="collapse" th:id="'reject'+${projectOffer.id}">
 						  <div class="card card-body">
 						    <input type="text" class="set-width" placeholder="Your comment here..."> <br><br>
 						    <a href="mailto:contactperson@company.com"><input type="submit" class="btn btn-primary" value="Reject"></a>
 						  </div>
 						</div>
 
-						<div class="collapse" id="moreinfo">
+						<div class="collapse" th:id="'moreinfo'+${projectOffer.id}">
 						  <div class="card card-body">
 						    <input type="text" class="set-width" placeholder="Your comment here..."> <br><br>
 						    <a href="mailto:contactperson@company.com"><input type="submit" class="btn btn-primary" value="Request"></a>
 						  </div>
 						</div>
 
-						<div class="collapse" id="approve">
+						<div class="collapse" th:id="'approve'+${projectOffer.id}">
 						  <div class="card card-body">
 						    <input type="text" class="set-width" placeholder="Your comment here..."> <br><br>
 						    <input type="submit" class="btn btn-success" value="Approve">
@@ -105,29 +108,11 @@
 				</div>
 				</td>
 			</tr>
-			<tr>
-				<td>
-				<p>
-				  	<a class="btn btn-default btn-block" data-toggle="collapse" href="#offer2" role="button" aria-expanded="true" aria-controls="offer2">
-				    	<strong> Offer 2 </strong>
-				  	</a>
-				</p>
-     				<div class="collapse" id="offer2">
-  					<div class="card card-body">
-						State: pending <br><br>
-						Detailed description: <br> asdsdadas
-						Goals: <br> 1223456 <br><br>
-						Technologies: <br> High tech <br><br>
-						Supervisor: <br> hi there! <br><br>
-  					</div>
-				</div>
-				</td>
-			</tr>
 		</table>
 	</div>
 
 	<div class="footer navbar-fixed-bottom">
-		<p class="center"> SAPE is a non commercial trademark created for educational perposes. <br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved. &nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a></p>
+		<p class="center"> SAPE is a non commercial trademark created for educational purposes. <br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved. &nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a></p>
 	</div>
 	<script>
 		function filterOffers() {
@@ -153,4 +138,3 @@
 	</script>
 </body>
 </html>
-

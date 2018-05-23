@@ -12,7 +12,6 @@ public class Student {
 	
 	private List<Assignment> assignments;
 	private List<Preference> preferences;
-	
 	public String getName() {
 		return name;
 	}
@@ -25,11 +24,11 @@ public class Student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getNIF() {
+	public String getNif() {
 		return nif;
 	}
-	public void setNIF(String nIF) {
-		nif = nIF;
+	public void setNif(String nif) {
+		this.nif = nif;
 	}
 	public String getTelephone() {
 		return telephone;
@@ -49,10 +48,21 @@ public class Student {
 	public void setItinerary(String itinerary) {
 		this.itinerary = itinerary;
 	}
-	
+	public List<Assignment> getAssignments() {
+		return assignments;
+	}
+	public void setAssignments(List<Assignment> assignments) {
+		this.assignments = assignments;
+	}
+	public List<Preference> getPreferences() {
+		return preferences;
+	}
+	public void setPreferences(List<Preference> preferences) {
+		this.preferences = preferences;
+	}
 	@Override
 	public String toString() {
-		return "Student [name=" + name + ", email=" + email + ", NIF=" + nif + ", telephone=" + telephone
+		return "Student [name=" + name + ", email=" + email + ", nif=" + nif + ", telephone=" + telephone
 				+ ", gradeCertificate=" + gradeCertificate + ", itinerary=" + itinerary + ", assignments=" + assignments
 				+ ", preferences=" + preferences + "]";
 	}

@@ -26,7 +26,7 @@ public class StudentDAO {
 
 	    public Student mapRow(ResultSet rs, int rowNum) throws SQLException { 
 	    	Student student = new Student();
-	    	student.setNIF(rs.getString("nif"));
+	    	student.setNif(rs.getString("nif"));
 	    	student.setEmail(rs.getString("mail"));
 	    	student.setName(rs.getString("name"));
 	    	student.setTelephone(rs.getString("telephone"));
@@ -48,14 +48,14 @@ public class StudentDAO {
 	
 	public void addStudent(Student student){
 		this.jdbcTemplate.update("insert into Student (nif, mail, name, telephone, gradeCertificate, itinerary) "
-				+ "values (?,?,?,?,?,?);", student.getNIF(), student.getEmail(),
+				+ "values (?,?,?,?,?,?);", student.getNif(), student.getEmail(),
 				student.getName(), student.getTelephone(), student.getGradeCertificate(), student.getGradeCertificate());
 	}
 	
 	public void updateStudent(Student student){
 		this.jdbcTemplate.update("update Student set mail = ?, name = ?"
 				+ "telephone = ?, gradeCertificate = ?, itinerary = ? where nif = ?;", student.getEmail(), student.getName(),
-				student.getTelephone(), student.getGradeCertificate(), student.getItinerary(), student.getNIF());
+				student.getTelephone(), student.getGradeCertificate(), student.getItinerary(), student.getNif());
 	}
 	
 	public void deleteStudent(String nif){

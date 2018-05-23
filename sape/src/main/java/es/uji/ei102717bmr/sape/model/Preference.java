@@ -47,7 +47,7 @@ public class Preference {
 	@Override
 	public String toString() {
 		return "Preference [order=" + preferenceOrder + ", state=" + state + ", lastChangeDate=" + lastChangeDate + ", studentNIF="
-				+ student.getNIF() + ", proectOfferID=" + projectOffer.getId() + "]";
+				+ student.getNif() + ", proectOfferID=" + projectOffer.getId() + "]";
 	}
 	
 	
