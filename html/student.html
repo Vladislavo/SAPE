@@ -1,0 +1,176 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link href="stylesheet.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-header" href="/"><img alt="Brand"
+				src="../images/mlogo.png"></a>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<form class="navbar-form navbar-right" style="margin-right: 150px">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search SAPE">
+						</div>
+						<button type="submit" class="btn btn-default">Search</button>
+					</form>
+				</li>
+				<li class="dropdown"><a href="#"
+					class="dropdown-toggle navbar-right" data-toggle="dropdown"
+					role="button" aria-haspopup="true" aria-expanded="false">Profile
+						<span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="profile">Your profile</a></li>
+						<li><a href="/help">Help</a></li>
+						<li><a href="/signout">Sign out</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</nav>
+
+<body>
+	<h1 class="center">Project Offers</h1>
+	<div class="bttcenter">
+		<input type="text" id="inputOffers" onkeyup="filterOffers()"
+			placeholder="Search offers...">
+	</div>
+
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+	<table th:unless="${#lists.isEmpty(projectOffers)}" class="table table-striped">
+     <tbody>
+       <tr th:each="offer: ${#lists.sort(projectOffers)}">
+         <td th:text="${offer.id}"></td> 
+         <td th:text="${offer.title}"></td>
+       </tr>
+     </tbody>
+   </table>
+		<table id="tableOffers">
+			<tr th:each="offer: ${projectOffers}">
+				<td>
+					<p>
+						<a class="btn btn-default btn-block" data-toggle="collapse"
+							th:href="'#' + ${offer.id}" role="button" aria-expanded="false"
+							aria-controls="offer1"> <strong> Company offer 1 </strong>
+						</a>
+					</p>
+					<div class="collapse" id="offer1">
+						<div class="card-body">
+							<b>State</b>: pending <br>
+							<br> <b>Detailed description</b>: <br> asdsdadas <br>
+							<br> <b>Goals:</b> <br> 1223456 <br>
+							<br> <b>Technologies:</b> <br> High tech <br>
+							<br> <b>Supervisor:</b> <br> hi there! <br>
+							<br> <b>Preference:</b> <br> <select
+								class="form-control text-center" id="sel1"
+								style="width: 70px; height: 35px;">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+							</select> </br> <a class="btn btn-primary" data-toggle="collapse"
+								href="#approve" role="button" aria-expanded="false"
+								aria-controls="approve"> Insert comment </a>
+							<div class="collapse" id="approve">
+								<div class="card card-body">
+									<input type="text" class="set-width"
+										placeholder="Your comment here..."> <br>
+									<br> <input type="submit" class="btn btn-success"
+										value="Comment">
+								</div>
+							</div>
+						</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p>
+						<a class="btn btn-default btn-block" data-toggle="collapse"
+							href="#offer2" role="button" aria-expanded="true"
+							aria-controls="offer2"> <strong> Offer 2 </strong>
+						</a>
+					</p>
+					<div class="collapse" id="offer2">
+						<div class="card card-body">
+							<b>State</b>: pending <br>
+							<br> <b>Detailed description</b>: <br> asdsdadas <br>
+							<br> <b>Goals:</b> <br> 1223456 <br>
+							<br> <b>Technologies:</b> <br> High tech <br>
+							<br> <b>Supervisor:</b> <br> hi there! <br>
+							<br> <b>Preference:</b> <br> <select
+								class="form-control text-center" id="sel1"
+								style="width: 70px; height: 35px;">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+							</select> </br> <a class="btn btn-primary" data-toggle="collapse"
+								href="#approve" role="button" aria-expanded="false"
+								aria-controls="approve"> Insert comment </a>
+							<div class="collapse" id="approve">
+								<div class="card card-body">
+									<input type="text" class="set-width"
+										placeholder="Your comment here..."> <br>
+									<br> <input type="submit" class="btn btn-success"
+										value="Comment">
+								</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="footer navbar-fixed-bottom">
+		<p class="center">
+			SAPE is a non commercial trademark created for educational purposes.
+			<br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved.
+			&nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a>
+		</p>
+	</div>
+	<script>
+		function filterOffers() {
+			// Declare variables
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("inputOffers");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("tableOffers");
+			tr = table.getElementsByTagName("tr");
+			// Loop through all table rows, and hide those who don't match the search query
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+	<script>
+		function concatenate(thymeleaf) {
+			var hashtag = "#";
+			return hashtag.concat(thymeleaf);
+			
+		}
+	</script>
+</body>
+</html>
