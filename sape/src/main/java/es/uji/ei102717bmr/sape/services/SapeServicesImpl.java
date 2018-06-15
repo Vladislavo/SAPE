@@ -201,8 +201,7 @@ public class SapeServicesImpl implements SapeServices {
 		
 		assignments.stream()
 			.forEach(a -> matches.put(a.getNif_student(), offersToTitles.get(a.getId_projectoffer())));
-		System.out.println(matches);
-		
+
 		return matches;
 	}
 	

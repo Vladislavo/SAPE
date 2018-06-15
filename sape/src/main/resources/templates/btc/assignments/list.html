@@ -37,7 +37,10 @@
 	<div class="center">
 		<h1> Manage Offers </h1> <br>
 		<a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}"><button class="btn btn-primary"> Offers </button></a>
-		<a href="/assignment/list.html" th:href="@{/assignments/list.html}"><button class="btn btn-primary"> Assignments </button></a>
+		<a href="/assignment/list.html" th:href="@{/assignment/list.html}"><button class="btn btn-primary"> Assignments </button></a>
+	</div>
+	<div class="bttcenter">
+  		<input type="text" id="inputOffers" onkeyup="filterOffers()" placeholder="Search offers...">
 	</div>
 
 	<div class="bttcenter">
