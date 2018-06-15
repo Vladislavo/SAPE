@@ -77,6 +77,9 @@
 							<a class="btn btn-primary" data-toggle="collapse" th:href="'#moreinfo'+${projectOffer.id}" role="button" aria-expanded="true" aria-controls="moreinfo">
 							    Request More Information
 							</a>
+							<a class="btn btn-success" data-toggle="collapse" th:href="'#approve'+${projectOffer.id}" role="button" aria-expanded="false" aria-controls="approve">
+							    Approve Offer
+							</a>
 						</p>
 
 						<div class="collapse" th:id="'reject'+${projectOffer.id}">
@@ -90,6 +93,12 @@
 						  <div class="card card-body">
 						    <input type="text" class="set-width" name="moreinfo" value="Dear friend, we have considered your offer and found a lack of information. Please modify next fields: "> <br><br>
 						    <a th:href="'mailto:'+${internshipIdToMailContactPerson['__${projectOffer.id_internship}__']}"><input type="submit" class="btn btn-primary" value="Request"></a>
+						  </div>
+						</div>
+						<div class="collapse" th:id="'approve'+${projectOffer.id}">
+						  <div class="card card-body">
+						    <input type="text" class="set-width" name="approve" value="Your offer has been approved and made public."> <br><br>
+						    <input type="submit" class="btn btn-success" value="Approve">
 						  </div>
 						</div>
 					</div>

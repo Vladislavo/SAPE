@@ -78,7 +78,7 @@ private SapeServices sapeServices;
         
         model.addAttribute("studentNifToProjectAssigned", sapeServices.studentNifToProjectAssigned());
         
-        return "btc/assignments/list1";
+        return "btc/assignments/list";
     }
     
     @RequestMapping(value="/add") 
@@ -94,12 +94,12 @@ private SapeServices sapeServices;
     		@ModelAttribute("nif_student") String nif_student,
     		BindingResult bindingResult) {  
     	
-    	if (bindingResult.hasErrors()) return "btc/assignments/list1";
+    	if (bindingResult.hasErrors()) return "btc/assignments/list";
     		assignment.setMail_tutor(mail_tutor);
     		assignment.setId_projectoffer(Long.valueOf(id_projectoffer));
     		assignment.setNif_student(nif_student);
     		assignmentDAO.addAssignment(assignment);
-    	return "btc/assignments/list1"; 
+    	return "btc/assignments/list"; 
     }
     
     @RequestMapping(value="/update/{nif_student}&{id_projectoffer}", method = RequestMethod.GET) 
