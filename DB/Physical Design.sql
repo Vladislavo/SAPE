@@ -1,19 +1,19 @@
 CREATE TABLE Company (
   cif VARCHAR(15),
-	mail VARCHAR(50),
-	name VARCHAR(50),
-	address VARCHAR(100),
-	telephone VARCHAR(15),
-	vat INT,
-	CONSTRAINT Company_pk PRIMARY KEY (cif)
+  mail VARCHAR(50),
+  name VARCHAR(50),
+  telephone VARCHAR(15),
+  address VARCHAR(500),
+  vat INT,
+  CONSTRAINT Company_pk PRIMARY KEY (cif)
 );
 
 CREATE TABLE Internship (
   id NUMERIC(10),
-  cif_Company VARCHAR(15),
-	description VARCHAR(100),
+  cif_company VA  RCHAR(15),
   remuneration VARCHAR(10),
-	mailContactPerson VARCHAR(50),
+  mailContactPerson VARCHAR(50),
+  description VARCHAR(2000),
   CONSTRAINT Internship_pk PRIMARY KEY (id),
   CONSTRAINT Company_Internship_fk FOREIGN KEY (cif_company)
   REFERENCES Company (cif) ON UPDATE CASCADE ON DELETE CASCADE
@@ -22,9 +22,9 @@ CREATE TABLE Internship (
 CREATE TABLE ProjectOffer (
   id NUMERIC(10),
   id_Internship NUMERIC(10),
-	title VARCHAR(50),
-	itinerary VARCHAR(50),
-	startDate DATE,
+  title VARCHAR(50),
+  itinerary VARCHAR(50),
+  startDate DATE,
   lastChangeDate DATE,
   tasks VARCHAR(50),
   objectives VARCHAR(50),
@@ -37,7 +37,7 @@ CREATE TABLE ProjectOffer (
 CREATE TABLE Review (
   id_ProjectOffer NUMERIC(10),
   creationDate DATE,
-  description VARCHAR(500),
+  description VARCHAR(2000),
   CONSTRAINT Review_pk PRIMARY KEY (id_ProjectOffer, creationDate),
   CONSTRAINT ProjectOffer_InternshipOffer_fk FOREIGN KEY (id_ProjectOffer)
   REFERENCES ProjectOffer (id) ON UPDATE CASCADE ON DELETE CASCADE
@@ -51,8 +51,9 @@ CREATE TABLE Review (
 
 
 
+
 CREATE TABLE Student (
-  nif VARCHAR(15),
+    nif VARCHAR(15),
 	mail VARCHAR(50),
 	name VARCHAR(50),
 	telephone VARCHAR(15),
@@ -62,7 +63,7 @@ CREATE TABLE Student (
 );
 
 CREATE TABLE Tutor (
-	mail VARCHAR(50),
+  mail VARCHAR(50),
   name VARCHAR(50),
   telephone VARCHAR(15),
   office VARCHAR(15),
@@ -70,11 +71,10 @@ CREATE TABLE Tutor (
 );
 
 CREATE TABLE Preference (
-	nif_Student VARCHAR(15),
+  nif_Student VARCHAR(15),
   id_ProjectOffer NUMERIC(10),
   lastchangeDate DATE,
   preference_order NUMERIC(2),
-  state VARCHAR (10),
   CONSTRAINT Preference_pk PRIMARY KEY (nif_Student, id_ProjectOffer),
   CONSTRAINT Student_Preference_fk FOREIGN KEY (nif_Student)
   REFERENCES Student (nif) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -83,7 +83,7 @@ CREATE TABLE Preference (
 );
 
 CREATE TABLE Assignment (
-	nif_Student VARCHAR(15),
+  nif_Student VARCHAR(15),
   creationDate DATE,
   id_ProjectOffer NUMERIC(10),
   mail_Tutor VARCHAR(50),
@@ -99,24 +99,20 @@ CREATE TABLE Assignment (
   REFERENCES Tutor (mail) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+
+
 --DROP TABLE Assigment, Preference, Tutor, Student, Review, ProjectOffer, Internship, Company;
 
 
-CREATE TABLE Users (
-	username VARCHAR(50),
-	password VARCHAR(200),
-	role VARCHAR(30)
+
+
+CREATE TABLE users (
+  id VARCHAR(15) not null,
+  mail VARCHAR(50) not null,
+  password VARCHAR(200) not null,
+  role VARCHAR(50) not null,
+  CONSTRAINT users_pk PRIMARY KEY (id)
 );
 
 
-
-
-
-
-
-
-
-
-
-
-
+--DROP TABLE Users;
