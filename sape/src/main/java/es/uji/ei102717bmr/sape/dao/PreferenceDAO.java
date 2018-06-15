@@ -28,11 +28,10 @@ public class PreferenceDAO {
 
 	    public Preference mapRow(ResultSet rs, int rowNum) throws SQLException { 
 	        Preference preference= new Preference();
-	        preference.setOrder(rs.getInt("order"));
-	        preference.setState(rs.getString("state"));
+	        preference.setOrder(rs.getInt("preference_order"));
 	        preference.setLastChangeDate(rs.getDate("lastChangeDate"));
-	        //preference.setStudentNIF();
-	        //preference.setProjectId();
+	        preference.setStudent_nif(rs.getString("nif_Student"));
+	        preference.setProjectOffer_id(rs.getLong("id_ProjectOffer"));
 	        
 	        return preference;
 	    }
@@ -47,19 +46,24 @@ public class PreferenceDAO {
 				new Object[]{nifStudent, idProjectOffer}, new PreferenceDAOMapper());
 		
 	}
+	public List<Preference> getPreference(String nifStudent) {
+		return this.jdbcTemplate.query("select * from Preference where nif_Student = ? order by preference_order asc;",
+				new Object[]{nifStudent}, new PreferenceDAOMapper());
+		
+	}
 	public void addPreference(Preference preference){
 		this.jdbcTemplate.update(
-				"insert into Preference (nif_Student, id_ProjectOffer, order, state, lastChangeDate) "
-				+ " values (?,?,?,?,?);", 
-				preference.getStudent().getNif(), preference.getProectOffer().getId(),
-				preference.getOrder(), preference.getState(), preference.getLastChangeDate());
+				"insert into Preference (nif_Student, id_ProjectOffer, order, lastChangeDate) "
+				+ " values (?,?,?,?);", 
+				preference.getStudent_nif(), preference.getProjectOffer_id(),
+				preference.getOrder(), preference.getLastChangeDate());
 				
 	}
 	public void updatePreference(Preference preference) {
-		this.jdbcTemplate.update("updatePreference set (order = ?, state= ?, lastChangeDate = ?"
+		this.jdbcTemplate.update("updatePreference set (order = ?, lastChangeDate = ?"
 				+ " where nif_Student = ? AND id_ProjectOffer = ?);", 
-				preference.getOrder(), preference.getState(), preference.getLastChangeDate(),
-				preference.getStudent().getNif(), preference.getProectOffer().getId());
+				preference.getOrder(), preference.getLastChangeDate(),
+				preference.getStudent_nif(), preference.getProjectOffer_id());
 	}			
 	public void deletePreference(String nifStudent, long projectId) {
 		this.jdbcTemplate.update("delete from Preference where nif_Student = ? AND id_Project = ?;", 

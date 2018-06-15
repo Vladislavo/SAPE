@@ -26,11 +26,11 @@ public class InternshipDAO {
 
 	    public Internship mapRow(ResultSet rs, int rowNum) throws SQLException { 
 	    	Internship internship = new Internship();
+	    	internship.setId(rs.getLong("id"));
 	    	internship.setMailContactPerson(rs.getString("mailContactPerson"));
 	    	internship.setDescription(rs.getString("description"));
-	    	internship.setRenumeration(rs.getInt("renumeration"));
-	        //internship.setProjectOffer();
-	    	//internship.setCompany();
+	    	internship.setRenumeration(rs.getString("remuneration"));
+	        internship.setCif_company(rs.getString("cif_company"));;
 	        return internship;
 	    }
 	}

@@ -3,11 +3,10 @@ package es.uji.ei102717bmr.sape.model;
 public class Internship {
 	private long id;
 	private String description;
-	private int renumeration;
+	private String renumeration;
 	private String mailContactPerson;
 	
-	private ProjectOffer projectOffer;
-	private Company company;
+	private String cif_company;
 	
 
 	public Internship(){
@@ -22,11 +21,11 @@ public class Internship {
 		this.description = description;
 	}
 
-	public int getRenumeration() {
+	public String getRenumeration() {
 		return renumeration;
 	}
 
-	public void setRenumeration(int renumeration) {
+	public void setRenumeration(String renumeration) {
 		this.renumeration = renumeration;
 	}
 
@@ -37,22 +36,6 @@ public class Internship {
 	public void setMailContactPerson(String mailContactPerson) {
 		this.mailContactPerson = mailContactPerson;
 	}
-
-	public ProjectOffer getProjectOffer() {
-		return projectOffer;
-	}
-
-	public void setProjectOffer(ProjectOffer projectOffer) {
-		this.projectOffer = projectOffer;
-	}
-	
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
 	
 	public long getId() {
 		return id;
@@ -61,12 +44,20 @@ public class Internship {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	@Override
-	public String toString(){
-		return "InternshipOffer [cif_company="+company.getCif()+", description="+description+", "
-				+ "renumeration="+renumeration+", mailContactPerson="+mailContactPerson+", "
-						+ "projectOfferID="+projectOffer.getId();
+
+
+	public String getCif_company() {
+		return cif_company;
 	}
-	
+
+	public void setCif_company(String cif_company) {
+		this.cif_company = cif_company;
+	}
+
+	@Override
+	public String toString() {
+		return "Internship [id=" + id + ", description=" + description + ", renumeration=" + renumeration
+				+ ", mailContactPerson=" + mailContactPerson + ", cif_company="
+				+ cif_company + "]";
+	}
 }

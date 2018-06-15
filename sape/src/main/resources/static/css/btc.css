@@ -48,7 +48,12 @@ h1 {
 }
 
 #tableOffers {
-    	width: 100%;
+   	width: 100%;
+}
+
+table#tableReviews {
+  	margin: 0px auto;
+  	border-spacing: 5px;
 }
 
 #th {

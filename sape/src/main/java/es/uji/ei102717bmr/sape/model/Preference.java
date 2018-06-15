@@ -4,11 +4,10 @@ import java.util.Date;
 
 public class Preference {
 	private int preferenceOrder;
-	private String state;
 	private Date lastChangeDate;
 	
-	private Student student;
-	private ProjectOffer projectOffer;
+	private String student_nif;
+	private long projectOffer_id;
 	
 	public Preference(){
 		super();
@@ -20,35 +19,41 @@ public class Preference {
 	public void setOrder(int order) {
 		this.preferenceOrder = order;
 	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
 	public Date getLastChangeDate() {
 		return lastChangeDate;
 	}
 	public void setLastChangeDate(Date lastChangeDate) {
 		this.lastChangeDate = lastChangeDate;
 	}
-	public Student getStudent() {
-		return student;
+
+	public int getPreferenceOrder() {
+		return preferenceOrder;
 	}
-	public void setStudent(Student student) {
-		this.student = student;
+
+	public void setPreferenceOrder(int preferenceOrder) {
+		this.preferenceOrder = preferenceOrder;
 	}
-	public ProjectOffer getProectOffer() {
-		return projectOffer;
+
+	public String getStudent_nif() {
+		return student_nif;
 	}
-	public void setProectOffer(ProjectOffer proectOffer) {
-		this.projectOffer = proectOffer;
+
+	public void setStudent_nif(String student_nif) {
+		this.student_nif = student_nif;
 	}
+
+	public long getProjectOffer_id() {
+		return projectOffer_id;
+	}
+
+	public void setProjectOffer_id(long projectOffer_id) {
+		this.projectOffer_id = projectOffer_id;
+	}
+
 	@Override
 	public String toString() {
-		return "Preference [order=" + preferenceOrder + ", state=" + state + ", lastChangeDate=" + lastChangeDate + ", studentNIF="
-				+ student.getNif() + ", proectOfferID=" + projectOffer.getId() + "]";
+		return "Preference [preferenceOrder=" + preferenceOrder + ", lastChangeDate=" + lastChangeDate
+				+ ", student_nif=" + student_nif + ", projectOffer_id=" + projectOffer_id + "]";
 	}
-	
 	
 }

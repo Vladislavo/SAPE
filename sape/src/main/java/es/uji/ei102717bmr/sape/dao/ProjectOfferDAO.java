@@ -2,6 +2,7 @@ package es.uji.ei102717bmr.sape.dao;
 
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -32,7 +33,7 @@ public class ProjectOfferDAO {
 	        projectOffer.setItinerary(rs.getString("itinerary"));
 	        projectOffer.setTasks(rs.getString("tasks"));
 	        projectOffer.setObjectives(rs.getString("objectives"));
-	        projectOffer.setState(rs.getString("state"));
+	        projectOffer.setState(rs.getLong("state"));
 	        projectOffer.setStartDate(rs.getDate("startDate"));
 	        projectOffer.setLastChangeDate(rs.getDate("lastChangeDate"));
 	        projectOffer.setId_internship(rs.getLong("id_internship"));
@@ -59,12 +60,13 @@ public class ProjectOfferDAO {
 				projectOffer.getLastChangeDate());
 	}
 	public void updateProjectOffer(ProjectOffer projectOffer) {
-		this.jdbcTemplate.update("update ProjectOffer set (title = ?, tasks = ?,itinerary = ?, objectives = ?,"
-				+ " state = ?, startDate = ?, lastChangeDate = ? where id = ?);", 
-				projectOffer.getTitle(), projectOffer.getItinerary(),
-				projectOffer.getTasks(), projectOffer.getObjectives(),
+		this.jdbcTemplate.update("update ProjectOffer set id_Internship = ?, title = ?, tasks = ?,itinerary = ?, objectives = ?,"
+				+ " state = ?, startDate = ?, lastChangeDate = ? where id = ?;",
+				projectOffer.getId_internship(),
+				projectOffer.getTitle(), projectOffer.getTasks(),
+				projectOffer.getItinerary(), projectOffer.getObjectives(),
 				projectOffer.getState(), projectOffer.getStartDate(),
-				projectOffer.getLastChangeDate(), projectOffer.getId());
+				new Date(), projectOffer.getId());
 	}			
 	public void deleteProjectOffer(long id) {
 		this.jdbcTemplate.update("delete from ProjectOffer where id = ?;", id);

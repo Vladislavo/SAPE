@@ -33,7 +33,7 @@ public class AssignmentDAO {
 	        assignment.setCreationDate(rs.getDate("creationDate"));
 	        assignment.setId_projectoffer(rs.getLong("id_ProjectOffer"));
 	        assignment.setMail_tutor(rs.getString("mail_tutor"));
-	        assignment.setState(rs.getString("state"));
+	        assignment.setState(rs.getBoolean("state"));
 	        assignment.setApprovalDate(rs.getDate("approvalDate"));
 	        assignment.setRejectDate(rs.getDate("rejectDate"));
 
@@ -45,29 +45,38 @@ public class AssignmentDAO {
 		return this.jdbcTemplate.query("select * from Assignment;" , new AssignmentMapper());
 	}
 	
-	public Assignment getAssignment(String nifStudent, Date creationDate) {
-		return this.jdbcTemplate.queryForObject("select * from Assignment where nif_Student = ? AND creationDate = ?;",
-				new Object[]{nifStudent, creationDate}, new AssignmentMapper());
+	public Assignment getAssignment(String nif_student, Long id_projectoffer) {
+		return this.jdbcTemplate.queryForObject("select * from Assignment where nif_Student = ? AND id_projectoffer = ?;",
+				new Object[]{nif_student, id_projectoffer}, new AssignmentMapper());
 		
+	}
+	public Assignment getAssignment(String nif_student) {
+		try {
+			return this.jdbcTemplate.queryForObject("select * from Assignment where nif_Student = ?;",
+					new Object[]{nif_student}, new AssignmentMapper());
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	public List<Assignment> getAssignments(String nif_student){
+		return this.jdbcTemplate.query("select * from Assignment where nif_Student = ?;", new Object[]{nif_student}, new AssignmentMapper());
 	}
 	public void addAssignment(Assignment assignment){
 		this.jdbcTemplate.update(
 				"insert into Assignment (nif_Student, creationDate, id_ProjectOffer, mail_Tutor, state, approvalDate, rejectDate) "
 				+ " values (?,?,?,?,?,?,?);", 
-				assignment.getNif_student(), assignment.getCreationDate(), assignment.getId_projectoffer(),
+				assignment.getNif_student(), new Date(), assignment.getId_projectoffer(),
 				assignment.getMail_tutor(), assignment.getState(), assignment.getApprovalDate(), assignment.getRejectDate());
 				
 	}
 	public void updateAssignment(Assignment assignment) {
-		this.jdbcTemplate.update("update Assignment set (id_ProjectOffer = ?, mail_Tutor= ?, state = ?, approvalDate = ?"
-				+ ", rejectDate = ? where nif_Student = ? AND creationDate = ?);", 
-				assignment.getId_projectoffer(), assignment.getMail_tutor(), assignment.getState(), 
-				assignment.getApprovalDate(), assignment.getRejectDate(), assignment.getNif_student(), 
-				assignment.getCreationDate());
+		this.jdbcTemplate.update("update Assignment set id_projectoffer = ?, nif_student = ?, mail_tutor = ? where nif_student = ? AND id_projectoffer = ?;", 
+				assignment.getId_projectoffer(), assignment.getNif_student(), assignment.getMail_tutor(), assignment.getNif_student(), 
+				assignment.getId_projectoffer());
 	}
-	public void deleteAssignment(String nifStudent, Date creationDate) {
-		this.jdbcTemplate.update("delete from Assignment where nif_Student = ? AND creationDate = ?;", 
-				nifStudent, creationDate);
+	public void deleteAssignment(String nifStudent, Long id_projectoffer) {
+		this.jdbcTemplate.update("delete from Assignment where nif_student = ? AND id_projectoffer = ?;", 
+				nifStudent, id_projectoffer);
 	}
 	
 

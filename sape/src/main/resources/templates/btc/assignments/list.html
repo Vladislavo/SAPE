@@ -56,7 +56,12 @@
 					<td th:text="${projectOffersMap['__${assignment.id_projectoffer}__']}"></td>
 					<td th:text="${studentsMap['__${assignment.nif_student}__']}"></td>
 					<td th:text="${tutorsMap['__${assignment.mail_tutor}__']}"></td>
-					<!-- edit assignment -->
+					<td>
+						<a th:href="@{/assignment/update/__${assignment.nif_student}__&__${assignment.id_projectoffer}__}"><button type="button" class="btn btn-default"> Edit </button></a>
+					</td>
+					<td>
+						<a th:href="@{/assignment/delete/__${assignment.nif_student}__&__${assignment.id_projectoffer}__}"><button type="button" class="btn btn-default"> Delete </button></a>
+					</td>
 				</tr>
 				<tr>
 					<td>
