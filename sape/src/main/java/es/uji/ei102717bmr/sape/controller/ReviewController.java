@@ -26,14 +26,7 @@ public class ReviewController {
     @RequestMapping("/list") 
     public String listReviews(Model model) {
         model.addAttribute("reviews", reviewDao.getReviews());
-        
         return "review/list";
-    }
-    
-    @RequestMapping(value="/list/{projectOffer_id}")
-    public String listReviews(Model model, @PathVariable long projectOffer_id) {
-    	model.addAttribute("reviews", reviewDao.getReviews(projectOffer_id));
-    	return "btc/offers/listReviews";
     }
     @RequestMapping(value="/add") 
     public String addReview(Model model) {
@@ -47,8 +40,7 @@ public class ReviewController {
                 return "review/add";
          reviewDao.addReview(review);
          return "redirect:list.html"; 
-    }
-    
+     }
     @RequestMapping(value="/update/{idProjectOffer}/{creationDate}", method = RequestMethod.GET) 
     public String editReview(Model model, @PathVariable long idProjectOffer, @PathVariable Date creationDate) { 
         model.addAttribute("review", reviewDao.getReview(idProjectOffer, creationDate));
@@ -66,7 +58,7 @@ public class ReviewController {
     @RequestMapping(value="/delete/{idProjectOffer}/{creationDate}")
     public String processDelete(@PathVariable long idProjectOffer, @PathVariable Date creationDate) {
            reviewDao.deleteReview(idProjectOffer, creationDate);
-           return "redirect:../list";
+           return "redirect:../list"; 
     }
 
 

@@ -107,14 +107,11 @@ public class SapeServicesImpl implements SapeServices {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public List<Internship> getInternships() {
 		return internshipDao.getInternships();
 	}
 	
 	@Override
-=======
->>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 	public Map<String, String> projectIdCompanyNameMatches() {
 		Map<String, String> projectCompanyMatch = new HashMap<>();
 		List<Internship> internships = internshipDao.getInternships();
@@ -130,11 +127,7 @@ public class SapeServicesImpl implements SapeServices {
 		// cif_company -> projectOffer
 		Map<String, ProjectOffer> internships_map = new HashMap<>();
 		internships.stream()
-<<<<<<< HEAD
 			.forEach(i -> internships_map.put(i.getCif_Company(), projectOffers_map.get(i.getId())));
-=======
-			.forEach(i -> internships_map.put(i.getCif_company(), projectOffers_map.get(i.getId())));
->>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 		
 		// cif_company -> company
 		Map<String, Company> companies_map = new HashMap<>();
@@ -216,9 +209,4 @@ public class SapeServicesImpl implements SapeServices {
 
 		return matches;
 	}
-<<<<<<< HEAD
-=======
-	
-	
->>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 }
