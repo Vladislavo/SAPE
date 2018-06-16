@@ -46,7 +46,7 @@ public class PreferenceController {
 		String studentRole = "Student";
 		if (user.getRole().trim().equals(studentRole)) {
 	        model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
-	        System.out.println(preferenceDAO.getPreference(user.getId().trim()));
+
 	        model.addAttribute("projectOffers", projectOfferDAO.getProjectOffers());
 	        return "preference/list";
 		}
@@ -67,10 +67,9 @@ public class PreferenceController {
          if (bindingResult.hasErrors()) 
                 return "preference/add";
          UserDetails user = (UserDetails) session.getAttribute("user");
-         System.out.println(user.getId().trim());
-         System.out.println(preference.toString());
+         preference.setStudent_nif(user.getId().trim());
          preference.setLastChangeDate(new Date());
-         preferenceDAO.deletePreference(user.getId().trim(), preference.getPreferenceOrder());
+         preferenceDAO.deletePreference(preference.getStudent_nif(), preference.getPreferenceOrder());
          preferenceDAO.deletePreferenceProject(user.getId().trim(), preference.getProjectOffer_id());
          preferenceDAO.addPreference(preference);
          return "redirect:../preference/list";
