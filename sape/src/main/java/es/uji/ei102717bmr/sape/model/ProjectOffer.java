@@ -11,7 +11,11 @@ public class ProjectOffer {
 	private String itinerary;
 	private String tasks;
 	private String objectives;
+<<<<<<< HEAD
 	private long state;
+=======
+	private Long state;
+>>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 	private String mailContactPerson_InternshipOffer;
 	private Date startDate;
 	private Date lastChangeDate;
@@ -81,6 +85,7 @@ public class ProjectOffer {
 		this.tasks = tasks;
 	}
 
+<<<<<<< HEAD
 	public Long getState() {
 		return state;
 	}
@@ -89,12 +94,22 @@ public class ProjectOffer {
 		this.state = state;
 	}
 
+=======
+>>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 	public String getMailContactPerson_InternshipOffer() {
 		return mailContactPerson_InternshipOffer;
 	}
 
 	public void setMailContactPerson_InternshipOffer(String mailContactPerson_InternshipOffer) {
 		this.mailContactPerson_InternshipOffer = mailContactPerson_InternshipOffer;
+	}
+	
+	public Long getState() {
+		return state;
+	}
+
+	public void setState(Long state) {
+		this.state = state;
 	}
 
 	public String getObjectives() {
@@ -107,7 +122,7 @@ public class ProjectOffer {
 
 	@Override
 	public String toString() {
-		return "ProjectOffer [id=" + id + ", id_Internship=" + id_internship + ", title=" + title + ", itinerary="
+		return "ProjectOffer [id=" + id + ", id_internship=" + id_internship + ", title=" + title + ", itinerary="
 				+ itinerary + ", tasks=" + tasks + ", objectives=" + objectives + ", state=" + state
 				+ ", mailContactPerson_InternshipOffer=" + mailContactPerson_InternshipOffer + ", startDate="
 				+ startDate + ", lastChangeDate=" + lastChangeDate + "]";

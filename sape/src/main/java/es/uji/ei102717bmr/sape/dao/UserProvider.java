@@ -46,9 +46,13 @@ public class UserProvider implements UserDAO {
 	
 	@Override
 	public UserDetails loadUserByMail(String mail, String password) {
+<<<<<<< HEAD
 		UserDetails user = null;
 		try{
 		user = jdbcTemplate.queryForObject("select * from Users where mail = ?;"
+=======
+		UserDetails user = (UserDetails) jdbcTemplate.query("select * from Users where user.mail=?;"
+>>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 				, new Object[]{mail}, new UserMapper());
 		System.out.println(user.toString());
 		}

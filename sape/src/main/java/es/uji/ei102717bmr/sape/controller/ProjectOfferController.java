@@ -2,8 +2,11 @@ package es.uji.ei102717bmr.sape.controller;
 
 import java.util.Date;
 
+<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
 
+=======
+>>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,17 +20,25 @@ import es.uji.ei102717bmr.sape.dao.AssignmentDAO;
 import es.uji.ei102717bmr.sape.dao.PreferenceDAO;
 import es.uji.ei102717bmr.sape.dao.ProjectOfferDAO;
 import es.uji.ei102717bmr.sape.dao.ReviewDAO;
+<<<<<<< HEAD
 import es.uji.ei102717bmr.sape.dao.StudentDAO;
 import es.uji.ei102717bmr.sape.model.Preference;
 import es.uji.ei102717bmr.sape.model.ProjectOffer;
 import es.uji.ei102717bmr.sape.model.Review;
 import es.uji.ei102717bmr.sape.model.UserDetails;
 import es.uji.ei102717bmr.sape.services.SapeServices;;
+=======
+import es.uji.ei102717bmr.sape.model.ProjectOffer;
+import es.uji.ei102717bmr.sape.model.Review;
+import es.uji.ei102717bmr.sape.services.SapeServices;
+import es.uji.ei102717bmr.sape.services.SapeServicesImpl;;
+>>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 
 @Controller
 @RequestMapping("/projectOffer")
 public class ProjectOfferController {
 
+<<<<<<< HEAD
 	private ProjectOfferDAO projectOfferDao;
 	private SapeServices sapeServices;
 	private ReviewDAO reviewDao;
@@ -35,10 +46,17 @@ public class ProjectOfferController {
 	private StudentDAO studentDAO;
 	private AssignmentDAO assignmentDAO;
 	
+=======
+    private ProjectOfferDAO projectOfferDao;
+    private SapeServices sapeServices;
+    private ReviewDAO reviewDao;
+
+>>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 	@Autowired
 	public void setSapeServicesImpl(SapeServices sapeServices){
 		this.sapeServices = sapeServices;
 	}
+<<<<<<< HEAD
 	
 	@Autowired
 	public void setProjectOfferDao(ProjectOfferDAO projectOfferDao) {
@@ -64,6 +82,19 @@ public class ProjectOfferController {
 		this.assignmentDAO = assignmentDAO;
 	}
 
+=======
+
+    @Autowired
+    public void setProjectOfferDao(ProjectOfferDAO projectOfferDao) {
+        this.projectOfferDao=projectOfferDao;
+    }
+    
+    @Autowired
+    public void setReviewDao(ReviewDAO reviewDao) {
+        this.reviewDao=reviewDao;
+    }
+    
+>>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
     @RequestMapping("/list") 
     public String listProjectOffers(Model model) {
         model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
@@ -137,12 +168,27 @@ public class ProjectOfferController {
          
          return "redirect:../list"; 
       }
+<<<<<<< HEAD
     @RequestMapping(value = "/student/assignments/update/{state}&{nifStudent}", method = RequestMethod.POST)
 	public String processUpdateAssignment(@PathVariable String nifStudent,
 			@PathVariable boolean state) {
 		assignmentDAO.updateAssignmentState(nifStudent, state);
 		return "redirect:/projectOffer/list/student";
 	}
+=======
+    @RequestMapping(value="/delete/{id}")
+    public String processDelete(@ModelAttribute("reject") String reviewText, @PathVariable long id) {
+    	Review review = new Review();
+        review.setText(reviewText);
+        review.setCreationDate(new Date());
+        review.setProjectOfferId(id);
+        reviewDao.addReview(review);
+        
+    	projectOfferDao.deleteProjectOffer(id);
+    	return "redirect:../list"; 
+    }
+
+>>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 
     @RequestMapping(value="/delete/{id}")
     public String processDelete(@ModelAttribute("reject") String reviewText, @PathVariable long id) {

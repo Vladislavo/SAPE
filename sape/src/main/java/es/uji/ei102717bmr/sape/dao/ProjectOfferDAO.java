@@ -60,7 +60,11 @@ public class ProjectOfferDAO {
 						+ " values (?,?,?,?);", projectOffer.getTitle(), lastValue, new Date(), new Date());
 	}
 	public void updateProjectOffer(ProjectOffer projectOffer) {
+<<<<<<< HEAD
 		this.jdbcTemplate.update("update ProjectOffer set id_internship = ?, title = ?, tasks = ?,itinerary = ?, objectives = ?,"
+=======
+		this.jdbcTemplate.update("update ProjectOffer set id_Internship = ?, title = ?, tasks = ?,itinerary = ?, objectives = ?,"
+>>>>>>> ccd335acc63bebcfcccc5c93e4572eec0750f8f9
 				+ " state = ?, startDate = ?, lastChangeDate = ? where id = ?;",
 				projectOffer.getId_internship(),
 				projectOffer.getTitle(), projectOffer.getTasks(),
