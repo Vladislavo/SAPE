@@ -10,7 +10,7 @@ public class Company {
 	private String telephone;
 	private int vat;
 	
-	private List<Internship> offers;
+	private List<String> offers;
 	
 	public Company(){
 		super();
@@ -53,11 +53,11 @@ public class Company {
 		this.vat = vat;
 	}
 
-	public List<Internship> getOffers() {
+	public List<String> getOffers() {
 		return offers;
 	}
 
-	public void setOffers(List<Internship> offers) {
+	public void setOffers(List<String> offers) {
 		this.offers = offers;
 	}
 	

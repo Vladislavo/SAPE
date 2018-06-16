@@ -1,5 +1,11 @@
 package es.uji.ei102717bmr.sape.controller;
 
+
+
+import java.util.Date;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,22 +17,42 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import es.uji.ei102717bmr.sape.dao.PreferenceDAO;
 import es.uji.ei102717bmr.sape.model.Preference;
+import es.uji.ei102717bmr.sape.dao.PreferenceDAO;
+import es.uji.ei102717bmr.sape.dao.AssignmentDAO;
+import es.uji.ei102717bmr.sape.model.Preference;
+import es.uji.ei102717bmr.sape.model.UserDetails;
+import es.uji.ei102717bmr.sape.dao.ProjectOfferDAO;
+
 
 @Controller
 @RequestMapping("/preference")
 public class PreferenceController {
 	
 	private PreferenceDAO preferenceDAO;
+	private ProjectOfferDAO projectOfferDAO;
 	
 	@Autowired
     public void setPreferenceDao(PreferenceDAO preferenceDAO) {
         this.preferenceDAO = preferenceDAO;
     }
+	@Autowired
+    public void setProjectOfferDao(ProjectOfferDAO projectOfferDAO) {
+        this.projectOfferDAO = projectOfferDAO;
+    }
 	
 	@RequestMapping("/list") 
-    public String listPreferences(Model model) {
-        model.addAttribute("preferences", preferenceDAO.getPreferences());
-        return "preference/list";
+    public String listPreferences(HttpSession session, Model model) {
+		UserDetails user = (UserDetails) session.getAttribute("user");
+		String studentRole = "Student";
+		if (user.getRole().trim().equals(studentRole)) {
+	        model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
+	        System.out.println(preferenceDAO.getPreference(user.getId().trim()));
+	        model.addAttribute("projectOffers", projectOfferDAO.getProjectOffers());
+	        return "preference/list";
+		}
+		else {
+			return "/home";
+		}
     }
 	
     @RequestMapping(value="/add") 
@@ -36,18 +62,24 @@ public class PreferenceController {
     }
     
     @RequestMapping(value="/add", method=RequestMethod.POST) 
-    public String processAddSubmit(@ModelAttribute("preference") Preference preference,
+    public String processAddSubmit(HttpSession session, @ModelAttribute("preference") Preference preference,
                                     BindingResult bindingResult) {
          if (bindingResult.hasErrors()) 
                 return "preference/add";
+         UserDetails user = (UserDetails) session.getAttribute("user");
+         System.out.println(user.getId().trim());
+         System.out.println(preference.toString());
+         preference.setLastChangeDate(new Date());
+         preferenceDAO.deletePreference(user.getId().trim(), preference.getPreferenceOrder());
+         preferenceDAO.deletePreferenceProject(user.getId().trim(), preference.getProjectOffer_id());
          preferenceDAO.addPreference(preference);
-         return "redirect:list.html";
+         return "redirect:../preference/list";
     }
     
     @RequestMapping(value="/update/{nifStudent}&{idProjectOffer}", method = RequestMethod.GET) 
     public String editStudent(Model model, @PathVariable String nif_Student,
     									   @PathVariable long id_ProjectOffer) { 
-        model.addAttribute("preference", preferenceDAO.getPreference(nif_Student, id_ProjectOffer));
+        model.addAttribute("preference", preferenceDAO.getPreference(nif_Student));
         return "preference/update"; 
     }
     
@@ -62,10 +94,11 @@ public class PreferenceController {
     	return "redirect:../list"; 
     }
     
-    @RequestMapping(value="/delete/{nif_Student}&{id_ProjectOffer}")
-    public String processDelete(@PathVariable String nif_Student,
+    @RequestMapping(value="/delete/{id_ProjectOffer}")
+    public String processDelete(HttpSession session,
 				  				@PathVariable long id_ProjectOffer) {
-    	preferenceDAO.deletePreference(nif_Student, id_ProjectOffer);
+    	UserDetails user = (UserDetails) session.getAttribute("user");
+    	preferenceDAO.deletePreferenceProject(user.getId().trim(),id_ProjectOffer);
     	return "redirect:../list"; 
     }
 	

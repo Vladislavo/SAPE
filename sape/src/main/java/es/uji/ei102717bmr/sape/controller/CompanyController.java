@@ -34,11 +34,11 @@ public class CompanyController {
         return "company/add";
     }
     
-    @RequestMapping(value="/add", method=RequestMethod.POST) 
+    @RequestMapping(value="/internship/add", method=RequestMethod.POST) 
     public String processAddSubmit(@ModelAttribute("company") Company company, BindingResult bindingResult) {  
     	if (bindingResult.hasErrors()) return "company/add";
     	companyDAO.addCompany(company);;
-    	return "redirect:list.html"; 
+    	return "redirect:/list.html"; 
     }
     
     @RequestMapping(value="/update/{cif}", method = RequestMethod.GET) 

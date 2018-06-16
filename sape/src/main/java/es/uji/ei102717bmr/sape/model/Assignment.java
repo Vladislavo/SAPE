@@ -3,7 +3,7 @@ package es.uji.ei102717bmr.sape.model;
 import java.util.Date;
 
 public class Assignment {
-	private String state;
+	private boolean state;
 	private Date creationDate;
 	private Date approvalDate;
 	private Date rejectDate;
@@ -18,13 +18,13 @@ public class Assignment {
 	public Assignment(){
 		super();
 		creationDate = new Date();
-		state = "Assigned";
+		state = false;
 	}
 	
-	public String getState() {
+	public boolean getState() {
 		return state;
 	}
-	public void setState(String state) {
+	public void setState(boolean state) {
 		this.state = state;
 	}
 	public Date getCreationDate() {

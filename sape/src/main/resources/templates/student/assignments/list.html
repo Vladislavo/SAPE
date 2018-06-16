@@ -46,7 +46,7 @@
 </nav>
 
 <body>
-	<h1 class="center">Project Offers</h1>
+	<h1 class="center">Assignments</h1>
 	<div class="bttcenter">
 		<input type="text" id="inputOffers" onkeyup="filterOffers()"
 			placeholder="Search offers...">
@@ -54,23 +54,21 @@
 
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
-		<div th:if="${#lists.isEmpty(projectOffers)}">There are no
-			project offers in the data base.</div>
-		<table th:unless="${#lists.isEmpty(projectOffers)}" id="tableOffers">
+		<div th:if="${#lists.isEmpty(assignments)}">There are no
+			assignments right now, come back soon.</div>
+		<table th:unless="${#lists.isEmpty(assignments)}" id="tableOffers">
+			<th:block th:each="assignment: ${assignments}">
 
-			<th:block th:each="projectOffer: ${projectOffers}">
-				<th:block th:each="student: ${students}">
-					<tr th:if="${student.itinerary} == ${projectOffer.itinerary}">
-
+				<th:block th:each="projectOffer: ${projectOffers}">
+					<tr
+						th:if="${assignment.id_projectoffer} == ${projectOffer.id} and ${assignment.state} == false">
 						<td>
 							<p>
 								<a class="btn btn-default btn-block" data-toggle="collapse"
 									th:href="'#'+${projectOffer.id}" role="button"
 									aria-expanded="false" aria-controls="offer1"> <strong
 									th:text="${projectOffer.title}"></strong>
-
 								</a>
-
 							</p>
 							<div class="collapse" th:id=${projectOffer.id}>
 								<div class="card-body">
@@ -83,35 +81,53 @@
 									<b>Itinerary:</b> <br>
 									<p th:text="${projectOffer.itinerary}"></p>
 
-									<form action="#" id="preference" th:action="@{/preference/add}"
-										th:object="${preference}" method="post"
-										onsubmit="return confirmation()">
-										 <input type="hidden"
-											id="id_projectOffer" name="id_projectOffer"
-											th:value=${projectOffer.id}> <b>Preference:</b>
-										<div>
-											<div style="float: left; width: 50px">
-												<select id="preference_order" name="preference_order"
-													class="form-control text-center"
-													style="width: 70px; height: 35px;">
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
-												</select>
-											</div>
-											<div style="float: right; width: 720px">
-												<input class="btn btn-primary" type="submit" value="Add">
-											</div>
-											<br></br>
-										</div>
+									<form action="#" id="preference"
+										th:action="@{/projectOffer/student/assignments/update/true&{nifStudent}(nifStudent=${assignment.nif_student})}"
+										th:object="${assignment}" method="post">
+										<input class="btn btn-success" type="submit" value="Approve">
+
+									</form>
+									<form action="#" id="preference"
+										th:action="@{/projectOffer/student/assignments/delete/{nifStudent}(nifStudent=${assignment.nif_student})}"
+										th:object="${assignment}" method="post">
+										<input class="btn btn-danger" type="submit" value="Delete">
+
 
 									</form>
 								</div>
 							</div>
 						</td>
 					</tr>
+					<tr
+						th:if="${assignment.id_projectoffer} == ${projectOffer.id} and ${assignment.state} == true">
+						<td><strong>You already have a project assigned:</strong></td>
+					</tr>
+					<tr
+						th:if="${assignment.id_projectoffer} == ${projectOffer.id} and ${assignment.state} == true">
+						<td>
+							<p>
+								<a class="btn btn-default btn-block" data-toggle="collapse"
+									th:href="'#'+${projectOffer.id}" role="button"
+									aria-expanded="false" aria-controls="offer1"> <strong
+									th:text="${projectOffer.title}"></strong>
+								</a>
+							</p>
+							<div class="collapse" th:id=${projectOffer.id}>
+								<div class="card-body">
+									<b>State</b>:
+									<p th:text="${projectOffer.state}"></p>
+									<b>Detailed description</b>:
+									<p th:text="${projectOffer.tasks}"></p>
+									<b>Goals:</b> <br>
+									<p th:text="${projectOffer.objectives}"></p>
+									<b>Itinerary:</b> <br>
+									<p th:text="${projectOffer.itinerary}"></p>
+
+								</div>
+							</div>
+						</td>
+					</tr>
+
 				</th:block>
 			</th:block>
 		</table>
@@ -150,18 +166,6 @@
 			var hashtag = "#";
 			return hashtag.concat(thymeleaf);
 
-		}
-	</script>
-
-	<script>
-		function confirmation() {
-			var result = confirm("Are you sure? This action will overwrite any project on your Preferences with the same preference order (if there's any). ");
-			if (result) {
-				return true;
-
-			} else {
-				return false;
-			}
 		}
 	</script>
 </body>

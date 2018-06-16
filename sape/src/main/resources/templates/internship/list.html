@@ -1,0 +1,156 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="stylesheet.css" rel="stylesheet" />
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link href="../css/company.css" th:href="@{/css/company.css}"
+	rel="stylesheet"></link>
+
+
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-header" href="#"><img alt="Brand"
+				src="../../img/mlogo.png"></a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Offers<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="list.html">List</a></li>
+						<li><a href="add.html">Propose</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Contact Person<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Your Profile</a></li>
+						<li><a href="#">Help</a></li>
+						<li><a href="#">Settings</a></li>
+						<li><a href="#">Sign out</a></li>
+					</ul></li>
+			</ul>
+			<form class="navbar-form navbar-right">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Search SAPE">
+				</div>
+				<button type="submit" class="btn btn-default">Search</button>
+			</form>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container-fluid -->
+</nav>
+<body>
+
+	<div class="center">
+		<h1>Manage Internships and Project Offers</h1>
+		<br> <a th:href="@{/internship/list.html}"><button
+				class="btn btn-primary">Internships</button></a> <a
+			th:href="@{/internship/add.html}"><button class="btn btn-primary">
+				Propose</button></a>
+	</div>
+
+	<div class="search-center">
+		<input type="text" id="inputInternships" onkeyup="filterOffers()"
+			placeholder="Search internships...">
+	</div>
+
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<div th:if="${#lists.isEmpty(internships)}">There are no
+			internship offers in the data base.</div>
+		<table th:unless="${#lists.isEmpty(internships)}"
+			id="tableInternships">
+			<th:block th:each="internship: ${internships}">
+				<th:block th:each="projectOffer: ${projectOffers}">
+					<tr th:if="${projectOffer.id_internship == internship.id}">
+						<td>
+							<p>
+								<a class="btn btn-default btn-block" data-toggle="collapse"
+									th:href="'#'+${internship.id}" role="button"
+									aria-expanded="false" aria-controls="internship1"> <strong
+									th:text="${projectOffer.title}"></strong>
+								</a>
+							</p>
+							<div class="collapse" th:id="${internship.id}">
+								<div class="card card-body">
+									<b>CIF Company:</b> <br>
+									<p th:text="${internship.cif_Company}"></p>
+									<br> <br> <b>Remuneration:</b> <br>
+									<p th:text="${internship.remuneration}"></p>
+									<br> <br> <b>Mail:</b> <br>
+									<p th:text="${internship.mailContactPerson}"></p>
+									<br> <br> <b>Description:</b> <br>
+									<p th:text="${internship.description}"></p>
+									<br> <br> <a th:href="@{/internship/update/__${internship.id}__}"><button
+											class="btn btn-primary">Edit Internship</button></a> <a
+										th:href="@{/internship/projectOffer/update/__${projectOffer.id_internship}__}"><button
+											class="btn btn-primary">Edit Project Offer</button></a> <a
+										class="btn btn-primary" data-toggle="collapse"
+										th:href="'#modify'+${projectOffer.state}" role="button"
+										aria-expanded="false" aria-controls="modify"> Request
+										Cancellation </a> <br> <br>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</th:block>
+			</th:block>
+		</table>
+	</div>
+
+	<div class="footer navbar-fixed-bottom">
+		<p class="center">
+			SAPE is a non commercial trademark created for educational purposes.
+			<br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved.
+			&nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a>
+		</p>
+	</div>
+
+	<script>
+		function filterOffers() {
+			// Declare variables
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("inputInternships");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("tableInternships");
+			tr = table.getElementsByTagName("tr");
+
+			// Loop through all table rows, and hide those who don't match the search query
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+</body>
+</html>

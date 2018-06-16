@@ -3,11 +3,9 @@ package es.uji.ei102717bmr.sape.model;
 public class Internship {
 	private long id;
 	private String description;
-	private int renumeration;
-	private String mailContactPerson;
-	
-	private ProjectOffer projectOffer;
-	private Company company;
+	private String remuneration;
+	private String mailcontactperson;
+	private String cif_Company;
 	
 
 	public Internship(){
@@ -22,36 +20,28 @@ public class Internship {
 		this.description = description;
 	}
 
-	public int getRenumeration() {
-		return renumeration;
+	public String getRemuneration() {
+		return remuneration;
 	}
 
-	public void setRenumeration(int renumeration) {
-		this.renumeration = renumeration;
+	public void setRemuneration(String remuneration) {
+		this.remuneration = remuneration;
 	}
 
 	public String getMailContactPerson() {
-		return mailContactPerson;
+		return mailcontactperson;
 	}
 
 	public void setMailContactPerson(String mailContactPerson) {
-		this.mailContactPerson = mailContactPerson;
-	}
-
-	public ProjectOffer getProjectOffer() {
-		return projectOffer;
-	}
-
-	public void setProjectOffer(ProjectOffer projectOffer) {
-		this.projectOffer = projectOffer;
+		this.mailcontactperson = mailContactPerson;
 	}
 	
-	public Company getCompany() {
-		return company;
+	public String getCif_Company() {
+		return cif_Company;
 	}
 
-	public void setCompany(Company company) {
-		this.company = company;
+	public void setCif_Company(String cif_Company) {
+		this.cif_Company = cif_Company;
 	}
 	
 	public long getId() {
@@ -64,9 +54,8 @@ public class Internship {
 	
 	@Override
 	public String toString(){
-		return "InternshipOffer [cif_company="+company.getCif()+", description="+description+", "
-				+ "renumeration="+renumeration+", mailContactPerson="+mailContactPerson+", "
-						+ "projectOfferID="+projectOffer.getId();
+		return "InternshipOffer [id="+id+", cif_company="+cif_Company+", remuneration="+remuneration+", "
+				+ "mailContactPerson="+mailcontactperson+", description="+description + "]";
 	}
 	
 }

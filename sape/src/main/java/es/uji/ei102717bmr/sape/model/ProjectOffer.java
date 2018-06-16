@@ -11,7 +11,7 @@ public class ProjectOffer {
 	private String itinerary;
 	private String tasks;
 	private String objectives;
-	private String state;
+	private long state;
 	private String mailContactPerson_InternshipOffer;
 	private Date startDate;
 	private Date lastChangeDate;
@@ -81,11 +81,11 @@ public class ProjectOffer {
 		this.tasks = tasks;
 	}
 
-	public String getState() {
+	public Long getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(Long state) {
 		this.state = state;
 	}
 

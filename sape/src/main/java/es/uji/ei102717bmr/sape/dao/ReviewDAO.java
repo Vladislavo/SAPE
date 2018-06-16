@@ -27,7 +27,7 @@ public class ReviewDAO {
 
 	    public Review mapRow(ResultSet rs, int rowNum) throws SQLException { 
 	        Review review = new Review();
-	        //review.setProjectOfferId(rs.getString("id_ProjectOffer"));
+	        review.setProjectOfferId(rs.getLong("id_ProjectOffer"));
 	        review.setCreationDate(rs.getDate("creationDate"));
 	        review.setText(rs.getString("description"));
 
@@ -48,18 +48,21 @@ public class ReviewDAO {
 		this.jdbcTemplate.update(
 				"insert into Review (id_ProjectOffer, creationDate, description) "
 				+ " values (?,?,?);", 
-				review.getProjectOffer().getId(), review.getCreationDate(), review.getText());
+				review.getProjectOfferId(), review.getCreationDate(), review.getText());
 				
 	}
 	public void updateReview(Review review) {
 		this.jdbcTemplate.update("update Review set (text = ?"
 				+ " where id_ProjectOffer = ? AND creationDate = ?);", 
-				review.getText(), review.getProjectOffer().getId(), review.getCreationDate());
-	}			
+				review.getText(), review.getProjectOfferId(), review.getCreationDate());
+	}
 	public void deleteReview(long idProjectOffer, Date creationDate) {
 		this.jdbcTemplate.update("delete from Review where id_ProjectOffer = ? AND creationDate = ?;", 
 				idProjectOffer, creationDate);
 	}
-	
 
+	public List<Review> getReviews(long projectOffer_id) {
+		return this.jdbcTemplate.query("select * from Review where id_ProjectOffer=?;", new Object[]{projectOffer_id}, 
+				new ReviewMapper());
+	}
 }

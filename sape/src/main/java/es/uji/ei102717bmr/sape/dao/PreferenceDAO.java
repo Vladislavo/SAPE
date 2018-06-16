@@ -3,6 +3,7 @@ package es.uji.ei102717bmr.sape.dao;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -28,43 +29,47 @@ public class PreferenceDAO {
 
 	    public Preference mapRow(ResultSet rs, int rowNum) throws SQLException { 
 	        Preference preference= new Preference();
-	        preference.setOrder(rs.getInt("order"));
-	        preference.setState(rs.getString("state"));
+	        preference.setPreferenceOrder(rs.getInt("preference_order"));
+	        preference.setStudent_nif(rs.getString("nif_student"));
+	        preference.setProjectOffer_id(rs.getInt("id_projectOffer"));
 	        preference.setLastChangeDate(rs.getDate("lastChangeDate"));
-	        //preference.setStudentNIF();
-	        //preference.setProjectId();
+
 	        
 	        return preference;
 	    }
 	}
 	
 	public List<Preference> getPreferences(){
-		return this.jdbcTemplate.query("select * from Preference;" , new PreferenceDAOMapper());
+		return this.jdbcTemplate.query("select * from preference;" , new PreferenceDAOMapper());
 	}
 	
-	public Preference getPreference(String nifStudent, long idProjectOffer) {
-		return this.jdbcTemplate.queryForObject("select * from Preference where nif_Student = ? AND id_ProjectOffer = ?;",
-				new Object[]{nifStudent, idProjectOffer}, new PreferenceDAOMapper());
-		
+	public List<Preference> getPreference(String nif_student) {
+		return this.jdbcTemplate.query("select * from Preference where nif_Student = ? order by preference_order;",
+				new Object[]{nif_student}, new PreferenceDAOMapper());
 	}
+		
+
 	public void addPreference(Preference preference){
 		this.jdbcTemplate.update(
-				"insert into Preference (nif_Student, id_ProjectOffer, order, state, lastChangeDate) "
-				+ " values (?,?,?,?,?);", 
-				preference.getStudent().getNif(), preference.getProectOffer().getId(),
-				preference.getOrder(), preference.getState(), preference.getLastChangeDate());
+				"insert into Preference (nif_student, id_ProjectOffer, preference_order, lastChangeDate) "
+				+ " values (?,?,?,?);", 
+				preference.getStudent_nif(), preference.getProjectOffer_id(),
+				preference.getPreferenceOrder(), preference.getLastChangeDate());
 				
 	}
 	public void updatePreference(Preference preference) {
-		this.jdbcTemplate.update("updatePreference set (order = ?, state= ?, lastChangeDate = ?"
+		this.jdbcTemplate.update("update Preference set (preference_order = ?, lastChangeDate = ?"
 				+ " where nif_Student = ? AND id_ProjectOffer = ?);", 
-				preference.getOrder(), preference.getState(), preference.getLastChangeDate(),
-				preference.getStudent().getNif(), preference.getProectOffer().getId());
+				preference.getPreferenceOrder(), preference.getLastChangeDate(),
+				preference.getStudent_nif(), preference.getProjectOffer_id());
 	}			
-	public void deletePreference(String nifStudent, long projectId) {
-		this.jdbcTemplate.update("delete from Preference where nif_Student = ? AND id_Project = ?;", 
-				nifStudent, projectId);
+	public void deletePreference(String nif_student, int preference_order) {
+		this.jdbcTemplate.update("delete from Preference where nif_Student = ? AND preference_order = ?;", 
+				nif_student, preference_order);
+	}
+	public void deletePreferenceProject(String nif_student, long id_projectOffer) {
+		this.jdbcTemplate.update("delete from Preference where nif_Student = ? AND id_ProjectOffer = ?;", 
+				nif_student, id_projectOffer);
 	}
 	
-
 }

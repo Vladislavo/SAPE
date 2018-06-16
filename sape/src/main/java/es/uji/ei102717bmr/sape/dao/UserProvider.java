@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -45,15 +46,26 @@ public class UserProvider implements UserDAO {
 	
 	@Override
 	public UserDetails loadUserByMail(String mail, String password) {
-		UserDetails user = (UserDetails) jdbcTemplate.query("select * from Users where email=?;"
+		UserDetails user = null;
+		try{
+		user = jdbcTemplate.queryForObject("select * from Users where mail = ?;"
 				, new Object[]{mail}, new UserMapper());
-	    if (user == null)
-	        return null; // User not found
+		System.out.println(user.toString());
+		}
+		catch(EmptyResultDataAccessException e){
+			e.printStackTrace();
+			return null; //User not found
+			
+		}
 	    // Password
-	    BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-	    if (passwordEncryptor.checkPassword(password, user.getPassword())) {
+	    //BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+	    System.out.println(user.getPassword().trim());
+	    System.out.println((user.getPassword().trim().equals(password)));
+	    //if (passwordEncryptor.checkPassword(password, user.getPassword())) {
 	        // Field password should be deleted in a secure way before return
+	    if(user.getPassword().trim().equals(password)){
 	    	user.setPassword("");
+	    	System.out.println("It works");
 	    	return user;
 	    } else {
 	        return null; // bad login!

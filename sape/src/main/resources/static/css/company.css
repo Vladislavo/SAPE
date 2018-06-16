@@ -7,7 +7,7 @@
 }
 
 .bg {
-	background-image: url("img/bg1.jpg");
+	background-image: url("../img/bg1.jpg");
 	background-size: cover
 }
 
@@ -20,13 +20,6 @@ h1 {
 	font-size: 20px
 }
 
-.signin-window {
-	background-color: #f7f7f7;
-	border: 1px solid grey;
-	border-radius: 10px;
-	padding: 40px
-}
-
 .green-button {
 	background-color: #ddffcc;
 }
@@ -35,7 +28,7 @@ h1 {
 	text-align: center;
 }
 
-.bttcenter {
+.search-center {
 	display: flex;
   	flex-direction: column;
   	justify-content: center;
@@ -43,21 +36,16 @@ h1 {
 	padding: 10px
 }
 
-.set-width {
-	width: 825px
-}
-
-#tableOffers {
-   	width: 100%;
-}
-
-table#tableReviews {
-  	margin: 0px auto;
-  	border-spacing: 5px;
+.error {
+	color: red;
 }
 
 #th {
 	height: 30px;
 	text-align: center;
 	padding: 10px;
+}
+
+#tableInternships {
+    	width: 100%;
 }

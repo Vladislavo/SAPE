@@ -37,7 +37,7 @@
           th:object="${user}" method="post">
 		  <div class="form-group">
 		    <label class="form_control control-label">Email</label>
-		    <input type="mail" class="form-control" placeholder="Email" th:field="*{mail}">
+		    <input type="text" class="form-control" placeholder="Email" th:field="*{mail}">
             <div class="error" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></div>
 		  </div>
 		  <div class="form-group">

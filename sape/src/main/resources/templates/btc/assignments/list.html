@@ -37,65 +37,140 @@
 	<div class="center">
 		<h1> Manage Offers </h1> <br>
 		<a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}"><button class="btn btn-primary"> Offers </button></a>
-		<a href="/assignment/list.html" th:href="@{/assignments/list.html}"><button class="btn btn-primary"> Assignments </button></a>
+		<a href="/assignment/list.html" th:href="@{/assignment/list.html}"><button class="btn btn-primary"> Assignments </button></a>
+	</div>
+	<div class="bttcenter">
+  		<input type="text" id="inputOffers" onkeyup="filterOffers()" placeholder="Search students...">
 	</div>
 
-	<div class="bttcenter">
-	<form action="#" id="assignments" th:action="@{/assignment/add}"
-                     		th:object="${assignment}" method="post">
-		<table>
-			<thead>
-				<tr>
-					<th> Project </th>
-					<th> Student </th>
-					<th> Tutor </th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="assignment : ${assignments}">
-					<td th:text="${projectOffersMap['__${assignment.id_projectoffer}__']}"></td>
-					<td th:text="${studentsMap['__${assignment.nif_student}__']}"></td>
-					<td th:text="${tutorsMap['__${assignment.mail_tutor}__']}"></td>
-					<!-- edit assignment -->
-				</tr>
-				<tr>
-					<td>
-						<select th:field="*{id_projectoffer}" form="assignments">
-							<option value="0"> Select project </option>
-							<option th:each="projectOfferNotAssigned : ${projectOffersNotAssigned}" 
-								th:value="${projectOfferNotAssigned.id}" 
-								th:text="${projectOfferNotAssigned.title}"></option>
-						</select>
-					</td>
-					<td>
-						<select th:field="*{nif_student}" form="assignments">
-							<option value="0"> Select student </option>
-							<option th:each="studentNotAssigned : ${studentsNotAssigned}" 
-								th:value="${studentNotAssigned.nif}" 
-								th:text="${studentNotAssigned.name}"></option>
-						</select>
-					</td>
-					<td>
-						<select th:field="*{mail_tutor}" form="assignments">
-							<option value="0"> Select tutor </option>
-							<option th:each="tutor : ${tutors}" 
-								th:value="${tutor.mail}" 
-								th:text="${tutor.name}"></option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>
-						
-							<input class="btn btn-primary" type="submit" value="Assign">
-						
-					</td>
-				</tr>
-			</tbody>
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<table id="tableOffers">
+			<tr th:each="student: ${students}">
+				<td>
+					<p>
+						<a class="btn btn-default btn-block" data-toggle="collapse" th:href="'#'+${student.nif}" role="button" aria-expanded="false" aria-controls="assignment1">
+	    					<strong th:text="${student.name}"></strong>
+						</a>
+	   				</p>
+	   				
+	   				<div class="collapse" th:id="${student.nif}">
+						<div class="card card-body">
+							<div th:if="${#lists.isEmpty(studentNifAssignment['__${student.nif}__'])}">
+								Student has no project assigned.
+							</div>
+							<div th:with="assignment=${studentNifAssignment['__${student.nif}__']}">
+							<div th:if="${studentNifAssignment['__${student.nif}__']} != null">
+								Assigned Project:
+								<table>
+									<thead>
+										<tr>
+											<th> Project </th>
+											<th> State </th>
+										</tr>
+									</thead>
+									<tbody>
+										<div>
+											<tr>
+												<td th:text="${studentNifToProjectAssigned['__${student.nif}__']}"></td>
+												<div th:switch="${assignment.state}">
+													<td th:case="true">Assigned</td>
+													<td th:case="false">Proposed</td>
+												</div>
+												<td><a th:href="@{/assignment/update/__${student.nif}__&__${assignment.id_projectoffer}__}"><button type="button" class="btn btn-default"> Edit </button></a></td>
+												<td><a th:href="@{/assignment/delete/__${student.nif}__&__${assignment.id_projectoffer}__}"><button type="button" class="btn btn-danger"> Delete </button></a></td>
+											</tr>
+										</div>
+									</tbody>
+								</table>
+							</div>
+							</div>
+							<div th:if="${#lists.isEmpty(studentsPreferences['__${student.nif}__'])}">
+			         			There are no preferences chosen by this student in the data base.
+			         			<div th:if="${isAssignned['__${student.nif}__'] == false}">
+				         			Propose project manually: <br>
+				         			<form action="#" id="assig" th:action="@{/assignment/add}"
+							                     		th:object="${assignment}" method="post">
+									<table>
+										<thead>
+											<tr>
+												<th> Project </th>
+												<th> Student </th>
+												<th> Tutor </th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													<select th:field="*{id_projectoffer}" form="assig">
+														<option value="0"> Select project </option>
+														<option th:each="projectOfferNotAssigned : ${projectOffersNotAssigned}" 
+															th:value="${projectOfferNotAssigned.id}" 
+															th:text="${projectOfferNotAssigned.title}"></option>
+													</select>
+												</td>
+												<td>
+													<select th:field="*{nif_student}" form="assig">
+														<option value="0"> Select student </option>
+														<option th:each="studentNotAssigned : ${studentsNotAssigned}"
+															th:value="${studentNotAssigned.nif}"
+															th:text="${studentNotAssigned.name}"></option>
+													</select>
+												</td>
+												<td>
+													<select th:field="*{mail_tutor}" form="assig">
+														<option value="0"> Select tutor </option>
+														<option th:each="tutor : ${tutors}"
+															th:value="${tutor.mail}"
+															th:text="${tutor.name}"></option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td></td>
+												<td>
+													<input class="btn btn-primary" type="submit" value="Assign">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									</form>	
+								</div>
+							</div>
+							<table th:unless="${#lists.isEmpty(studentsPreferences['__${student.nif}__'])}">
+								<thead>
+									<tr>
+							         <th>Preference order</th>
+							         <th>Project Title</th>
+							       </tr>
+								</thead>
+								<tbody>
+									<tr th:each="preference: ${studentsPreferences['__${student.nif}__']}">
+										<form action="#" id="assignments" th:action="@{/assignment/add}"
+							                     		th:object="${assignment}" method="post">
+											<td th:text="${preference.preferenceOrder}"></td>
+		      								<td th:text="${profectOfferToTitle['__${preference.projectOffer_id}__']}"></td>
+		      								<input type="hidden" name="id_projectoffer" th:value="${preference.projectOffer_id}">
+		      								<input type="hidden" name="nif_student" th:value="${preference.student_nif}">
+		      								<td>
+											<select th:if="${studentNifAssignment['__${preference.student_nif}__']} == null" name="tutor_mail_form">
+												<option value="0"> Select tutor </option>
+												<option th:each="tutor : ${tutors}" 
+													th:value="${tutor.mail}" 
+													th:text="${tutor.name}"></option>
+											</select>
+											</td>
+											<td th:if="${studentNifAssignment['__${preference.student_nif}__']} == null" ><button type="submit" class="btn btn-default">Propose</button></a>
+		      							</form>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</td>
+			</tr>
 		</table>
-		</form>
 	</div>
 </body>
 	
@@ -103,5 +178,27 @@
 	<div class="footer navbar-fixed-bottom">
 		<p class="center"> SAPE is a non commercial trademark created for educational purposes. <br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved. &nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a></p>
 	</div>
+	<script>
+		function filterOffers() {
+  			// Declare variables
+  			var input, filter, table, tr, td, i;
+  			input = document.getElementById("inputOffers");
+  			filter = input.value.toUpperCase();
+  			table = document.getElementById("tableOffers");
+  			tr = table.getElementsByTagName("tr");
+
+  			// Loop through all table rows, and hide those who don't match the search query
+  			for (i = 0; i < tr.length; i++) {
+    				td = tr[i].getElementsByTagName("td")[0];
+    				if (td) {
+      					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        					tr[i].style.display = "";
+      					} else {
+        					tr[i].style.display = "none";
+      					}
+    				}
+  			}
+		}
+	</script>
 </body>
 </html>

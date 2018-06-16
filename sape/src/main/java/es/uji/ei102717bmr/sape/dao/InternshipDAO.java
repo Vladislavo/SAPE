@@ -2,6 +2,7 @@ package es.uji.ei102717bmr.sape.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -26,11 +27,12 @@ public class InternshipDAO {
 
 	    public Internship mapRow(ResultSet rs, int rowNum) throws SQLException { 
 	    	Internship internship = new Internship();
+	    	internship.setId(rs.getLong("id"));
+	    	internship.setCif_Company(rs.getString("cif_Company"));
+	    	internship.setRemuneration(rs.getString("remuneration"));
 	    	internship.setMailContactPerson(rs.getString("mailContactPerson"));
 	    	internship.setDescription(rs.getString("description"));
-	    	internship.setRenumeration(rs.getInt("renumeration"));
-	        //internship.setProjectOffer();
-	    	//internship.setCompany();
+
 	        return internship;
 	    }
 	}
@@ -45,15 +47,15 @@ public class InternshipDAO {
 	}
 	
 	public void addInternship(Internship internship){
-		this.jdbcTemplate.update("insert into Internship (id, mailContactPerson, description,"
-				+ "renumeration) values (?,?,?,?);", internship.getId(), internship.getMailContactPerson(),
-				internship.getDescription(), internship.getRenumeration());
+		this.jdbcTemplate.update("insert into Internship (cif_Company, mailContactPerson, remuneration,"
+				+ "description) values (?,?,?,?);", internship.getCif_Company(), internship.getMailContactPerson(),
+				internship.getRemuneration(), internship.getDescription());
 	}
 	
 	public void updateInternship(Internship internship){
 		this.jdbcTemplate.update("update Internship set mailContactPerson=?, "
-				+ "description=?, renumeration=? where id=?;", internship.getMailContactPerson(),
-				internship.getDescription(), internship.getRenumeration(), internship.getId());
+				+ "description=?, remuneration=? where id=?;", internship.getMailContactPerson(),
+				internship.getDescription(), internship.getRemuneration(), internship.getId());
 	}
 	
 	public void deleteInternship(long id){
