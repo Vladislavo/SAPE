@@ -1,0 +1,175 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link href="/css/index.css" th:href="@{/css/btc.css}" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-header" href="/"><img alt="Brand"
+				src="/img/mlogo.png"></a>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<form class="navbar-form navbar-right" style="margin-right: 150px">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search SAPE">
+						</div>
+						<button type="submit" class="btn btn-default">Search</button>
+					</form>
+				</li>
+				<li class="dropdown"><a href="#"
+					class="dropdown-toggle navbar-right" data-toggle="dropdown"
+					role="button" aria-haspopup="true" aria-expanded="false">Profile
+						<span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="../projectOffer/list/student">Project Offers</a></li>
+						<li><a href="/preference/list">Your Preferences</a></li>
+						<li><a href="/projectOffer/student/assignments/list">Your Assignments</a></li>
+						<li><a href="/help">Help</a></li>
+						<li><a href="/signout">Sign out</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</nav>
+
+<body>
+	<h1 class="center">Preferences</h1>
+	<div class="bttcenter">
+		<input type="text" id="inputOffers" onkeyup="filterOffers()"
+			placeholder="Search offers...">
+	</div>
+
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<div th:if="${#lists.isEmpty(preferences)}">You do not have preferences.</div>
+		<table th:unless="${#lists.isEmpty(preferences)}" id="tableOffers">
+			<th:block th:each="preference: ${preferences}">
+				<th:block th:each="projectOffer: ${projectOffers}">
+					<tr th:if="${preference.projectOffer_id} == ${projectOffer.id}">
+						<td>
+							<p>
+								<a class="btn btn-default btn-block" data-toggle="collapse"
+									th:href="'#'+${projectOffer.id}" role="button"
+									aria-expanded="false" aria-controls="offer1"> <strong
+									th:text="${preference.preferenceOrder}"></strong> <strong
+									th:text="${projectOffer.title}"></strong>
+								</a>
+							</p>
+							<div class="collapse" th:id=${projectOffer.id}>
+								<div class="card-body">
+									<b>State</b>:
+									<p th:text="${projectOffer.state}"></p>
+									<b>Detailed description</b>:
+									<p th:text="${projectOffer.tasks}"></p>
+									<b>Goals:</b> <br>
+									<p th:text="${projectOffer.objectives}"></p>
+									<b>Itinerary:</b> <br>
+									<p th:text="${projectOffer.itinerary}"></p>
+
+									<form action="#" id="preference" th:action="@{/preference/add}"
+										th:object="${preference}" method="post" onsubmit="return confirmation()">
+										<input type="hidden" id="student_nif" name="student_nif"
+											value=${preference.student_nif}> <input type="hidden"
+											id="projectOffer_id" name="projectOffer_id"
+											th:value=${projectOffer.id}> <b>Preference:</b>
+										<div style="width: 400px">
+											<div style="float: left; width: 50px">
+												<select id="preferenceOrder" name="preferenceOrder"
+													class="form-control text-center"
+													style="width: 70px; height: 35px;">
+													<option th:if="${preference.preferenceOrder} != 1"
+														value="1">1</option>
+													<option th:if="${preference.preferenceOrder} != 2"
+														value="2">2</option>
+													<option th:if="${preference.preferenceOrder} != 3"
+														value="3">3</option>
+													<option th:if="${preference.preferenceOrder} != 4"
+														value="4">4</option>
+													<option th:if="${preference.preferenceOrder} != 5"
+														value="5">5</option>
+												</select>
+											</div>
+											<div style="float: right; width: 300px">
+												<input class="btn btn-primary" type="submit"
+													onsubmit="success()" value="Add">
+												<a th:href="@{/preference/delete/{id_ProjectOffer}(id_ProjectOffer=${projectOffer.id})}" class="btn btn-danger">Delete</a>
+											</div>
+											<br></br>
+										</div>
+									</form>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</th:block>
+			</th:block>
+		</table>
+	</div>
+
+	<div class="footer navbar-fixed-bottom">
+		<p class="center">
+			SAPE is a non commercial trademark created for educational purposes.
+			<br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved.
+			&nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a>
+		</p>
+	</div>
+	<script>
+		function filterOffers() {
+			// Declare variables
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("inputOffers");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("tableOffers");
+			tr = table.getElementsByTagName("tr");
+			// Loop through all table rows, and hide those who don't match the search query
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+	<script>
+		function concatenate(thymeleaf) {
+			var hashtag = "#";
+			return hashtag.concat(thymeleaf);
+
+		}
+	</script>
+	<script>
+		function success() {
+			alert("Your preference has been added.");
+		}
+	</script>
+	<script>
+		function confirmation() {
+			var result = confirm("Are you sure? This action will overwrite a project added before (if there's any). ");
+			if (result) {
+				return true;
+			    
+			}
+			else{
+				return false;
+			}
+		}
+	</script>
+	
+</body>
+</html>
