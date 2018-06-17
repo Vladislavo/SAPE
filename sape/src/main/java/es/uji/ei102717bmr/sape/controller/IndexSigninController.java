@@ -43,22 +43,8 @@ public class IndexSigninController {
         // Authenticated correctly.
         // Save the data of the authenticated user data in the session
         session.setAttribute("user", user);
-        
-        System.out.println(user.getRole() == "Student");
-        if (user.getRole().trim() == "Student"){
-        	 return "redirect:/projectOffer/list/Student";
-        }
-        //String nextUrl = (String) session.getAttribute("nextUrl");
-        //String returnUrl = "redirect:/";
-        //System.out.println(nextUrl + " fin");
-//        if (nextUrl != null){
-//        	returnUrl += nextUrl;
-//        } else {
-//        	
-//        }
-//        session.removeAttribute("nextUrl");
-        // Return to the corresponding page
-        return "redirect:/";
+       	return "redirect:/projectOffer/list";
+
     }
 }
 
