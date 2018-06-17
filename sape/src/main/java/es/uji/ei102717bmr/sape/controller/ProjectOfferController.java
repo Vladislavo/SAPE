@@ -93,6 +93,17 @@ public class ProjectOfferController {
     	}
     	return "/home";
     }
+    @RequestMapping("/student/assignments/list")
+    public String listAssigmentsStudent(HttpSession session, Model model) {
+            UserDetails user = (UserDetails) session.getAttribute("user");
+            model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
+            model.addAttribute("assignments", assignmentDAO.getAssignment(user.getId().trim()));
+            System.out.println(assignmentDAO.getAssignment(user.getId().trim()));
+
+
+            return "student/assignments/list";
+    }
+
 
     @RequestMapping(value="/add") 
     public String addProjectOffer(HttpSession session, Model model) {
