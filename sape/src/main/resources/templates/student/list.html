@@ -32,11 +32,10 @@
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/projectOffer/list/student">Project Offers</a></li>
+						<li><a href="/projectOffer/list">Project Offers</a></li>
 						<li><a href="/preference/list">Your Preferences</a></li>
 						<li><a href="/projectOffer/student/assignments/list">Your
 								Assignments</a></li>
-						<li><a href="/help">Help</a></li>
 						<li><a href="/signout">Sign out</a></li>
 					</ul></li>
 			</ul>
@@ -46,7 +45,13 @@
 </nav>
 
 <body>
-	<h1 class="center">Project Offers</h1>
+	<div class="center">
+		<h1>Project Offers</h1>
+		<br> <a th:href="@{/preference/list.html}"><button
+				class="btn btn-primary">Preferences</button></a> <a
+			th:href="@{/projectOffer/student/assignments/list.html}"><button class="btn btn-primary">
+				Assignments</button></a>
+	</div>
 	<div class="bttcenter">
 		<input type="text" id="inputOffers" onkeyup="filterOffers()"
 			placeholder="Search offers...">
