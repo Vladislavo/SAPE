@@ -42,14 +42,11 @@
 						<li><a href="list.html">List</a></li>
 						<li><a href="add.html">Propose</a></li>
 					</ul></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Contact Person<span class="caret"></span></a>
+				<li class="dropdown"><a th:text="${user.id}"
+					class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Your Profile</a></li>
-						<li><a href="#">Help</a></li>
-						<li><a href="#">Settings</a></li>
-						<li><a href="#">Sign out</a></li>
+						<li><a href="/signout">Sign out</a></li>
 					</ul></li>
 			</ul>
 			<form class="navbar-form navbar-right">
@@ -86,37 +83,37 @@
 			id="tableInternships">
 			<th:block th:each="internship: ${internships}">
 				<th:block th:each="projectOffer: ${projectOffers}">
-					<tr th:if="${projectOffer.id_internship == internship.id}">
-						<td>
-							<p>
-								<a class="btn btn-default btn-block" data-toggle="collapse"
-									th:href="'#'+${internship.id}" role="button"
-									aria-expanded="false" aria-controls="internship1"> <strong
-									th:text="${projectOffer.title}"></strong>
-								</a>
-							</p>
-							<div class="collapse" th:id="${internship.id}">
-								<div class="card card-body">
-									<b>CIF Company:</b> <br>
-									<p th:text="${internship.cif_Company}"></p>
-									<br> <br> <b>Remuneration:</b> <br>
-									<p th:text="${internship.remuneration}"></p>
-									<br> <br> <b>Mail:</b> <br>
-									<p th:text="${internship.mailContactPerson}"></p>
-									<br> <br> <b>Description:</b> <br>
-									<p th:text="${internship.description}"></p>
-									<br> <br> <a th:href="@{/internship/update/__${internship.id}__}"><button
-											class="btn btn-primary">Edit Internship</button></a> <a
-										th:href="@{/internship/projectOffer/update/__${projectOffer.id_internship}__}"><button
-											class="btn btn-primary">Edit Project Offer</button></a> <a
-										class="btn btn-primary" data-toggle="collapse"
-										th:href="'#modify'+${projectOffer.state}" role="button"
-										aria-expanded="false" aria-controls="modify"> Request
-										Cancellation </a> <br> <br>
+					<th:block th:if="${projectOffer.id_internship == internship.id}">
+						<tr th:if="${user.id == internship.cif_Company}">
+							<td>
+								<p>
+									<a class="btn btn-default btn-block" data-toggle="collapse"
+										th:href="'#'+${internship.id}" role="button"
+										aria-expanded="false" aria-controls="internship1"> <strong
+										th:text="${projectOffer.title}"></strong>
+									</a>
+								</p>
+								<div class="collapse" th:id="${internship.id}">
+									<div class="card card-body">
+										<b>Remuneration:</b> <br>
+										<p th:text="${internship.remuneration}"></p>
+										<br> <br> <b>Mail:</b> <br>
+										<p th:text="${internship.mailContactPerson}"></p>
+										<br> <br> <b>Description:</b> <br>
+										<p th:text="${internship.description}"></p>
+										<br> <br> <a
+											th:href="@{/internship/update/__${internship.id}__}"><button
+												class="btn btn-primary">Edit Internship</button></a> <a
+											th:href="@{/internship/projectOffer/update/__${projectOffer.id_internship}__}"><button
+												class="btn btn-primary">Edit Project Offer</button></a><br> <br>
+										<form action="mailto:btc@uji.es" onclick="return confirmation()">
+													<a class="btn btn-warning" type="submit"> Request Cancellation</a>
+										</form>
+									</div>
 								</div>
-							</div>
-						</td>
-					</tr>
+							</td>
+						</tr>
+					</th:block>
 				</th:block>
 			</th:block>
 		</table>
@@ -149,6 +146,18 @@
 						tr[i].style.display = "none";
 					}
 				}
+			}
+		}
+	</script>
+
+	<script>
+		function confirmation() {
+			var result = confirm("Are you sure? We'll send a mail to the BTC to delete this Internship. ");
+			if (result) {
+				return true;
+
+			} else {
+				return false;
 			}
 		}
 	</script>

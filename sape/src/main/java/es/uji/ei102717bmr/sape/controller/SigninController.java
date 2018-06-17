@@ -63,6 +63,9 @@ public class SigninController {
         // Authenticated correctly.
         // Save the data of the authenticated user data in the session
         session.setAttribute("user", user);
+        
+        if (user.getRole().trim().equals("Company")) return "redirect:/internship/list/";
+        
         return "redirect:/projectOffer/list/";
     }
 

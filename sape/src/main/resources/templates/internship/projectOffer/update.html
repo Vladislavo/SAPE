@@ -42,14 +42,11 @@
 						<li><a href="../../list.html">List</a></li>
 						<li><a href="../../add.html">Propose</a></li>
 					</ul></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
+				<li class="dropdown"><a th:text="${user.id}" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Contact Person<span class="caret"></span></a>
+					aria-expanded="false"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Your Profile</a></li>
-						<li><a href="#">Help</a></li>
-						<li><a href="#">Settings</a></li>
-						<li><a href="#">Sign out</a></li>
+						<li><a href="/signin">Sign out</a></li>
 					</ul></li>
 			</ul>
 			<form class="navbar-form navbar-right">
