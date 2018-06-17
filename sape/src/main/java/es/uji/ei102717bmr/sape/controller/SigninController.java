@@ -63,17 +63,7 @@ public class SigninController {
         // Authenticated correctly.
         // Save the data of the authenticated user data in the session
         session.setAttribute("user", user);
-        String nextUrl = (String) session.getAttribute("nextUrl");
-        String returnUrl = "redirect:/";
-        System.out.println(nextUrl + " fin");
-        if (nextUrl != null){
-        	returnUrl += nextUrl;
-        } else {
-        	
-        }
-        session.removeAttribute("nextUrl");
-        // Return to the corresponding page
-        return returnUrl;
+        return "redirect:/projectOffer/list/";
     }
 
     @RequestMapping("/signout")
