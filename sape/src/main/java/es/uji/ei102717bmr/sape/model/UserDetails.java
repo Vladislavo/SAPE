@@ -5,6 +5,7 @@ public class UserDetails {
     String mail;
     String password; 
     String role;
+    String name;
     
 
 	public String getRole() {
@@ -38,4 +39,14 @@ public class UserDetails {
     public void setPassword(String password) {
        this.password = password;
     }
+    
+    public String getName() {
+    	return name;
+    }
+    
+    public void setName(String name) {
+    	this.name = name;
+    }
+    
+    
 }

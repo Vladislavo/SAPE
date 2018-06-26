@@ -42,7 +42,7 @@
 						<li><a href="list.html">List</a></li>
 						<li><a href="add.html">Propose</a></li>
 					</ul></li>
-				<li class="dropdown"><a th:text="${user.id}" class="dropdown-toggle"
+				<li class="dropdown"><a th:text="${user.name}" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -88,7 +88,7 @@
 				</tr>
 				<tr>
 					<td><label>Description</label></td>
-					<td><input type="text" th:field="*{description}" /></td>
+					<td><textarea th:field="*{description}" ></textarea></td>
 				</tr>
 
 				<tr>
