@@ -65,8 +65,7 @@
 
 			<th:block th:each="projectOffer: ${projectOffers}">
 				<th:block th:each="student: ${students}">
-					<tr th:if="${student.itinerary} == ${projectOffer.itinerary}">
-
+					<tr th:if="${student.itinerary} == ${projectOffer.itinerary} and ${projectOffer.state} == 2">
 						<td>
 							<p>
 								<a class="btn btn-default btn-block" data-toggle="collapse"
@@ -79,16 +78,17 @@
 							</p>
 							<div class="collapse" th:id=${projectOffer.id}>
 								<div class="card-body">
-									<b>State</b>:
-									<p th:text="${projectOffer.state}"></p>
 									<b>Detailed description</b>:
 									<p th:text="${projectOffer.tasks}"></p>
 									<b>Goals:</b> <br>
 									<p th:text="${projectOffer.objectives}"></p>
 									<b>Itinerary:</b> <br>
 									<p th:text="${projectOffer.itinerary}"></p>
+									<p></p>
+									<b th:if="${assignment} != null">Students with an assigned project can't modify their preferences.</b>
+									<p></p>
 
-									<form action="#" id="preference" th:action="@{/preference/add}"
+									<form th:if="${assignment} == null" action="#" id="preference" th:action="@{/preference/add}"
 										th:object="${preference}" method="post"
 										onsubmit="return confirmation()">
 										 <input type="hidden"

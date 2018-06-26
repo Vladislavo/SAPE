@@ -75,16 +75,17 @@
 							</p>
 							<div class="collapse" th:id=${projectOffer.id}>
 								<div class="card-body">
-									<b>State</b>:
-									<p th:text="${projectOffer.state}"></p>
 									<b>Detailed description</b>:
 									<p th:text="${projectOffer.tasks}"></p>
 									<b>Goals:</b> <br>
 									<p th:text="${projectOffer.objectives}"></p>
 									<b>Itinerary:</b> <br>
 									<p th:text="${projectOffer.itinerary}"></p>
+									<p></p>
+									<b th:if="${assignment} != null">Students with an assigned project can't modify their preferences.</b>
+									<p></p>
 
-									<form action="#" id="preference" th:action="@{/preference/add}"
+									<form th:if="${assignment} == null" action="#" id="preference" th:action="@{/preference/add}"
 										th:object="${preference}" method="post" onsubmit="return confirmation()">
 										<input type="hidden" id="student_nif" name="student_nif"
 											value=${preference.student_nif}> <input type="hidden"
@@ -109,7 +110,7 @@
 											</div>
 											<div style="float: right; width: 300px">
 												<input class="btn btn-primary" type="submit"
-													onsubmit="success()" value="Add">
+													onsubmit="success()" value="Update">
 												<a th:href="@{/preference/delete/{id_ProjectOffer}(id_ProjectOffer=${projectOffer.id})}" class="btn btn-danger">Delete</a>
 											</div>
 											<br></br>

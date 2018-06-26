@@ -30,6 +30,7 @@ public class PreferenceController {
 	
 	private PreferenceDAO preferenceDAO;
 	private ProjectOfferDAO projectOfferDAO;
+	private AssignmentDAO assignmentDAO;
 	
 	@Autowired
     public void setPreferenceDao(PreferenceDAO preferenceDAO) {
@@ -39,15 +40,19 @@ public class PreferenceController {
     public void setProjectOfferDao(ProjectOfferDAO projectOfferDAO) {
         this.projectOfferDAO = projectOfferDAO;
     }
-	
+	@Autowired
+    public void setAssignmentDao(AssignmentDAO assignmentDAO) {
+        this.assignmentDAO = assignmentDAO;
+    }
 	@RequestMapping("/list") 
     public String listPreferences(HttpSession session, Model model) {
 		UserDetails user = (UserDetails) session.getAttribute("user");
 		String studentRole = "Student";
 		if (user.getRole().trim().equals(studentRole)) {
 	        model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
-
 	        model.addAttribute("projectOffers", projectOfferDAO.getProjectOffers());
+	        model.addAttribute("assignment", assignmentDAO.getAssignment(user.getId().trim()));
+	        
 	        return "preference/list";
 		}
 		else {

@@ -87,6 +87,8 @@ public class ProjectOfferController {
     			model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
     			model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
     			model.addAttribute("students", studentDAO.getStudent(user.getId().trim()));
+    			model.addAttribute("assignment", assignmentDAO.getAssignment(user.getId().trim()));
+    		
     		
     			return "student/list";
     		}
