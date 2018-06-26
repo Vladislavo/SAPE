@@ -87,11 +87,11 @@
 				</tr>
 				<tr>
 					<td><label>Start Date:</label></td>
-					<td><input type="text" th:field="*{startDate}" /></td>
+					<td><input type="text" maxlength="10" th:field="*{startDate}" /></td>
 				</tr>
 				<tr>
 					<td><label>Last Change Date:</label></td>
-					<td><input type="text" th:field="*{lastChangeDate}" /></td>
+					<td><input type="text" th:field="*{lastChangeDate}" readonly/></td>
 				</tr>
 				<tr>
 					<td><label>Tasks:</label></td>

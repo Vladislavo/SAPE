@@ -25,7 +25,7 @@ public class InternshipController {
 	private InternshipDAO internshipDAO;
 	private SapeServicesImpl sapeServicesImpl;
 	private ProjectOfferDAO projectOfferDAO;
-	private String studentRole = "Company";
+	private String role = "Company";
 	
 	@Autowired
 	public void setSapeServicesImpl(SapeServicesImpl sapeServicesImpl){
@@ -45,19 +45,19 @@ public class InternshipController {
     @RequestMapping("/list") 
     public String listInternship(HttpSession session, Model model) {
 		UserDetails user = (UserDetails) session.getAttribute("user");
-		if (user.getRole().trim().equals(studentRole)) {
+		if (user.getRole().trim().equals(role)) {
 			model.addAttribute("user", user);
 	        model.addAttribute("internships", internshipDAO.getInternships());
 	        model.addAttribute("projectOffers", sapeServicesImpl.getProjectOffers());
 	        return "internship/list";
 		}
-		return "/signin";
+		return "/home";
     }
     
     @RequestMapping(value="/add") 
     public String addInternship(HttpSession session, Model model) {
 		UserDetails user = (UserDetails) session.getAttribute("user");
-		if (user.getRole().trim().equals(studentRole)) {
+		if (user.getRole().trim().equals(role)) {
 			model.addAttribute("user", user);
 	        model.addAttribute("internships", internshipDAO.getInternships());
 	        Internship internship = new Internship();
@@ -71,7 +71,7 @@ public class InternshipController {
     public String processAddSubmit(HttpSession session, @ModelAttribute("internship") Internship internship, @ModelAttribute("projectofferTitle") String title, BindingResult bindingResult) {  
     	if (bindingResult.hasErrors()) return "internship/add";
 		UserDetails user = (UserDetails) session.getAttribute("user");
-		if (user.getRole().trim().equals(studentRole)) {
+		if (user.getRole().trim().equals(role)) {
 			internship.setCif_Company(user.getId());
 	    	internshipDAO.addInternship(internship);
 	    	ProjectOffer projectOffer = new ProjectOffer();
@@ -85,7 +85,7 @@ public class InternshipController {
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET) 
     public String editInternship(HttpSession session, Model model, @PathVariable long id) {
 		UserDetails user = (UserDetails) session.getAttribute("user");
-		if (user.getRole().trim().equals(studentRole)) {
+		if (user.getRole().trim().equals(role)) {
 			model.addAttribute("user", user);
 	        model.addAttribute("internship", internshipDAO.getInternship(id));
 	        return "internship/update"; 
@@ -97,7 +97,7 @@ public class InternshipController {
     public String processUpdateSubmit(HttpSession session, @PathVariable long id, @ModelAttribute("internship") Internship internship, BindingResult bindingResult) {
     	if (bindingResult.hasErrors()) return "internship/update";
 		UserDetails user = (UserDetails) session.getAttribute("user");
-		if (user.getRole().trim().equals(studentRole)) {
+		if (user.getRole().trim().equals(role)) {
 	    	internshipDAO.updateInternship(internship);
 	    	return "redirect:../list";
 		}
@@ -107,7 +107,7 @@ public class InternshipController {
     @RequestMapping(value="/projectOffer/update/{id}", method = RequestMethod.GET) 
     public String editProjectOffer(HttpSession session, Model model, @PathVariable long id) {
 		UserDetails user = (UserDetails) session.getAttribute("user");
-		if (user.getRole().trim().equals(studentRole)) {
+		if (user.getRole().trim().equals(role)) {
 			model.addAttribute("user", user);
 	        model.addAttribute("projectOffer", projectOfferDAO.getProjectOfferInternship(id));
 	        return "internship/projectOffer/update";
@@ -119,7 +119,7 @@ public class InternshipController {
     public String processUpdateSubmit(HttpSession session, @PathVariable long id, @ModelAttribute("projectOffer") ProjectOffer projectOffer, BindingResult bindingResult) {
     	if (bindingResult.hasErrors()) return "internship/projectOffer/update";
 		UserDetails user = (UserDetails) session.getAttribute("user");
-		if (user.getRole().trim().equals(studentRole)) {
+		if (user.getRole().trim().equals(role)) {
 	    	projectOfferDAO.updateProjectOfferInternship(projectOffer);
 	    	return "redirect:../../list";
 		}
