@@ -73,12 +73,14 @@ public class ProjectOfferController {
     	        model.addAttribute("projectCompanyMatches", sapeServices.projectIdCompanyNameMatches());
     	        model.addAttribute("internshipIdToMailContactPerson", sapeServices.internshipIdMailContactPerson());
     	        
+    	        
     	        return "btc/offers/list";
     		}
     		case "DCC": {
     			model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
     	        model.addAttribute("projectCompanyMatches", sapeServices.projectIdCompanyNameMatches());
     	        model.addAttribute("internshipIdToMailContactPerson", sapeServices.internshipIdMailContactPerson());
+    	        
     	        
     	        return "dcc/offers/list";
     		}
@@ -88,6 +90,8 @@ public class ProjectOfferController {
     			model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
     			model.addAttribute("students", studentDAO.getStudent(user.getId().trim()));
     			model.addAttribute("assignment", assignmentDAO.getAssignment(user.getId().trim()));
+    			System.out.println(user.toString());
+    			model.addAttribute("user", user);
     		
     		
     			return "student/list";
@@ -100,7 +104,7 @@ public class ProjectOfferController {
             UserDetails user = (UserDetails) session.getAttribute("user");
             model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
             model.addAttribute("assignments", assignmentDAO.getAssignment(user.getId().trim()));
-            System.out.println(assignmentDAO.getAssignment(user.getId().trim()));
+            model.addAttribute("user", user);
 
 
             return "student/assignments/list";

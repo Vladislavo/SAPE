@@ -52,6 +52,7 @@ public class PreferenceController {
 	        model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
 	        model.addAttribute("projectOffers", projectOfferDAO.getProjectOffers());
 	        model.addAttribute("assignment", assignmentDAO.getAssignment(user.getId().trim()));
+	        model.addAttribute("user", user);
 	        
 	        return "preference/list";
 		}
