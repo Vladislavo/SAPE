@@ -83,7 +83,7 @@
 									<b>Itinerary:</b> <br>
 									<p th:text="${projectOffer.itinerary}"></p>
 									<p></p>
-									<b th:if="${assignment} != null">Students with an assigned project can't modify their preferences.</b>
+									<b th:if="${assignment} != null">Students with an assigned or proposed project can't modify their preferences.</b>
 									<p></p>
 
 									<form th:if="${assignment} == null" action="#" id="preference" th:action="@{/preference/add}"
