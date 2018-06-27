@@ -58,7 +58,7 @@
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
 		<div th:if="${#lists.isEmpty(projectOffers)}">There are no
-			project offers in the data base.</div>
+			project offers in the database.</div>
 		<table th:unless="${#lists.isEmpty(projectOffers)}" id="tableOffers">
 
 			<th:block th:each="projectOffer: ${projectOffers}">
