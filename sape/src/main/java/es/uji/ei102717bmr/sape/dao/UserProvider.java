@@ -39,7 +39,8 @@ public class UserProvider implements UserDAO {
 	    	user.setMail(rs.getString("mail"));
 	    	user.setPassword(rs.getString("password"));
 	    	user.setRole(rs.getString("role"));
-	        user.setName(rs.getString("name"));
+	    	user.setName(rs.getString("name"));
+	        
 	        return user;
 	    }
 	}

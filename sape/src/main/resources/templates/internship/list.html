@@ -25,7 +25,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-header" href="#"><img alt="Brand"
+			<a class="navbar-header" href="/signout"><img alt="Brand"
 				src="../../img/mlogo.png"></a>
 		</div>
 
@@ -42,7 +42,7 @@
 						<li><a href="list.html">List</a></li>
 						<li><a href="add.html">Propose</a></li>
 					</ul></li>
-				<li class="dropdown"><a th:text="${user.id}"
+				<li class="dropdown"><a th:text="${user.name}"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"
 					aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -95,19 +95,34 @@
 								</p>
 								<div class="collapse" th:id="${internship.id}">
 									<div class="card card-body">
-										<b>Remuneration:</b> <br>
+										<b>Title:</b> <br>
+										<p th:text="${projectOffer.title}"></p>
+										<br> <b>Itinerary:</b> <br>
+										<p th:text="${projectOffer.itinerary}"></p>
+										<br> <b>Start Date:</b> <br>
+										<p th:text="${projectOffer.startDate}"></p>
+										<br> <b>Last Change Date:</b> <br>
+										<p th:text="${projectOffer.lastChangeDate}"></p>
+										<br> <b>Tasks:</b> <br>
+										<p th:text="${projectOffer.tasks}"></p>
+										<br> <b>Objectives:</b> <br>
+										<p th:text="${projectOffer.objectives}"></p>
+										<br> <b>Remuneration:</b> <br>
 										<p th:text="${internship.remuneration}"></p>
-										<br> <br> <b>Mail:</b> <br>
+										<br> <b>Mail:</b> <br>
 										<p th:text="${internship.mailContactPerson}"></p>
-										<br> <br> <b>Description:</b> <br>
+										<br> <b>Description:</b> <br>
 										<p th:text="${internship.description}"></p>
-										<br> <br> <a
+										<br> <a
 											th:href="@{/internship/update/__${internship.id}__}"><button
 												class="btn btn-primary">Edit Internship</button></a> <a
 											th:href="@{/internship/projectOffer/update/__${projectOffer.id_internship}__}"><button
-												class="btn btn-primary">Edit Project Offer</button></a><br> <br>
-										<form action="mailto:btc@uji.es" onclick="return confirmation()">
-													<a class="btn btn-warning" type="submit"> Request Cancellation</a>
+												class="btn btn-primary">Edit Project Offer</button></a><br>
+										<br>
+										<form action="mailto:btc@uji.es"
+											onclick="return confirmation()">
+											<a class="btn btn-warning" type="submit"> Request
+												Cancellation</a>
 										</form>
 									</div>
 								</div>

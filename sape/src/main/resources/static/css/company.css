@@ -40,6 +40,11 @@ h1 {
 	color: red;
 }
 
+.box {
+	rows="4" ;
+	cols="100";
+}
+
 #th {
 	height: 30px;
 	text-align: center;

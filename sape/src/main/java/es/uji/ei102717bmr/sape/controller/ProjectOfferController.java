@@ -102,7 +102,9 @@ public class ProjectOfferController {
 	    			model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
 	    			model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
 	    			model.addAttribute("students", studentDAO.getStudent(user.getId().trim()));
-	    		
+    				model.addAttribute("assignment", assignmentDAO.getAssignment(user.getId().trim()));
+    				model.addAttribute("user", user);
+
 	    			return "student/list";
 	    		}
 	    	}
@@ -264,7 +266,7 @@ public class ProjectOfferController {
             model.addAttribute("user", user);
             model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
             model.addAttribute("assignments", assignmentDAO.getAssignment(user.getId().trim()));
-            System.out.println(assignmentDAO.getAssignment(user.getId().trim()));
+            model.addAttribute("user", user);
 
 
             return "student/assignments/list";

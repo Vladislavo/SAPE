@@ -37,6 +37,7 @@ public class PreferenceController {
 	public void setSapeServicesImpl(SapeServices sapeServicesImpl){
 		this.sapeServices = sapeServicesImpl;
 	}
+	private AssignmentDAO assignmentDAO;
 	
 	@Autowired
     public void setPreferenceDao(PreferenceDAO preferenceDAO) {
@@ -46,7 +47,10 @@ public class PreferenceController {
     public void setProjectOfferDao(ProjectOfferDAO projectOfferDAO) {
         this.projectOfferDAO = projectOfferDAO;
     }
-	
+	@Autowired
+    public void setAssignmentDao(AssignmentDAO assignmentDAO) {
+        this.assignmentDAO = assignmentDAO;
+    }
 	@RequestMapping("/list") 
     public String listPreferences(HttpSession session, Model model) {
 		UserDetails user = (UserDetails) session.getAttribute("user");
@@ -56,7 +60,11 @@ public class PreferenceController {
 				case "Student": 
 					model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
 			        model.addAttribute("projectOffers", projectOfferDAO.getProjectOffers());
-			        return "preference/list";
+			        model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
+	        		model.addAttribute("assignment", assignmentDAO.getAssignment(user.getId().trim()));
+	        		model.addAttribute("user", user);
+
+				return "preference/list";
 				case "BTC": 
 					model.addAttribute("students", sapeServices.getStudents());
 					model.addAttribute("studentsPreferences", sapeServices.getStudentsPreferences());
@@ -71,7 +79,6 @@ public class PreferenceController {
 		} else {
     		model.addAttribute("user", new UserDetails());
     	}
-		
 		return "/home";
     }
 	
