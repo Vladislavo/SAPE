@@ -39,8 +39,27 @@ public class SigninController {
     private UserDAO userDao;
 
     @RequestMapping("/signin")
-    public String signin(Model model) {
-        model.addAttribute("user", new UserDetails());
+    public String signin(Model model, HttpSession session) {
+    	UserDetails user = (UserDetails) session.getAttribute("user");
+    	
+    	if(user != null) {
+    		switch(user.getRole().trim()) {
+				case "BTC": {
+					return "redirect:/projectOffer/list/";
+				}
+				case "DCC": {
+					return "redirect:/projectOffer/list/";
+				}
+				case "Company": {
+					return "redirect:/internship/list/";
+				}
+				case "Student": {
+					return "redirect:/student/list";
+				}
+    		}
+    	} else {
+    		model.addAttribute("user", new UserDetails());
+    	}
         return "signin";
     }
 
@@ -64,9 +83,22 @@ public class SigninController {
         // Save the data of the authenticated user data in the session
         session.setAttribute("user", user);
         
-        if (user.getRole().trim().equals("Company")) return "redirect:/internship/list/";
+        switch(user.getRole().trim()) {
+			case "BTC": {
+				return "redirect:/projectOffer/list/";
+			}
+			case "DCC": {
+				return "redirect:/projectOffer/list/";
+			}
+			case "Company": {
+				return "redirect:/internship/list/";
+			}
+			case "Student": {
+				return "redirect:/student/list";
+			}
+        }
         
-        return "redirect:/projectOffer/list/";
+        return "signin";
     }
 
     @RequestMapping("/signout")

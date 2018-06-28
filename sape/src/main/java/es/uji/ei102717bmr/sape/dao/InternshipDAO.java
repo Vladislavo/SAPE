@@ -35,7 +35,7 @@ public class InternshipDAO {
 
 	        return internship;
 	    }
-	}
+	   }
 	
 	public List<Internship> getInternships(){
 		return this.jdbcTemplate.query("select * from Internship;", new InternshipMapper());

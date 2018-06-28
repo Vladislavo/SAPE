@@ -2,6 +2,11 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="/../css/btc.css" th:href="@{/../css/btc.css}" rel="stylesheet"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" 
+	integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" 
+	crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -21,10 +26,18 @@
       	    				</form>
 	  			</li>
           			<li class="dropdown">
-            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management <span class="caret"></span></a>
             				<ul class="dropdown-menu">
-              					<li><a href="/profile">Your profile</a></li>
-              					<li><a href="/help">Help</a></li>
+              					<li><a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}">Offers</a></li>
+              					<li><a href="/assignment/list.html" th:href="@{/assignment/list.html}">Assignments</a></li>
+              					<li><a href="/company/list.html" th:href="@{/company/list.html}">Companies</a></li>
+              					<li><a href="/preference/list.html" th:href="@{/preference/list.html}">Students' preferences</a></li>
+            				</ul>
+          			</li>
+      			
+          			<li class="dropdown">
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${user.name}">  <span class="caret"></span></a>
+            				<ul class="dropdown-menu">
               					<li><a href="/signout">Sign out</a></li>
             				</ul>
           			</li>
@@ -33,22 +46,27 @@
   	</div><!-- /.container-fluid -->
 </nav>
 
-<body>
-   <h1>List of Reviews for </h1>
-   <table id="tableReviews">
-    <thead>
-       <tr>
-         <th>Creation Date</th>
-         <th>Review Text</th>
-       </tr>
-    </thead>
-    <tbody>
-     <tr th:each="review: ${reviews}">
-      <td th:text="${review.creationDate}"></td>
-      <td th:text="${review.text}"></td>
-     </tr>
-    </tbody>
-   </table>
+<body class="center">
+	<div th:if="${#lists.isEmpty(reviews)}">
+	<h2>Project has no reviews.</h2>
+	</div>
+	<div th:unless="${#lists.isEmpty(reviews)}">
+   <h1>List of Reviews</h1>
+	   <table id="tableReviews" class="pure-table pure-table-horizontal">
+	    <thead>
+	       <tr>
+	         <th>Creation Date</th>
+	         <th>Review Text</th>
+	       </tr>
+	    </thead>
+	    <tbody>
+	     <tr th:each="review: ${reviews}">
+	      <td th:text="${review.creationDate}"></td>
+	      <td th:text="${review.text}"></td>
+	     </tr>
+	    </tbody>
+	   </table>
+	   </div>
    <div class="bttcenter">
    	<a th:href="@{/projectOffer/list}"><button type="button" class="btn btn-primary">Back</button></a>
    </div>

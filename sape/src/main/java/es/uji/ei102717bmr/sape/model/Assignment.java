@@ -11,9 +11,6 @@ public class Assignment {
 	private long id_projectoffer;
 	private String nif_student;
 	private String mail_tutor;
-	//private ProjectOffer projectOffer;
-	//private Tutor tutor;
-	//private Student student;
 	
 	public Assignment(){
 		super();

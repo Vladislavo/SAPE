@@ -1,0 +1,95 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link href="/css/index.css" th:href="@{/css/btc.css}" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" 
+	integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" 
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-header" href="/"><img alt="Brand"
+				src="/img/mlogo.png"></a>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<form class="navbar-form navbar-right" style="margin-right: 150px">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search SAPE">
+						</div>
+						<button type="submit" class="btn btn-default">Search</button>
+					</form>
+				</li>
+				<li class="dropdown">
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management <span class="caret"></span></a>
+            				<ul class="dropdown-menu">
+              					<li><a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}">Offers</a></li>
+              					<li><a href="/assignment/list.html" th:href="@{/assignment/list.html}">Assignments</a></li>
+              					<li><a href="/company/list.html" th:href="@{/company/list.html}">Companies</a></li>
+              					<li><a href="/preference/list.html" th:href="@{/preference/list.html}">Students' preferences</a></li>
+            				</ul>
+          			</li>
+      			
+          			<li class="dropdown">
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${user.name}">  <span class="caret"></span></a>
+            				<ul class="dropdown-menu">
+              					<li><a href="/signout">Sign out</a></li>
+            				</ul>
+          			</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</nav>
+
+<body>
+	<div class="center">
+		<h1 th:text=${company.name}></h1>
+	</div>
+	
+	
+
+	<div class="col-md-3"></div>
+	
+	<table class="pure-table pure-table-horizontal">
+		<tr>
+			<td> Company's CIF </td>
+			<td th:text=${company.cif}></td>
+		</tr>
+		<tr>
+			<td> E-mail </td>
+			<td th:text=${company.mail}></td>
+		</tr>
+		<tr>
+			<td> Telephone </td>
+			<td th:text=${company.telephone}></td>
+		</tr>
+		<tr>
+			<td> Address </td>
+			<td th:text=${company.address}></td>
+		</tr>
+		<tr>
+			<td> VAT </td>
+			<td th:text=${company.vat}></td>
+		</tr>
+	</table>
+	
+
+	<div class="footer navbar-fixed-bottom">
+		<p class="center">
+			SAPE is a non commercial trademark created for educational purposes.
+			<br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved.
+			&nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a>
+		</p>
+	</div>
+</body>
+</html>

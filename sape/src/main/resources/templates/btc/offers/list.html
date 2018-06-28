@@ -21,14 +21,22 @@
       	    				</form>
 	  			</li>
           			<li class="dropdown">
-            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management <span class="caret"></span></a>
             				<ul class="dropdown-menu">
-              					<li><a href="/profile">Your profile</a></li>
-              					<li><a href="/help">Help</a></li>
+              					<li><a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}">Offers</a></li>
+              					<li><a href="/assignment/list.html" th:href="@{/assignment/list.html}">Assignments</a></li>
+              					<li><a href="/company/list.html" th:href="@{/company/list.html}">Companies</a></li>
+              					<li><a href="/preference/list.html" th:href="@{/preference/list.html}">Students' preferences</a></li>
+            				</ul>
+          			</li>
+      			
+          			<li class="dropdown">
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${user.name}">  <span class="caret"></span></a>
+            				<ul class="dropdown-menu">
               					<li><a href="/signout">Sign out</a></li>
             				</ul>
           			</li>
-      			</ul>
+
     		</div>
   	</div><!-- /.container-fluid -->
 </nav>
@@ -38,11 +46,21 @@
 		<h1> Manage Offers </h1> <br>
 		<a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}"><button class="btn btn-primary"> Offers </button></a>
 		<a href="/assignment/list.html" th:href="@{/assignment/list.html}"><button class="btn btn-primary"> Assignments </button></a>
+		<a href="/company/list.html" th:href="@{/company/list.html}"><button class="btn btn-primary"> Companies </button></a>
+		<a href="/preference/list.html" th:href="@{/preference/list.html}"><button class="btn btn-primary"> Students' Preferences </button></a>
 	</div>
 	<div class="bttcenter">
   		<input type="text" id="inputOffers" onkeyup="filterOffers()" placeholder="Search offers...">
 	</div>
-	
+	<div class="center">
+		Sort by state:
+		<a href="/projectOffer/list/revision" th:href="@{/projectOffer/list/revision}"><button class="btn btn-default"> Revision </button></a>
+		<a href="/projectOffer/list/accepted" th:href="@{/projectOffer/list/accepted}"><button class="btn btn-default"> Accepted </button></a>
+		<a href="/projectOffer/list/visible" th:href="@{/projectOffer/list/visible}"><button class="btn btn-default"> Visible </button></a>
+		<a href="/projectOffer/list/proposed" th:href="@{/projectOffer/list/proposed}"><button class="btn btn-default"> Proposed </button></a>
+		<a href="/projectOffer/list/assigned" th:href="@{/projectOffer/list/assigned}"><button class="btn btn-default"> Assigned </button></a>
+		<a href="/projectOffer/list/assigned" th:href="@{/projectOffer/list}"><button class="btn btn-default"> All </button></a>
+	</div> <br>
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
 		<div th:if="${#lists.isEmpty(projectOffers)}">
@@ -58,20 +76,39 @@
    				</p>
      				<div class="collapse" th:id="${projectOffer.id}">
   					<div class="card card-body">
-					    	<b>State</b>: <p th:text="${projectOffer.state}"></p> <br>
+					    	<b>State</b>: <th:block th:switch="${projectOffer.state}">
+											  <div th:case="0">
+											     <p>Revision</p>
+											  </div>
+											  <div th:case="1">
+											     <p>Accepted</p>
+											  </div>
+											  <div th:case="2">
+											     <p>Visible</p>
+											  </div>
+											  <div th:case="3">
+											     <p>Proposed</p>
+											  </div>
+											  <div th:case="4">
+											     <p>Assigned</p>
+											  </div>
+										</th:block> <br>
 					    	<b>Company</b> : <p th:text="${projectCompanyMatches['__${projectOffer.id}__']}"></p> <br>
 					    	<b>Detailed description</b>: <br> <p th:text="${projectOffer.tasks}"></p> <br>
 					    	<b>Goals:</b> <br> <p th:text="${projectOffer.objectives}"></p> <br>
 					    	<b>Itinerary:</b> <br> <p th:text="${projectOffer.itinerary}"></p> <br>
 					    	<b>Contact person:</b> <br> <p th:text="${internshipIdToMailContactPerson['__${projectOffer.id_internship}__']}"></p> <br>
+							<a th:href="'/company/info/' + ${projectIdToCompanyCif['__${projectOffer.id}__']}">More information about company</a>
 						<p>
 							<a th:href="@{/projectOffer/update/__${projectOffer.id}__}"> 
 								<button type="button" class="btn btn-primary">Modify Offer</button>
 							</a>
-							<a th:href="@{/review/list/__${projectOffer.id}__}"> 
-								<button type="button" class="btn btn-primary">List reviews</button>
-							</a>
-							<a class="btn btn-primary" data-toggle="collapse" th:href="'#reject'+${projectOffer.id}" role="button" aria-expanded="true" aria-controls="reject">
+							
+								<a th:if="${projectOffer.id} != null" th:href="@{/review/list/__${projectOffer.id}__}"> 
+									<button type="button" class="btn btn-primary">List reviews</button>
+								</a>
+							
+							<a class="btn btn-primary" data-toggle="collapse" onsubmit="success()" th:href="'#reject'+${projectOffer.id}" role="button" aria-expanded="true" aria-controls="reject">
 							    Reject Offer
 							</a>
 							<a class="btn btn-primary" data-toggle="collapse" th:href="'#moreinfo'+${projectOffer.id}" role="button" aria-expanded="true" aria-controls="moreinfo">
@@ -80,25 +117,34 @@
 							<a class="btn btn-success" data-toggle="collapse" th:href="'#approve'+${projectOffer.id}" role="button" aria-expanded="false" aria-controls="approve">
 							    Approve Offer
 							</a>
+							<a class="btn btn-success" data-toggle="collapse" th:href="'#publish'+${projectOffer.id}" role="button" aria-expanded="false" aria-controls="approve">
+							    Publish
+							</a>
 						</p>
 
 						<div class="collapse" th:id="'reject'+${projectOffer.id}">
 						  <div class="card card-body">
-						    <input type="text" class="set-width" name="reject" value="Dear friend, after the revision we have considered your offer proposal as not adequate. Please contact us in case you are not agree." > <br><br>
-						    <a th:href="@{/projectOffer/delete/__${projectOffer.id}__}"><input type="submit" class="btn btn-primary" value="Reject"></a>
+						    <textarea class="set-width" name="reject">Dear friend, after the revision we have considered your offer proposal as not adequate. Please contact us in case you are not agree.</textarea> <br><br>
+						    <a onclick="return confirmation()" th:href="@{/projectOffer/delete/__${projectOffer.id}__}"><input type="submit" class="btn btn-danger" value="Reject"></a>
 						  </div>
 						</div>
 
 						<div class="collapse" th:id="'moreinfo'+${projectOffer.id}">
 						  <div class="card card-body">
-						    <input type="text" class="set-width" name="moreinfo" value="Dear friend, we have considered your offer and found a lack of information. Please modify next fields: "> <br><br>
+						    <textarea class="set-width" name="moreinfo">Dear friend, we have considered your offer and found a lack of information. Please modify next fields:</textarea> <br><br>
 						    <a th:href="'mailto:'+${internshipIdToMailContactPerson['__${projectOffer.id_internship}__']}"><input type="submit" class="btn btn-primary" value="Request"></a>
 						  </div>
 						</div>
 						<div class="collapse" th:id="'approve'+${projectOffer.id}">
 						  <div class="card card-body">
-						    <input type="text" class="set-width" name="approve" value="Your offer has been approved and made public."> <br><br>
-						    <input type="submit" class="btn btn-success" value="Approve">
+						    <textarea class="set-width" name="approve">Your offer has been approved.</textarea> <br><br>
+						    <a th:href="@{/projectOffer/approve/__${projectOffer.id}__}"><input type="submit" class="btn btn-success" value="Approve"></a>
+						  </div>
+						</div>
+						<div class="collapse" th:id="'publish'+${projectOffer.id}">
+						  <div class="card card-body">
+						    <textarea class="set-width" name="approve">Your offer has been made public.</textarea> <br><br>
+						    <a th:href="@{/projectOffer/publish/__${projectOffer.id}__}"><input type="submit" class="btn btn-success" value="Publish"></a>
 						  </div>
 						</div>
 					</div>
@@ -131,6 +177,17 @@
       					}
     				}
   			}
+		}
+		
+		function confirmation() {
+			var result = confirm("Are you sure? This action will delete the project offer from the database. ");
+			if (result) {
+				return true;
+			    
+			}
+			else{
+				return false;
+			}
 		}
 	</script>
 </body>

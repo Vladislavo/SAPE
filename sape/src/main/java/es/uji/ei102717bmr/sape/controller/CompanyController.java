@@ -1,5 +1,7 @@
 package es.uji.ei102717bmr.sape.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import es.uji.ei102717bmr.sape.dao.CompanyDAO;
 import es.uji.ei102717bmr.sape.model.Company;
+import es.uji.ei102717bmr.sape.model.UserDetails;
 
 @Controller
 @RequestMapping("/company")
@@ -22,8 +25,20 @@ public class CompanyController {
     	this.companyDAO = companyDAO;
     }
     
-    @RequestMapping("/list") 
-    public String listCompanies(Model model) {
+    @RequestMapping("/info/{cif}") 
+    public String getCompany(HttpSession session, @PathVariable String cif, Model model) {
+    	UserDetails user = (UserDetails) session.getAttribute("user");
+    	if(user != null)
+    		model.addAttribute("user", user);
+        model.addAttribute("company", companyDAO.getCompany(cif));
+        return "company/info";
+    }
+    
+    @RequestMapping("/list")
+    public String listCompanies(HttpSession session, Model model) {
+    	UserDetails user = (UserDetails) session.getAttribute("user");
+    	if(user != null)
+    		model.addAttribute("user", user);
         model.addAttribute("companies", companyDAO.getCompanies());
         return "company/list";
     }

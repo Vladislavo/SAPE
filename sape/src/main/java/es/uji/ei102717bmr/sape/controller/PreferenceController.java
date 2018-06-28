@@ -21,6 +21,7 @@ import es.uji.ei102717bmr.sape.dao.PreferenceDAO;
 import es.uji.ei102717bmr.sape.dao.AssignmentDAO;
 import es.uji.ei102717bmr.sape.model.Preference;
 import es.uji.ei102717bmr.sape.model.UserDetails;
+import es.uji.ei102717bmr.sape.services.SapeServices;
 import es.uji.ei102717bmr.sape.dao.ProjectOfferDAO;
 
 
@@ -30,6 +31,12 @@ public class PreferenceController {
 	
 	private PreferenceDAO preferenceDAO;
 	private ProjectOfferDAO projectOfferDAO;
+	private SapeServices sapeServices;
+	
+	@Autowired
+	public void setSapeServicesImpl(SapeServices sapeServicesImpl){
+		this.sapeServices = sapeServicesImpl;
+	}
 	
 	@Autowired
     public void setPreferenceDao(PreferenceDAO preferenceDAO) {
@@ -43,16 +50,29 @@ public class PreferenceController {
 	@RequestMapping("/list") 
     public String listPreferences(HttpSession session, Model model) {
 		UserDetails user = (UserDetails) session.getAttribute("user");
-		String studentRole = "Student";
-		if (user.getRole().trim().equals(studentRole)) {
-	        model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
-
-	        model.addAttribute("projectOffers", projectOfferDAO.getProjectOffers());
-	        return "preference/list";
-		}
-		else {
-			return "/home";
-		}
+		if(user != null) {
+			model.addAttribute("user", user);
+			switch(user.getRole().trim()) {
+				case "Student": 
+					model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
+			        model.addAttribute("projectOffers", projectOfferDAO.getProjectOffers());
+			        return "preference/list";
+				case "BTC": 
+					model.addAttribute("students", sapeServices.getStudents());
+					model.addAttribute("studentsPreferences", sapeServices.getStudentsPreferences());
+					model.addAttribute("profectOfferToTitle", sapeServices.getProjectOffersToTitles());
+					return "/btc/preference/list";
+				case "DCC":
+					model.addAttribute("students", sapeServices.getStudents());
+					model.addAttribute("studentsPreferences", sapeServices.getStudentsPreferences());
+					model.addAttribute("profectOfferToTitle", sapeServices.getProjectOffersToTitles());
+					return "/dcc/preference/list";
+			}
+		} else {
+    		model.addAttribute("user", new UserDetails());
+    	}
+		
+		return "/home";
     }
 	
     @RequestMapping(value="/add") 

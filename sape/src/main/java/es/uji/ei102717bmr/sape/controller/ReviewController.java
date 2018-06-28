@@ -1,17 +1,23 @@
 package es.uji.ei102717bmr.sape.controller;
 
 import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import es.uji.ei102717bmr.sape.dao.ReviewDAO;
-import es.uji.ei102717bmr.sape.model.Review;;
+import es.uji.ei102717bmr.sape.model.Review;
+import es.uji.ei102717bmr.sape.model.UserDetails;
 
 @Controller
 @RequestMapping("/review")
@@ -23,10 +29,14 @@ public class ReviewController {
     public void setReviewDao(ReviewDAO reviewDao) {
         this.reviewDao = reviewDao;
     }
-    @RequestMapping("/list") 
-    public String listReviews(Model model) {
-        model.addAttribute("reviews", reviewDao.getReviews());
-        return "review/list";
+    @RequestMapping("/list/{id_projectOffer}") 
+    public String listReviews(HttpSession session, Model model, @PathVariable String id_projectOffer) {
+        model.addAttribute("reviews", reviewDao.getReviews(Long.valueOf(id_projectOffer)));
+        UserDetails user = (UserDetails) session.getAttribute("user");
+        if(user != null){
+        	model.addAttribute("user", user);
+        }
+        return "btc/offers/listReviews";
     }
     @RequestMapping(value="/add") 
     public String addReview(Model model) {

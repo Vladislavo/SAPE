@@ -73,10 +73,10 @@ public class AssignmentDAO {
 		this.jdbcTemplate.update("update Assignment set state = ? where nif_student = ?;", 
 				state, nifStudent);
 	}
-	public void updateAssignment(Assignment assignment) {
+	public void updateAssignment(Assignment assignment , String id_projectOffer_old) {
 		this.jdbcTemplate.update("update Assignment set id_projectoffer = ?, nif_student = ?, mail_tutor = ? where nif_student = ? AND id_projectoffer = ?;", 
 				assignment.getId_projectoffer(), assignment.getNif_student(), assignment.getMail_tutor(), assignment.getNif_student(), 
-				assignment.getId_projectoffer());
+				Long.valueOf(id_projectOffer_old));
 	}
 	public void deleteAssignment(String nifStudent, Long id_projectoffer) {
 		this.jdbcTemplate.update("delete from Assignment where nif_student = ? AND id_projectoffer = ?;", 

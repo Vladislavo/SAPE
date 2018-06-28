@@ -19,8 +19,28 @@ public class IndexSigninController {
     private UserDAO userDao;
 
     @RequestMapping("/home")
-    public String indexSignin(Model model) {
-        model.addAttribute("user", new UserDetails());
+    public String indexSignin(Model model, HttpSession session) {
+    	UserDetails user = (UserDetails) session.getAttribute("user");
+    	
+    	if(user != null) {
+    		switch(user.getRole().trim()) {
+				case "BTC": {
+					return "redirect:/projectOffer/list/";
+				}
+				case "DCC": {
+					return "redirect:/projectOffer/list/";
+				}
+				case "Company": {
+					return "redirect:/internship/list/";
+				}
+				case "Student": {
+					return "redirect:/student/list";
+				}
+    		}
+    	} else {
+    		model.addAttribute("user", new UserDetails());
+    	}
+
         return "home";
     }
 
@@ -43,7 +63,23 @@ public class IndexSigninController {
         // Authenticated correctly.
         // Save the data of the authenticated user data in the session
         session.setAttribute("user", user);
-       	return "redirect:/projectOffer/list";
+        
+        switch(user.getRole().trim()) {
+		case "BTC": {
+			return "redirect:/projectOffer/list/";
+		}
+		case "DCC": {
+			return "redirect:/projectOffer/list/";
+		}
+		case "Company": {
+			return "redirect:/internship/list/";
+		}
+		case "Student": {
+			return "redirect:/student/list";
+		}
+    }
+    
+    return "redirect:/signin";
 
     }
 }

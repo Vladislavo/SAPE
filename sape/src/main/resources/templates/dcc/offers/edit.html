@@ -21,10 +21,17 @@
       	    				</form>
 	  			</li>
           			<li class="dropdown">
-            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management <span class="caret"></span></a>
             				<ul class="dropdown-menu">
-              					<li><a href="/profile">Your profile</a></li>
-              					<li><a href="/help">Help</a></li>
+              					<li><a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}">Offers</a></li>
+              					<li><a href="/company/list.html" th:href="@{/company/list.html}">Companies</a></li>
+              					<li><a href="/preference/list.html" th:href="@{/preference/list.html}">Students' preferences</a></li>
+            				</ul>
+          			</li>
+      			
+          			<li class="dropdown">
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${user.name}">  <span class="caret"></span></a>
+            				<ul class="dropdown-menu">
               					<li><a href="/signout">Sign out</a></li>
             				</ul>
           			</li>
@@ -35,45 +42,22 @@
 
 <body>
 	<div class="center">
-		<h2>Edit Project Offer</h2>
+		<h2>Edit Project Offer's Itinerary</h2>
 		<form action="#" th:action="@{/projectOffer/update/{id}(id=${projectOffer.id})}"
                      th:object="${projectOffer}" method="post">
 			<table class="bttcenter">
-				<tr>
-		            <td><label>Title</label></td>
-		            <td><input type="text" th:field="*{title}" /></td>
-		        </tr>
 		        <tr>
 		            <td><label>Itinerary</label></td>
-		            <td><input type="text" th:field="*{itinerary}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>Tasks</label></td>
-		            <td><input type="text" th:field="*{tasks}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>Objectives</label></td>
-		            <td><input type="text" th:field="*{objectives}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>State</label></td>
-		            <td><input type="text" th:field="*{state}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>Internship ID</label></td>
-		            <td><input type="text" th:field="*{id_internship}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>Start date</label></td>
-		            <td><input type="text" th:field="*{startDate}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>Last change date</label></td>
-		            <td><input type="text" th:field="*{lastChangeDate}" /></td>
+		            <td>
+		            	<select th:field="*{itinerary}">
+		            		<option value="Sistemas de Información">Sistemas de Información</option>
+		            		<option value="Ingeniería del Software">Ingeniería del Software</option>
+		            		<option value="Tecnologías de la Información">Tecnologías de la Información</option>
+		            		<option value="Ingeniería de Computadores">Ingeniería de Computadores</option>
+		            	</select>
 		        </tr>
 			</table>
-				
-	    <input type="text" class="set-width" name="review" placeholder="Notify the contact person about changes you have introduced..."> <br><br>
+	    <input type="text" class="set-width" required placeholder="Notify the contact person about changes you have introduced..."> <br><br>
 	    <input type="submit" class="btn btn-primary" value="Apply">
 	    </form>
 	</div>

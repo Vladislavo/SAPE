@@ -1,0 +1,123 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link href="/css/index.css" th:href="@{/css/btc.css}" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-header" href="/"><img alt="Brand"
+				src="/img/mlogo.png"></a>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<form class="navbar-form navbar-right" style="margin-right: 150px">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search SAPE">
+						</div>
+						<button type="submit" class="btn btn-default">Search</button>
+					</form>
+				</li>
+				<li class="dropdown"><a href="#"
+					class="dropdown-toggle navbar-right" data-toggle="dropdown"
+					role="button" aria-haspopup="true" aria-expanded="false">Profile
+						<span class="caret"></span>
+				</a>
+					<li class="dropdown">
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management <span class="caret"></span></a>
+            				<ul class="dropdown-menu">
+              					<li><a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}">Offers</a></li>
+              					<li><a href="/assignment/list.html" th:href="@{/assignment/list.html}">Assignments</a></li>
+              					<li><a href="/company/list.html" th:href="@{/company/list.html}">Companies</a></li>
+              					<li><a href="/preference/list.html" th:href="@{/preference/list.html}">Students' preferences</a></li>
+            				</ul>
+          			</li>
+      			
+          			<li class="dropdown">
+            				<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${user.name}">  <span class="caret"></span></a>
+            				<ul class="dropdown-menu">
+              					<li><a href="/signout">Sign out</a></li>
+            				</ul>
+          			</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</nav>
+
+<body>
+	<div class="center">
+		<h1>Registered companies</h1>
+		<br> 		<a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}"><button class="btn btn-primary"> Offers </button></a>
+		<a href="/assignment/list.html" th:href="@{/assignment/list.html}"><button class="btn btn-primary"> Assignments </button></a>
+		<a href="/company/list.html" th:href="@{/company/list.html}"><button class="btn btn-primary"> Companies </button></a>
+		<a href="/preference/list.html" th:href="@{/preference/list.html}"><button class="btn btn-primary"> Students' Preferences </button></a>
+	</div>
+	
+	<div class="bttcenter">
+		<input type="text" id="inputOffers" onkeyup="filterOffers()"
+			placeholder="Search companies...">
+	</div>
+
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<div th:if="${#lists.isEmpty(companies)}">There are no companies registered.</div>
+			<table th:unless="${#lists.isEmpty(companies)}" id="tableOffers">
+				<tr th:each="company: ${companies}">
+					<td>
+					<p>
+						<a class="btn btn-default btn-block" data-toggle="collapse" th:href="'#'+${company.cif}" role="button" aria-expanded="false" aria-controls="offer1">
+	    					<strong th:text="${company.name}"></strong>
+						</a>
+	   				</p>
+	     				<div class="collapse" th:id="${company.cif}">
+	  					<div class="card card-body">
+						    	<b>E-mail</b>: <p th:text="${company.mail}"></p> <br>
+						    	<b>Telephone</b>: <br> <p th:text="${company.telephone}"></p> <br>
+						    	<b>Address:</b> <br> <p th:text="${company.address}"></p> <br>
+						    	<b>VAT:</b> <br> <p th:text="${company.vat}"></p> <br>
+						</div>
+					</div>
+					</td>
+				</tr>
+			</table>
+	</div>
+
+	<div class="footer navbar-fixed-bottom">
+		<p class="center">
+			SAPE is a non commercial trademark created for educational purposes.
+			<br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved.
+			&nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a>
+		</p>
+	</div>
+	<script>
+		function filterOffers() {
+			// Declare variables
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("inputOffers");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("tableOffers");
+			tr = table.getElementsByTagName("tr");
+			// Loop through all table rows, and hide those who don't match the search query
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+</body>
+</html>

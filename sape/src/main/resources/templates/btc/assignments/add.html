@@ -38,61 +38,56 @@
           			</li>
       			</ul>
     		</div>
-  	</div><!-- /.container-fluid -->
+  	</div>
 </nav>
 
 <body>
 	<div class="center">
-		<h2>Edit Project Offer</h2>
-		<form action="#" th:action="@{/projectOffer/update/{id}(id=${projectOffer.id})}"
-                     th:object="${projectOffer}" method="post">
-			<table class="bttcenter">
+		<h1> Propose New Assignment For</h1>
+		<h1 th:text="${studentsMap['__${nif_student}__']}"></h1>
+	</div>
+
+	<div class="bttcenter">
+	<form action="#" id="assignments" th:action="@{/assignment/add}"
+                     		th:object="${assignment}" method="post">
+		<table>
+			<thead>
 				<tr>
-		            <td><label>Title</label></td>
-		            <td><input type="text" th:field="*{title}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>Itinerary</label></td>
-		            <td>
-		            	<select th:field="*{itinerary}">
-		            		<option value="Sistemas de Información">Sistemas de Información</option>
-		            		<option value="Ingeniería del Software">Ingeniería del Software</option>
-		            		<option value="Tecnologías de la Información">Tecnologías de la Información</option>
-		            		<option value="Ingeniería de Computadores">Ingeniería de Computadores</option>
-		            	</select>
-		        </tr>
-		        <tr>
-		            <td><label>Tasks</label></td>
-		            <td><input type="text" th:field="*{tasks}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>Objectives</label></td>
-		            <td><input type="text" th:field="*{objectives}" /></td>
-		        </tr>
-		        <!--  <tr>
-		            <td><label>State</label></td>
-		            <td><input type="text" th:field="*{state}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>Internship ID</label></td>
-		            <td><input type="text" th:field="*{id_internship}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>Start date</label></td>
-		            <td><input type="text" th:field="*{startDate}" /></td>
-		        </tr>
-		        <tr>
-		            <td><label>Last change date</label></td>
-		            <td><input type="text" th:field="*{lastChangeDate}" /></td>
-		        </tr>
-		        -->
-			</table>
-	    <input type="text" class="set-width" required placeholder="Notify the contact person about changes you have introduced..."> <br><br>
-	    <input type="submit" class="btn btn-primary" value="Apply">
-	    </form>
+					<th> Project </th>
+					<th> Tutor </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<select required th:field="*{id_projectoffer}" form="assignments">
+							<option value="-1"> Select project offer </option>
+							
+								<option th:each="projectOfferNotAssigned : ${projectOffersNotAssigned}"
+										th:text="${projectOfferNotAssigned.title}"
+										th:value="${projectOfferNotAssigned.id}">
+								</option>
+						</select>
+						<div class="error" th:if="${#fields.hasErrors('id_projectoffer')}" th:errors="*{id_projectoffer}"></div>
+					</td>
+					<input type="hidden" name="nif_student" th:value=${nif_student}>
+					<td>
+						<select required th:field="*{mail_tutor}" form="assignments">
+							<option value=""> Select Tutor </option>
+								<option th:each="tutor : ${tutors}" th:value="${tutor.mail}" 
+										th:text="${tutor.name}">
+								</option>
+						</select>
+					</td>
+				</tr>	
+			</tbody>
+		</table>
+		<div class="center">
+			<input class="btn btn-primary" type="submit" value="Propose">
+		</div>
+		</form>
 	</div>
 </body>
-						
 <div class="footer navbar-fixed-bottom">
 	<p class="center"> SAPE is a non commercial trademark created for educational purposes. <br> &copy; 2018 <a href="/">SAPE</a>. All rights reserved. &nbsp <a href="#">Terms of Service</a> &nbsp <a href="#">Privacy</a></p>
 </div>

@@ -49,7 +49,7 @@
 <body>
 	<div class="center">
 		<h1> Manage Offers </h1> <br>
-				<a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}"><button class="btn btn-primary"> Offers </button></a>
+		<a href="/projectOffer/list.html" th:href="@{/projectOffer/list.html}"><button class="btn btn-primary"> Offers </button></a>
 		<a href="/assignment/list.html" th:href="@{/assignment/list.html}"><button class="btn btn-primary"> Assignments </button></a>
 		<a href="/company/list.html" th:href="@{/company/list.html}"><button class="btn btn-primary"> Companies </button></a>
 		<a href="/preference/list.html" th:href="@{/preference/list.html}"><button class="btn btn-primary"> Students' Preferences </button></a>
@@ -71,76 +71,25 @@
 	   				
 	   				<div class="collapse" th:id="${student.nif}">
 						<div class="card card-body">
-							<div th:if="${#lists.isEmpty(studentNifAssignment['__${student.nif}__'])}">
-								Student has no project assigned. <br>
-								<a th:href="@{/assignment/add/__${student.nif}__}">Propose manually</a>
-							</div>
-							<div th:with="assignment=${studentNifAssignment['__${student.nif}__']}">
-								<div th:if="${studentNifAssignment['__${student.nif}__']} != null">
-									<p>Assigned Project</p>
-									<table class="pure-table pure-table-horizontal">
-										<thead>
-											<tr>
-												<th> Project </th>
-												<th> Tutor </th>
-												<th> State </th>
-												<th ></th>
-												<th ></th>
-											</tr>
-										</thead>
-										<tbody>
-											<div>
-												<tr>
-													<td th:text="${studentNifToProjectAssigned['__${student.nif}__']}"></td>
-													<td th:text="${tutorsMap['__${assignment.mail_tutor}__']}"></td>
-													<div th:switch="${assignment.state}">
-														<td th:case="true">Assigned</td>
-														<td th:case="false">Proposed</td>
-													</div>
-													<td><a th:href="@{/assignment/update/__${student.nif}__&__${assignment.id_projectoffer}__}"><button type="button" class="btn btn-default"> Edit </button></a></td>
-													<td><a th:href="@{/assignment/delete/__${student.nif}__&__${assignment.id_projectoffer}__}" onclick="return confirmation()"><button type="button" class="btn btn-danger"> Delete </button></a></td>
-												</tr>
-											</div>
-										</tbody>
-									</table>
-								</div>
-							</div>
 							<div th:if="${#lists.isEmpty(studentsPreferences['__${student.nif}__'])}">
-			         			There are no preferences chosen by this student in the data base.
+								Student has no preferences.
 							</div>
 							<div th:unless="${#lists.isEmpty(studentsPreferences['__${student.nif}__'])}">
-							<br><p> Student's preferences</p>
-							<table class="pure-table pure-table-horizontal">
-								<thead>
-									<tr>
-							         <th>Preference order</th>
-							         <th>Project Title</th>
-							         <th></th>
-							         <th></th>
-							       </tr>
-								</thead>
-								<tbody>
-									<tr th:each="preference: ${studentsPreferences['__${student.nif}__']}">
-										<form action="#" id="assignments" th:action="@{/assignment/add}"
-							                     		th:object="${assignment}" method="post">
+								<table  class="pure-table pure-table-horizontal">
+									<thead>
+										<tr>
+											<th> Project Offer </th>
+											<th> Order </th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="preference : ${studentsPreferences['__${student.nif}__']}">
+											<td th:text="${profectOfferToTitle['__${preference.projectOffer_id}__']}"></td>
 											<td th:text="${preference.preferenceOrder}"></td>
-		      								<td th:text="${profectOfferToTitle['__${preference.projectOffer_id}__']}"></td>
-		      								<input type="hidden" name="id_projectoffer" th:value="${preference.projectOffer_id}">
-		      								<input type="hidden" name="nif_student" th:value="${preference.student_nif}">
-		      								<td th:if="${studentNifAssignment['__${preference.student_nif}__']} == null">
-												<select required name="tutor_mail_form">
-													<option value=""> Select tutor </option>
-													<option th:each="tutor : ${tutors}" 
-														th:value="${tutor.mail}" 
-														th:text="${tutor.name}"></option>
-												</select>
-											</td>
-											<td th:if="${studentNifAssignment['__${preference.student_nif}__']} == null" ><button type="submit" class="btn btn-primary">Propose</button></a>
-		      							</form>
-									</tr>
-								</tbody>
-							</table>
-							<br>
+										</tr>
+									</tbody>
+								</table>
+								<br>
 							</div>
 						</div>
 					</div>
@@ -174,17 +123,6 @@
       					}
     				}
   			}
-		}
-		
-		function confirmation() {
-			var result = confirm("Are you sure? This action will delete the assignment from the database.");
-			if (result) {
-				return true;
-			    
-			}
-			else{
-				return false;
-			}
 		}
 	</script>
 </body>

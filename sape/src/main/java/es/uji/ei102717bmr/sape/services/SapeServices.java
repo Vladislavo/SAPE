@@ -6,14 +6,14 @@ import java.util.Map;
 import es.uji.ei102717bmr.sape.model.*;
 
 public interface SapeServices {
-    public List<ProjectOffer> projectOffersNotAssigned();
-    public List<Assignment> assignmentsNotAssigned();
-    public List<Student> studentsWithoutProjectAssigned();
+    List<ProjectOffer> projectOffersNotAssigned();
+    List<Assignment> assignmentsNotAssigned();
+    List<Student> studentsWithoutProjectAssigned();
     
-    public List<Tutor> getTutors();
-    public List<ProjectOffer> getProjectOffers();
-    public List<Student> getStudents();
-    public List<Internship> getInternships();
+    List<Tutor> getTutors();
+    List<ProjectOffer> getProjectOffers();
+    List<Student> getStudents();
+    List<Internship> getInternships();
     
     Map<String, String> projectIdCompanyNameMatches();
     Map<String, String> internshipIdMailContactPerson();
@@ -22,4 +22,9 @@ public interface SapeServices {
 	Map<String, Assignment> studentAssignProjects();
 	Map<String, Boolean> isProjectAssigned();
 	Map<String, String> studentNifToProjectAssigned();
+	Map<String, String> projectIdCompanyCif();
+	Map<String, String> studentNifToName();
+	Map<String, String> tutorMailToName();
+	
+	List<ProjectOffer> getProjectOffersByState(int state);
 }
