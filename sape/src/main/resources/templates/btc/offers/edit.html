@@ -49,7 +49,7 @@
 			<table class="bttcenter">
 				<tr>
 		            <td><label>Title</label></td>
-		            <td><input type="text" th:field="*{title}" /></td>
+		            <td><textarea th:field="*{title}" ></textarea></td>
 		        </tr>
 		        <tr>
 		            <td><label>Itinerary</label></td>
@@ -63,11 +63,11 @@
 		        </tr>
 		        <tr>
 		            <td><label>Tasks</label></td>
-		            <td><input type="text" th:field="*{tasks}" /></td>
+		            <td><textarea th:field="*{tasks}" ></textarea></td>
 		        </tr>
 		        <tr>
 		            <td><label>Objectives</label></td>
-		            <td><input type="text" th:field="*{objectives}" /></td>
+		            <td><textarea th:field="*{objectives}" ></textarea></td>
 		        </tr>
 		        <!--  <tr>
 		            <td><label>State</label></td>
@@ -87,7 +87,7 @@
 		        </tr>
 		        -->
 			</table>
-	    <input type="text" class="set-width" required placeholder="Notify the contact person about changes you have introduced..."> <br><br>
+	    <textarea class="set-width" required placeholder="Notify the contact person about changes you have introduced..."></textarea> <br><br>
 	    <input type="submit" class="btn btn-primary" value="Apply">
 	    </form>
 	</div>
