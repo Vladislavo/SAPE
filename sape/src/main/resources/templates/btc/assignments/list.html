@@ -2,11 +2,18 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="css/btc.css" th:href="@{/css/btc.css}" rel="stylesheet"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+<!-- new table style start -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" 
 	integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" 
 	crossorigin="anonymous">
+<!-- new table style start -->
+<!-- remove input text start -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- remove input text end -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -55,7 +62,7 @@
 		<a href="/preference/list.html" th:href="@{/preference/list.html}"><button class="btn btn-primary"> Students' Preferences </button></a>
 	</div>
 	<div class="bttcenter">
-  		<input type="text" id="inputOffers" onkeyup="filterOffers()" placeholder="Search students...">
+  		<input type="text" id="inputOffers" class="deletable" onkeyup="filterOffers()" placeholder="Search students...">
 	</div>
 
 	<div class="col-md-2"></div>
@@ -186,6 +193,34 @@
 				return false;
 			}
 		}
+		<!-- remove input text start -->
+
+	            $(document).ready(function() {
+	                $('input.deletable').wrap('<span class="deleteicon" />').after($('<span/>').click(function() {
+	                    $(this).prev('input').val('').trigger('change').focus();
+	                }));
+	            });
+	        
+		<!-- remove input text end -->
 	</script>
+	<style>
+	            span.deleteicon {
+	                position: relative;
+	            }
+	            span.deleteicon span {
+	                position: absolute;
+	                display: block;
+	                top: 6px;
+	                right: 5px;
+	                width: 20px;
+	                height: 20px;
+	                background: url('https://drive.google.com/uc?export=view&id=1pEmYosB0XPXIGcYYVYyse_FiQof_5F1r');
+	                cursor: pointer;
+	            }
+	            span.deleteicon input {
+	                padding-right: 16px;
+	                box-sizing: border-box;
+	            }
+	        </style>
 </body>
 </html>
