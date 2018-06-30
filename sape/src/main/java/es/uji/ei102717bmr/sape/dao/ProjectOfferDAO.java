@@ -76,6 +76,10 @@ public class ProjectOfferDAO {
 				projectOffer.getItinerary(), projectOffer.getObjectives(),
 				projectOffer.getState(), new Date(), projectOffer.getId_internship());
 	}
+	public void updateProjectOfferState(long state, long id) {
+		this.jdbcTemplate.update("update ProjectOffer set state = ? where id = ?;",
+				state, id);
+	}
 	
 	public void deleteProjectOffer(long id) {
 		this.jdbcTemplate.update("delete from ProjectOffer where id = ?;", id);

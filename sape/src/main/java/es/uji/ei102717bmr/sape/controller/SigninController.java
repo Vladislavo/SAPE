@@ -54,7 +54,7 @@ public class SigninController {
 					return "redirect:/internship/list/";
 				}
 				case "Student": {
-					return "redirect:/student/list";
+					return "redirect:/projectOffer/list";
 				}
     		}
     	} else {
@@ -94,7 +94,7 @@ public class SigninController {
 				return "redirect:/internship/list/";
 			}
 			case "Student": {
-				return "redirect:/student/list";
+				return "redirect:/projectOffer/list";
 			}
         }
         

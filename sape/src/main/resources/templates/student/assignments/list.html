@@ -81,17 +81,16 @@
 									<p th:text="${projectOffer.tasks}"></p>
 									<b>Goals:</b> <br>
 									<p th:text="${projectOffer.objectives}"></p>
-									<b>Itinerary:</b> <br>
-									<p th:text="${projectOffer.itinerary}"></p>
+									
 
 									<form action="#" id="preference"
-										th:action="@{/projectOffer/student/assignments/update/true&{nifStudent}(nifStudent=${assignment.nif_student})}"
+										th:action="@{/projectOffer/student/assignments/update/true&{nifStudent}&{projectOfferId}(nifStudent=${assignment.nif_student},projectOfferId=${projectOffer.id})}"
 										th:object="${assignment}" method="post">
 										<input class="btn btn-success" type="submit" value="Approve">
 
 									</form>
 									<form action="#" id="preference"
-										th:action="@{/projectOffer/student/assignments/delete/{nifStudent}(nifStudent=${assignment.nif_student})}"
+										th:action="@{/projectOffer/student/assignments/delete/{nifStudent}&{projectOfferId}(nifStudent=${assignment.nif_student},projectOfferId=${projectOffer.id})}"
 										th:object="${assignment}" method="post">
 										<input class="btn btn-danger" type="submit" value="Delete">
 
@@ -121,8 +120,7 @@
 									<p th:text="${projectOffer.tasks}"></p>
 									<b>Goals:</b> <br>
 									<p th:text="${projectOffer.objectives}"></p>
-									<b>Itinerary:</b> <br>
-									<p th:text="${projectOffer.itinerary}"></p>
+									
 
 								</div>
 							</div>

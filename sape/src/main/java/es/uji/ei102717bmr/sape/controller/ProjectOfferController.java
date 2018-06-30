@@ -77,7 +77,7 @@ public class ProjectOfferController {
     @RequestMapping("/list") 
     public String listProjectOffers(HttpSession session, Model model) {
     	UserDetails user = (UserDetails) session.getAttribute("user");
-    	
+    	System.out.println("Im working");
     	if(user != null) {
     		model.addAttribute("user", user);
 	    	switch(user.getRole().trim()) {
@@ -103,6 +103,7 @@ public class ProjectOfferController {
 	    			model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
 	    			model.addAttribute("students", studentDAO.getStudent(user.getId().trim()));
     				model.addAttribute("assignment", assignmentDAO.getAssignment(user.getId().trim()));
+    				System.out.println(user.toString() + "User");
     				model.addAttribute("user", user);
 
 	    			return "student/list";
@@ -354,12 +355,15 @@ public class ProjectOfferController {
     }
     
     // should go into assignments but there is a conflicts of path arguments
-    @RequestMapping(value = "/student/assignments/update/{state}&{nifStudent}", method = RequestMethod.POST)
+    @RequestMapping(value = "/student/assignments/update/{state}&{nifStudent}&{projectOfferId}", method = RequestMethod.POST)
 	public String processUpdateAssignment(HttpSession session, @PathVariable String nifStudent,
-			@PathVariable boolean state) {
+			@PathVariable boolean state, @PathVariable long projectOfferId) {
     	UserDetails user = (UserDetails) session.getAttribute("user");
     	if(user.getRole().trim().equals("Student")) {
 	    	assignmentDAO.updateAssignmentState(nifStudent, state);
+	    	if (state == true) {
+	    		projectOfferDao.updateProjectOfferState((long)4, projectOfferId);
+	    	}
 			return "redirect:/projectOffer/list";
     	} else {
     		return "signin";
@@ -392,13 +396,18 @@ public class ProjectOfferController {
     	return "signin";
     }
     // should go into assignments but there is a conflicts of path arguments
-    @RequestMapping("/student/assignments/delete/{nifStudent}")
-	public String processDelete(HttpSession session, @PathVariable String nifStudent) {
+    @RequestMapping("/student/assignments/delete/{nifStudent}&{projectOfferId}")
+	public String processDelete(HttpSession session, @PathVariable String nifStudent,  @PathVariable long projectOfferId) {
     	UserDetails user = (UserDetails) session.getAttribute("user");
+    	
     	if(user.getRole().trim().equals("Student")) {
 			assignmentDAO.deleteAssignment(nifStudent);
+    		projectOfferDao.updateProjectOfferState((long) 2, projectOfferId);
 	
 			return "redirect:/projectOffer/list";
+		
+	    		
+	    	
 	    } else {
     		return "signin";
     	}
