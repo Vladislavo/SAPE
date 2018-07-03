@@ -117,39 +117,35 @@
 							<a class="btn btn-primary" data-toggle="collapse" th:href="'#moreinfo'+${projectOffer.id}" role="button" aria-expanded="true" aria-controls="moreinfo">
 							    Request More Information
 							</a>
-							<a class="btn btn-success" data-toggle="collapse" th:href="'#approve'+${projectOffer.id}" role="button" aria-expanded="false" aria-controls="approve">
-							    Approve Offer
+							
+							<a th:href="@{/projectOffer/approve/__${projectOffer.id}__}">
+								<button type="button" class="btn btn-success" value="Publish">Approve</button>
 							</a>
-							<a class="btn btn-success" data-toggle="collapse" th:href="'#publish'+${projectOffer.id}" role="button" aria-expanded="false" aria-controls="approve">
-							    Publish
+							
+							<a th:href="@{/projectOffer/publish/__${projectOffer.id}__}">
+								<button type="button" class="btn btn-success" value="Publish">Publish</button>
 							</a>
 						</p>
 
-						<div class="collapse" th:id="'reject'+${projectOffer.id}">
-						  <div class="card card-body">
-						    <textarea class="set-width" required name="reject">Dear friend, after the revision we have considered your offer proposal as not adequate. Please contact us in case you are not agree.</textarea> <br><br>
-						    <a onclick="return confirmation()" th:href="@{/projectOffer/delete/__${projectOffer.id}__}"><input type="submit" class="btn btn-danger" value="Reject"></a>
-						  </div>
-						</div>
-
-						<div class="collapse" th:id="'moreinfo'+${projectOffer.id}">
-						  <div class="card card-body">
-						    <textarea class="set-width" required name="moreinfo">Dear friend, we have considered your offer and found a lack of information. Please modify next fields:</textarea> <br><br>
-						    <a th:href="'mailto:'+${internshipIdToMailContactPerson['__${projectOffer.id_internship}__']}"><input type="submit" class="btn btn-primary" value="Request"></a>
-						  </div>
-						</div>
-						<div class="collapse" th:id="'approve'+${projectOffer.id}">
-						  <div class="card card-body">
-						    <textarea class="set-width" required name="approve">Your offer has been approved.</textarea> <br><br>
-						    <a th:href="@{/projectOffer/approve/__${projectOffer.id}__}"><input type="submit" class="btn btn-success" value="Approve"></a>
-						  </div>
-						</div>
-						<div class="collapse" th:id="'publish'+${projectOffer.id}">
-						  <div class="card card-body">
-						    <textarea class="set-width" required name="approve">Your offer has been made public.</textarea> <br><br>
-						    <a th:href="@{/projectOffer/publish/__${projectOffer.id}__}"><input type="submit" class="btn btn-success" value="Publish"></a>
-						  </div>
-						</div>
+						<form th:action="${'/projectOffer/delete/'+__${projectOffer.id}__}"
+							method=post>
+							<div class="collapse" th:id="'reject'+${projectOffer.id}">
+							  <div class="card card-body">
+							    <textarea class="set-width" required name="reject">Dear friend, after the revision we have considered your offer proposal as not adequate. Please contact us in case you are not agree.</textarea> <br><br>
+							    <a onclick="return confirmation()" th:href="@{/projectOffer/delete/__${projectOffer.id}__}"><input type="submit" class="btn btn-danger" value="Reject"></a>
+							  </div>
+							</div>
+						</form>
+						
+						<form th:action="${'/projectOffer/mail/'+__${projectOffer.id}__}"
+							method=post>
+							<div class="collapse" th:id="'moreinfo'+${projectOffer.id}">
+							  <div class="card card-body">
+							    <textarea class="set-width" required name="moreinfo">Dear friend, we have considered your offer and found a lack of information. Please modify next fields:</textarea> <br><br>
+							    <a th:href="@{'/projectOffer/mail/'+${internshipIdToMailContactPerson['__${projectOffer.id_internship}__']}}"><input type="submit" class="btn btn-primary" value="Request"></a>
+							  </div>
+							</div>
+						</form>
 					</div>
 				</div>
 				</td>

@@ -27,4 +27,6 @@ public interface SapeServices {
 	Map<String, String> tutorMailToName();
 	
 	List<ProjectOffer> getProjectOffersByState(int state);
+	
+	Map<String, String> projectIdCompanyContactPerson();
 }

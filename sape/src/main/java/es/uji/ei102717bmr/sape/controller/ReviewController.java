@@ -31,10 +31,13 @@ public class ReviewController {
     }
     @RequestMapping("/list/{id_projectOffer}") 
     public String listReviews(HttpSession session, Model model, @PathVariable String id_projectOffer) {
-        model.addAttribute("reviews", reviewDao.getReviews(Long.valueOf(id_projectOffer)));
         UserDetails user = (UserDetails) session.getAttribute("user");
         if(user != null){
         	model.addAttribute("user", user);
+        	model.addAttribute("reviews", reviewDao.getReviews(Long.valueOf(id_projectOffer)));
+        } else {
+        	model.addAttribute("user", new UserDetails());
+        	return "signin";
         }
         return "btc/offers/listReviews";
     }

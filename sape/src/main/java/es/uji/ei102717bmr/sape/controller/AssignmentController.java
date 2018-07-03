@@ -1,8 +1,5 @@
 package es.uji.ei102717bmr.sape.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import es.uji.ei102717bmr.sape.dao.AssignmentDAO;
+import es.uji.ei102717bmr.sape.dao.ProjectOfferDAO;
 import es.uji.ei102717bmr.sape.model.Assignment;
 import es.uji.ei102717bmr.sape.model.ProjectOffer;
 import es.uji.ei102717bmr.sape.model.UserDetails;
@@ -27,7 +25,10 @@ import es.uji.ei102717bmr.sape.services.SapeServices;
 public class AssignmentController {
 	
 private AssignmentDAO assignmentDAO;
-private SapeServices sapeServices;
+	private SapeServices sapeServices;
+	
+	@Autowired
+	ProjectOfferDAO projectOfferDao;
 
 	@Autowired
 	public void setSapeServicesImpl(SapeServices sapeServicesImpl){
@@ -120,8 +121,8 @@ private SapeServices sapeServices;
 		    			assignment.setMail_tutor(mail_tutor);
 			    		assignment.setId_projectoffer(Long.valueOf(id_projectoffer));
 			    		assignment.setNif_student(nif_student);
+			    		projectOfferDao.updateProjectOfferState(3, Long.valueOf(id_projectoffer));
 		    		}
-		    		System.out.println(assignment);
 		    		assignmentDAO.addAssignment(assignment);
 		    	return "redirect:/assignment/list";
 	    	} 

@@ -1,6 +1,7 @@
 package es.uji.ei102717bmr.sape.controller;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,8 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +21,6 @@ import es.uji.ei102717bmr.sape.dao.PreferenceDAO;
 import es.uji.ei102717bmr.sape.dao.ProjectOfferDAO;
 import es.uji.ei102717bmr.sape.dao.ReviewDAO;
 import es.uji.ei102717bmr.sape.dao.StudentDAO;
-import es.uji.ei102717bmr.sape.model.Assignment;
 import es.uji.ei102717bmr.sape.model.Preference;
 import es.uji.ei102717bmr.sape.model.ProjectOffer;
 import es.uji.ei102717bmr.sape.model.Review;
@@ -77,7 +76,6 @@ public class ProjectOfferController {
     @RequestMapping("/list") 
     public String listProjectOffers(HttpSession session, Model model) {
     	UserDetails user = (UserDetails) session.getAttribute("user");
-    	System.out.println("Im working");
     	if(user != null) {
     		model.addAttribute("user", user);
 	    	switch(user.getRole().trim()) {
@@ -103,7 +101,6 @@ public class ProjectOfferController {
 	    			model.addAttribute("preferences", preferenceDAO.getPreference(user.getId().trim()));
 	    			model.addAttribute("students", studentDAO.getStudent(user.getId().trim()));
     				model.addAttribute("assignment", assignmentDAO.getAssignment(user.getId().trim()));
-    				System.out.println(user.toString() + "User");
     				model.addAttribute("user", user);
 
 	    			return "student/list";
@@ -120,7 +117,6 @@ public class ProjectOfferController {
     	
     	if(user != null) {
     		model.addAttribute("user", user);
-    		//System.out.println(user);
 	    	switch(user.getRole().trim()) {
 	    		case "BTC": {
 	    			model.addAttribute("projectOffers", sapeServices.getProjectOffersByState(0));
@@ -131,7 +127,7 @@ public class ProjectOfferController {
 	    	        return "btc/offers/list";
 	    		}
 	    		case "DCC": {
-	    			model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
+	    			model.addAttribute("projectOffers", sapeServices.getProjectOffersByState(0));
 	    	        model.addAttribute("projectCompanyMatches", sapeServices.projectIdCompanyNameMatches());
 	    	        model.addAttribute("internshipIdToMailContactPerson", sapeServices.internshipIdMailContactPerson());
 	    	        model.addAttribute("projectIdToCompanyCif", sapeServices.projectIdCompanyCif());
@@ -160,7 +156,7 @@ public class ProjectOfferController {
 	    	        return "btc/offers/list";
 	    		}
 	    		case "DCC": {
-	    			model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
+	    			model.addAttribute("projectOffers", sapeServices.getProjectOffersByState(1));
 	    	        model.addAttribute("projectCompanyMatches", sapeServices.projectIdCompanyNameMatches());
 	    	        model.addAttribute("internshipIdToMailContactPerson", sapeServices.internshipIdMailContactPerson());
 	    	        model.addAttribute("projectIdToCompanyCif", sapeServices.projectIdCompanyCif());
@@ -189,7 +185,7 @@ public class ProjectOfferController {
 	    	        return "btc/offers/list";
 	    		}
 	    		case "DCC": {
-	    			model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
+	    			model.addAttribute("projectOffers", sapeServices.getProjectOffersByState(2));
 	    	        model.addAttribute("projectCompanyMatches", sapeServices.projectIdCompanyNameMatches());
 	    	        model.addAttribute("internshipIdToMailContactPerson", sapeServices.internshipIdMailContactPerson());
 	    	        model.addAttribute("projectIdToCompanyCif", sapeServices.projectIdCompanyCif());
@@ -218,7 +214,7 @@ public class ProjectOfferController {
 	    	        return "btc/offers/list";
 	    		}
 	    		case "DCC": {
-	    			model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
+	    			model.addAttribute("projectOffers", sapeServices.getProjectOffersByState(3));
 	    	        model.addAttribute("projectCompanyMatches", sapeServices.projectIdCompanyNameMatches());
 	    	        model.addAttribute("internshipIdToMailContactPerson", sapeServices.internshipIdMailContactPerson());
 	    	        model.addAttribute("projectIdToCompanyCif", sapeServices.projectIdCompanyCif());
@@ -247,7 +243,7 @@ public class ProjectOfferController {
 	    	        return "btc/offers/list";
 	    		}
 	    		case "DCC": {
-	    			model.addAttribute("projectOffers", projectOfferDao.getProjectOffers());
+	    			model.addAttribute("projectOffers", sapeServices.getProjectOffersByState(4));
 	    	        model.addAttribute("projectCompanyMatches", sapeServices.projectIdCompanyNameMatches());
 	    	        model.addAttribute("internshipIdToMailContactPerson", sapeServices.internshipIdMailContactPerson());
 	    	        model.addAttribute("projectIdToCompanyCif", sapeServices.projectIdCompanyCif());
@@ -370,12 +366,12 @@ public class ProjectOfferController {
     	}
 	}
 
-    @RequestMapping(value="/delete/{id}")
+    @RequestMapping(value="/delete/{id}", method = RequestMethod.POST)
     public String processDelete(Model model, HttpSession session, @ModelAttribute("reject") String reviewText, @PathVariable long id) {
     	UserDetails user = (UserDetails) session.getAttribute("user");
     	if(user != null) {
     		model.addAttribute("user", user);
-	    	if(user.getRole().trim().equals("BTC")) {
+	    	if(user.getRole().trim().equals("BTC") || user.getRole().trim().equals("DCC")) {
 		    	Review review = new Review();
 		        review.setText(reviewText);
 		        review.setCreationDate(new Date());
@@ -383,9 +379,15 @@ public class ProjectOfferController {
 		        reviewDao.addReview(review);
 		        
 		        ProjectOffer projectOffer = projectOfferDao.getProjectOffer(id);
+		       
+		        projectOfferDao.deleteProjectOffer(id);
 		        internshipDAO.deleteInternship(projectOffer.getId_internship());
+		        Map<String, String> poidtocontactPersonMail = sapeServices.projectIdCompanyContactPerson();
 		        
-		    	projectOfferDao.deleteProjectOffer(id);
+		        System.out.println("From: <"+user.getMail()+">\nTo: "+poidtocontactPersonMail.get(id)
+		        		+ "\nDate: " + new Date().toString()+"\nSubject: " + projectOffer.getTitle()
+		        		+ "\n\n" + reviewText);
+		    	
 		    	return "redirect:../list";
 	    	} else {
 	    		return "signin";
@@ -413,8 +415,8 @@ public class ProjectOfferController {
     	}
 	}
     
-    @RequestMapping("/publish/{id}")
-	public String publishOffer(Model model, HttpSession session, @PathVariable String id) {
+    @RequestMapping(value="/publish/{id}")
+	public String publishOffer(Model model, HttpSession session, @ModelAttribute("publish") String reviewText, @PathVariable String id) {
     	UserDetails user = (UserDetails) session.getAttribute("user");
     	if(user != null) {
     		model.addAttribute("user", user);
@@ -422,6 +424,18 @@ public class ProjectOfferController {
 	    		ProjectOffer po = projectOfferDao.getProjectOffer(Long.valueOf(id));
 	    		po.setState((long) 2);
 	    		projectOfferDao.updateProjectOffer(po);
+	    		
+	    		Review review = new Review();
+		        review.setText("Your offer has been made public.");
+		        review.setCreationDate(new Date());
+		        review.setProjectOfferId(Long.valueOf(id));
+		        reviewDao.addReview(review);
+		        
+		        Map<String, String> poidtocontactPersonMail = sapeServices.projectIdCompanyContactPerson();
+		        
+		        System.out.println("From: <"+user.getMail()+">\nTo: "+poidtocontactPersonMail.get(id)
+		        		+ "\nDate: " + new Date().toString()+"\nSubject: " + po.getTitle()
+		        		+ "\n\nYour offer has been made public.");
 				return "redirect:/projectOffer/list";
 		    }
     	} else {
@@ -430,17 +444,56 @@ public class ProjectOfferController {
     	return "signin";
 	}
     
-    @RequestMapping("/approve/{id}")
+    @RequestMapping(value="/approve/{id}")
 	public String approveOffer(Model model, HttpSession session, @PathVariable String id) {
-    	System.out.println("debug");
     	UserDetails user = (UserDetails) session.getAttribute("user");
     	if(user != null) {
     		model.addAttribute("user", user);
-	    	if(user.getRole().trim().equals("BTC")) {
+	    	if(user.getRole().trim().equals("BTC") || user.getRole().trim().equals("DCC")) {
 	    		ProjectOffer po = projectOfferDao.getProjectOffer(Long.valueOf(id));
 	    		po.setState((long) 1);
 	    		projectOfferDao.updateProjectOffer(po);
+	    		
+	    		Review review = new Review();
+		        review.setText("Your offer has been approved.");
+		        review.setCreationDate(new Date());
+		        review.setProjectOfferId(Long.valueOf(id));
+		        reviewDao.addReview(review);
+		        
+		        Map<String, String> poidtocontactPersonMail = sapeServices.projectIdCompanyContactPerson();
+		        
+		        System.out.println("From: <"+user.getMail()+">\nTo: "+poidtocontactPersonMail.get(id)
+		        		+ "\nDate: " + new Date().toString()+"\nSubject: " + po.getTitle()
+		        		+ "\n\nYour offer has been approved.");
 				return "redirect:/projectOffer/list";
+		    }
+    	} else {
+    		model.addAttribute("user", new UserDetails());
+    	}
+    	return "signin";
+	}
+    
+    @RequestMapping(value="/mail/{id}", method = RequestMethod.POST)
+	public String sendMail(Model model, HttpSession session, @ModelAttribute("moreinfo") String reviewText, @PathVariable String id) {
+    	UserDetails user = (UserDetails) session.getAttribute("user");
+    	if(user != null) {
+    		model.addAttribute("user", user);
+	    	if(user.getRole().trim().equals("BTC") || user.getRole().trim().equals("DCC")) {
+	    		ProjectOffer po = projectOfferDao.getProjectOffer(Long.valueOf(id));
+	    		
+		        Map<String, String> poidtocontactPersonMail = sapeServices.projectIdCompanyContactPerson();
+		        
+		        Review review = new Review();
+		        review.setText(reviewText);
+		        review.setCreationDate(new Date());
+		        review.setProjectOfferId(Long.valueOf(id));
+		        reviewDao.addReview(review);
+		        
+		        System.out.println("From: <"+user.getMail()+">\nTo: "+poidtocontactPersonMail.get(id)
+		        		+ "\nDate: " + new Date().toString()+"\nSubject: " + po.getTitle()
+		        		+ "\n\n" + reviewText);
+		    	
+	    		return "redirect:/projectOffer/list";
 		    }
     	} else {
     		model.addAttribute("user", new UserDetails());

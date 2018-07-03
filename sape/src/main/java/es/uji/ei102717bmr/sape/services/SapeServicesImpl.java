@@ -192,6 +192,47 @@ public class SapeServicesImpl implements SapeServices {
 		
 		return projectCompanyMatch;
 	}
+	
+	@Override
+	public Map<String, String> projectIdCompanyContactPerson() {
+		Map<String, String> projectCompanyMatch = new HashMap<>();
+		List<Internship> internships = internshipDao.getInternships();
+		List<Company> companies = companyDao.getCompanies();
+		List<ProjectOffer> projectOffers = projectOfferDao.getProjectOffers();
+		
+		// internship_id -> projectOffer
+		Map<Long, ProjectOffer> projectOffers_map = new HashMap<>();
+		projectOffers.stream()
+			.forEach(po -> projectOffers_map.put(po.getId_internship(), po));
+		
+		Map<String, Company> comp_map = new HashMap<>();
+		companies.stream()
+			.forEach(c -> comp_map.put(c.getCif(), c));
+		//System.out.println(projectOffers_map);
+		
+		// cif_company -> projectOffer
+		Map<Long, Company> internships_map = new HashMap<>();
+		internships.stream()
+			.forEach(i -> internships_map.put(i.getId(), comp_map.get(i.getCif_Company())));
+		
+		//System.out.println(companies);
+		
+		
+		//System.out.println(companies);
+		
+		// cif_company -> company
+		Map<String, Company> companies_map = new HashMap<>();
+		companies.stream()
+			.forEach(c -> companies_map.put(c.getCif(), c));
+		
+		// projectOffer -> company_name
+		projectOffers.stream()
+			.forEach(po -> projectCompanyMatch.put(po.getId()+"", internships_map.get(po.getId_internship()).getMail()));
+		//companies.stream()
+			//.forEach(c -> projectCompanyMatch.put(internships_map.get(c.getCif()).getId()+"", c.getName()));
+		
+		return projectCompanyMatch;
+	}
 
 	@Override
 	public Map<String, String> internshipIdMailContactPerson() {
